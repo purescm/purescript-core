@@ -9,13 +9,17 @@
           timeLog
           timeEnd
           clear)
-  (import (only (rnrs base) define lambda)
-          (prefix (rnrs base) scm:))
+  (import (only (rnrs base) define lambda begin)
+          (prefix (rnrs base) scm:)
+          (only (rnrs io ports) current-output-port put-string)
+          (only (rnrs io simple) newline))
 
   (define log
     (lambda (s)
       (lambda ()
-        (scm:error #f "Effect.Console:log not implemented."))))
+        (begin 
+          (put-string (current-output-port) s)
+          (newline (current-output-port))))))
 
   (define warn
     (lambda (s)
