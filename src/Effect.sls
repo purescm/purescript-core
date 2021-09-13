@@ -7,7 +7,8 @@
           whileE
           forE
           foreachE)
-  (import (only (rnrs base) define lambda error))
+  (import (only (rnrs base) define lambda error quote + >=)
+          (only (rnrs control) do))
 
   (define pureE
     (lambda (a)
@@ -36,7 +37,9 @@
       (lambda (hi)
         (lambda (f)
           (lambda ()
-            (error #f "Effect:forE not implemented."))))))
+            (do ([i lo (+ i 1)])
+                ((>= i hi) '())
+              ((f i))))))))
 
   (define foreachE
     (lambda (as)
