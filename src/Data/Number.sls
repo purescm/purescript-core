@@ -14,7 +14,7 @@
     (lambda (n)
       (error #f "Data.Number:isNan not implemented.")))
 
-  (define infinity 'Data.Number:infinity-NOT-DEFINED)
+  (define infinity +inf.0)
 
   (define isFinite
     (lambda (n)
