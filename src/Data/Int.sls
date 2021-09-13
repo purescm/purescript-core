@@ -8,7 +8,8 @@
           quot
           rem
           pow)
-  (import (only (rnrs base) define lambda error))
+  (import (only (rnrs base) define lambda error)
+          (only (rnrs arithmetic flonums) fixnum->flonum))
 
   (define fromNumberImpl
     (lambda (just)
@@ -18,7 +19,7 @@
 
   (define toNumber
     (lambda (n)
-      (error #f "Data.Int:toNumber not implemented.")))
+      (fixnum->flonum n)))
 
   (define fromStringAsImpl
     (lambda (just)
