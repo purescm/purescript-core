@@ -6,33 +6,44 @@
           read
           modifyImpl
           write)
-  (import (only (rnrs base) define lambda error))
+  (import (only (rnrs base)
+                define lambda quote let let* error cons car)
+          (only (rnrs mutable-pairs) set-car!)
+          (only (rnrs hashtables) hashtable-ref))
 
   (define new
     (lambda (val)
       (lambda ()
-        (error #f "Effect.Ref:new not implemented."))))
+        (cons val '()))))
 
   (define newWithSelf
     (lambda (f)
       (lambda ()
-        (error #f "Effect.Ref:newWithSelf not implemented."))))
+        (let ([ref (cons '() '())])
+          (set-car! ref (f ref))
+          ref))))
 
   (define read
     (lambda (ref)
       (lambda ()
-        (error #f "Effect.Ref:read not implemented."))))
+        (car ref))))
 
   (define modifyImpl
     (lambda (f)
       (lambda (ref)
         (lambda ()
-          (error #f "Effect.Ref:modifyImpl not implemented.")))))
+          (let* ([t (f (car ref))]
+                 [v (hashtable-ref
+                     t
+                     "state"
+                     'Effect.Ref:modifyImpl-CANT-GET-STATE)])
+            (set-car! ref v)
+            v)))))
 
   (define write
     (lambda (val)
       (lambda (ref)
         (lambda ()
-          (error #f "Effect.Ref:write not implemented.")))))
+          (set-car! ref val)))))
 
 )
