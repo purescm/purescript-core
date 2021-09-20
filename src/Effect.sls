@@ -19,7 +19,7 @@
     (lambda (a)
       (lambda (f)
         (lambda ()
-          (error #f "Effect:bindE not implemented")))))
+          ((f (a)))))))
 
   (define untilE
     (lambda (f)
