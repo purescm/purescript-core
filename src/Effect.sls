@@ -13,7 +13,7 @@
   (define pureE
     (lambda (a)
       (lambda ()
-        (error #f "Effect:pureE not implemented."))))
+        a)))
 
   (define bindE
     (lambda (a)
