@@ -3,12 +3,12 @@
 (library (Data.Semigroup foreign)
   (export concatString
           concatArray)
-  (import (only (rnrs base) define lambda error))
+  (import (only (rnrs base) define lambda error string-append))
 
   (define concatString
     (lambda (s1)
       (lambda (s2)
-        (error #f "Data.Semigroup:concatString not implemented."))))
+        (string-append s1 s2))))
 
   (define concatArray
     (lambda (xs)
