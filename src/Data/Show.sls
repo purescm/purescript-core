@@ -10,16 +10,17 @@
           join)
   (import (only (rnrs base) define lambda let* quote begin if set!
                             + - < >=
-                            error string-append vector-ref vector-length)
+                            error number->string string-append
+                            vector-ref vector-length)
           (only (rnrs control) do))
 
   (define showIntImpl
     (lambda (n)
-      (error #f "Data.Show:showIntImpl not implemented.")))
+      (number->string n)))
 
   (define showNumberImpl
     (lambda (n)
-      (error #f "Data.Show:showNumberImpl not implemented.")))
+      (number->string n)))
 
   (define showCharImpl
     (lambda (c)
@@ -35,10 +36,10 @@
         (let* ([buffer  "["]
                [append! (lambda (str) (set! buffer (string-append buffer str)))])
           (do ([i 0 (+ i 1)])
-              ((> i (vector-length xs)) '())
+              ((>= i (vector-length xs)) '())
             (begin 
               (append! (f (vector-ref xs i)))
-              (if (< i (vector-length xs) 1)
+              (if (< i (- (vector-length xs) 1))
                   (append! ","))))
           (append! "]")
           buffer))))
