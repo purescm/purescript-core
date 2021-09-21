@@ -8,7 +8,10 @@
           showArrayImpl
           cons
           join)
-  (import (only (rnrs base) define lambda error))
+  (import (only (rnrs base) define lambda let* quote begin if set!
+                            + - < >=
+                            error string-append vector-ref vector-length)
+          (only (rnrs control) do))
 
   (define showIntImpl
     (lambda (n)
@@ -27,8 +30,18 @@
       (error #f "Data.Show:showStringImpl not implemented.")))
 
   (define showArrayImpl
-    (lambda (s)
-      (error #f "Data.Show:showArrayImpl not implemented.")))
+    (lambda (f)
+      (lambda (xs)
+        (let* ([buffer  "["]
+               [append! (lambda (str) (set! buffer (string-append buffer str)))])
+          (do ([i 0 (+ i 1)])
+              ((> i (vector-length xs)) '())
+            (begin 
+              (append! (f (vector-ref xs i)))
+              (if (< i (vector-length xs) 1)
+                  (append! ","))))
+          (append! "]")
+          buffer))))
 
   (define cons
     (lambda (head)
