@@ -7,7 +7,8 @@
           whileE
           forE
           foreachE)
-  (import (only (rnrs base) define lambda error quote + >=)
+  (import (only (rnrs base) define lambda error quote)
+          (only (rnrs arithmetic fixnums) fx+ fx>=?)
           (only (rnrs control) do))
 
   (define pureE
@@ -37,8 +38,8 @@
       (lambda (hi)
         (lambda (f)
           (lambda ()
-            (do ([i lo (+ i 1)])
-                ((>= i hi) '())
+            (do ([i lo (fx+ i 1)])
+                ((fx>=? i hi) '())
               ((f i))))))))
 
   (define foreachE
