@@ -8,7 +8,8 @@
           time
           timeLog
           timeEnd
-          clear)
+          clear
+          debug)
   (import (only (rnrs base) define lambda begin)
           (prefix (rnrs base) scm:)
           (only (rnrs io ports) current-output-port put-string)
@@ -55,4 +56,8 @@
     (lambda ()
       (scm:error #f "Effect.Console:clear not implemented.")))
 
+  (define debug
+    (lambda (s)
+      (lambda ()
+        (scm:error #f "Effect.Console:debug not implemented."))))
 )
