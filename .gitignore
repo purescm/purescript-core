@@ -6,6 +6,4 @@
 /node_modules/
 /output/
 package-lock.json
-
-# PureScheme
-!/.dir-locals.el
+test/actual_output.txt

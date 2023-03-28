@@ -12,6 +12,18 @@ Bugfixes:
 
 Other improvements:
 
+## [v6.0.0](https://github.com/purescript/purescript-console/releases/tag/v6.0.0) - 2022-04-27
+
+Breaking changes:
+- Migrated FFI to ES modules (#39 by @kl0tl and @JordanMartinez)
+
+New features:
+- Added `debug` (#36)
+
+Bugfixes:
+
+Other improvements:
+
 ## [v5.0.0](https://github.com/purescript/purescript-console/releases/tag/v5.0.0) - 2021-02-26
 
 Breaking changes:
