@@ -1,3 +1,5 @@
+-- For code-genning the FFI, see
+-- https://gist.github.com/JordanMartinez/d66cb8170067c7eeb59c9e9d68260261
 module Data.Function.Uncurried where
 
 import Data.Unit (Unit)
