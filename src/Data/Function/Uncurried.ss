@@ -1,7 +1,7 @@
 #!r6rs
 #!chezscheme
 
-(library (Data.Functon.Uncurried foreign)
+(library (Data.Function.Uncurried foreign)
   (export
     mkFn0
     mkFn2
