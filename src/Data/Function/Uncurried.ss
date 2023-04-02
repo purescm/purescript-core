@@ -124,7 +124,7 @@
   (scm:define runFn0
     (scm:lambda (fn)
       (scm:lambda ()
-        (fn (scm:quote Data.Unit:unit-NOT-DEFINED))))))
+        (fn (scm:quote Data.Unit:unit-NOT-DEFINED)))))
 
   (scm:define runFn1
     (scm:lambda (fn)
