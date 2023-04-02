@@ -123,8 +123,7 @@
 
   (scm:define runFn0
     (scm:lambda (fn)
-      (scm:lambda ()
-        (fn))))
+      (fn)))
 
   (scm:define runFn1
     (scm:lambda (fn)
