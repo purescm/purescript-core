@@ -29,7 +29,7 @@
   (scm:define mkFn0
     (scm:lambda (fn)
       (scm:lambda ()
-        (fn))))
+        (fn (scm:quote Data.Unit:unit-NOT-DEFINED))))))
 
   (scm:define mkFn2
     (scm:lambda (fn)
@@ -124,7 +124,7 @@
   (scm:define runFn0
     (scm:lambda (fn)
       (scm:lambda ()
-        (fn))))
+        (fn (scm:quote Data.Unit:unit-NOT-DEFINED))))))
 
   (scm:define runFn1
     (scm:lambda (fn)
