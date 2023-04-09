@@ -6,40 +6,38 @@
           read
           modifyImpl
           write)
-  (import (chezscheme))
+  (import (prefix (chezscheme) scm:))
 
-  (define new
-    (lambda (v)
-      (lambda ()
-        (box v))))
+  (scm:define new
+    (scm:lambda (v)
+      (scm:lambda ()
+        (scm:box v))))
 
-  (define newWithSelf
-    (lambda (f)
-      (lambda ()
-        (let ([ref (box '())])
-          (set-box! ref (f ref))
+  (scm:define newWithSelf
+    (scm:lambda (f)
+      (scm:lambda ()
+        (scm:let ([ref (scm:box '())])
+          (scm:set-box! ref (f ref))
           ref))))
 
-  (define read
-    (lambda (ref)
-      (lambda ()
-        (unbox ref))))
+  (scm:define read
+    (scm:lambda (ref)
+      (scm:lambda ()
+        (scm:unbox ref))))
 
-  ;; modify' :: forall s b. (s -> { state :: s, value :: b }) -> Ref s -> Effect b
-
-  (define modifyImpl
-    (lambda (f)
-      (lambda (ref)
-        (lambda ()
-          (let* ([t (f (unbox ref))]
-                 [v (hashtable-ref t "state" 'Effect.Ref:modifyImpl-CANT-GET-STATE)])
-            (set-box! ref v)
+  (scm:define modifyImpl
+    (scm:lambda (f)
+      (scm:lambda (ref)
+        (scm:lambda ()
+          (scm:let* ([t (f (scm:unbox ref))]
+                     [v (scm:hashtable-ref t "state" 'Effect.Ref:modifyImpl-CANT-GET-STATE)])
+            (scm:set-box! ref v)
             v)))))
 
-  (define write
-    (lambda (val)
-      (lambda (ref)
-        (lambda ()
-          (set-box! ref val)))))
+  (scm:define write
+    (scm:lambda (val)
+      (scm:lambda (ref)
+        (scm:lambda ()
+          (scm:set-box! ref val)))))
 
 )
