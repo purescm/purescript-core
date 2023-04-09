@@ -12,38 +12,37 @@
           (only (rnrs hashtables) hashtable-ref))
 
   (define new
-    (lambda (val)
+    (lambda (v)
       (lambda ()
-        (cons val '()))))
+        (box v))))
 
   (define newWithSelf
     (lambda (f)
       (lambda ()
-        (let ([ref (cons '() '())])
-          (set-car! ref (f ref))
+        (let ([ref (box '())])
+          (set-box! ref (f ref))
           ref))))
 
   (define read
     (lambda (ref)
       (lambda ()
-        (car ref))))
+        (unbox ref))))
+
+  ;; modify' :: forall s b. (s -> { state :: s, value :: b }) -> Ref s -> Effect b
 
   (define modifyImpl
     (lambda (f)
       (lambda (ref)
         (lambda ()
-          (let* ([t (f (car ref))]
-                 [v (hashtable-ref
-                     t
-                     "state"
-                     'Effect.Ref:modifyImpl-CANT-GET-STATE)])
-            (set-car! ref v)
+          (let* ([t (f (unbox ref))]
+                 [v (hashtable-ref t "state" 'Effect.Ref:modifyImpl-CANT-GET-STATE)])
+            (set-box! ref v)
             v)))))
 
   (define write
     (lambda (val)
       (lambda (ref)
         (lambda ()
-          (set-car! ref val)))))
+          (set-box! ref val)))))
 
 )
