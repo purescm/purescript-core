@@ -16,7 +16,7 @@
   (scm:define newWithSelf
     (scm:lambda (f)
       (scm:lambda ()
-        (scm:let ([ref (scm:box '())])
+        (scm:let ([ref (scm:box (scm:quote ()))])
           (scm:set-box! ref (f ref))
           ref))))
 
