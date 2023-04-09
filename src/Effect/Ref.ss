@@ -6,10 +6,7 @@
           read
           modifyImpl
           write)
-  (import (only (rnrs base)
-                define lambda quote let let* error cons car)
-          (only (rnrs mutable-pairs) set-car!)
-          (only (rnrs hashtables) hashtable-ref))
+  (import (chezscheme))
 
   (define new
     (lambda (v)
