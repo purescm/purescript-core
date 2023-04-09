@@ -30,7 +30,7 @@
       (scm:lambda (ref)
         (scm:lambda ()
           (scm:let* ([t (f (scm:unbox ref))]
-                     [v (scm:hashtable-ref t "state" 'Effect.Ref:modifyImpl-CANT-GET-STATE)])
+                     [v (scm:hashtable-ref t "state" (scm:quote Effect.Ref:modifyImpl-CANT-GET-STATE))])
             (scm:set-box! ref v)
             v)))))
 
