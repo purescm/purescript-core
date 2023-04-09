@@ -1,7 +1,7 @@
 ;; -*- mode: scheme -*-
 
 (library (Effect.Ref foreign)
-  (export new
+  (export _new
           newWithSelf
           read
           modifyImpl
