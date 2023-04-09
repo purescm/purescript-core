@@ -8,7 +8,7 @@
           write)
   (import (prefix (chezscheme) scm:))
 
-  (scm:define new
+  (scm:define _new
     (scm:lambda (v)
       (scm:lambda ()
         (scm:box v))))
