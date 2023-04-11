@@ -3,6 +3,6 @@
   (import (prefix (chezscheme) scm:))
 
   (scm:define unsafeUnionFn
-    (scm:lambda (r1 r2))
-      (scm:error #f "unsafeUnionFn: unimplemented!"))
+    (scm:lambda (r1 r2)
+      (scm:error #f "unsafeUnionFn: unimplemented!")))
   )
