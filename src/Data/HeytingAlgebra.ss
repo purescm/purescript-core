@@ -4,21 +4,18 @@
   (export boolConj
           boolDisj
           boolNot)
-  (import (only (rnrs base) define lambda error))
+  (import (only (rnrs base) define lambda and or not))
 
   (define boolConj 
     (lambda (b1)
       (lambda (b2)
-        (error #f "Data.HeytingAlgebra:boolConj not implemented."))))
+        (and b1 b2))))
 
   (define boolDisj
     (lambda (b1)
       (lambda (b2)
-        (error #f "Data.HeytingAlgebra:boolDisj not implemented."))))
+        (or b1 b2))))
 
-  (define boolNot
-    (lambda (b1)
-      (lambda (b2)
-        (error #f "Data.HeytingAlgebra:boolNot not implemented."))))
+  (define boolNot not)
 
 )

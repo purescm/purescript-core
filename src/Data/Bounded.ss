@@ -4,15 +4,16 @@
   (export topInt bottomInt
           topChar bottomChar
           topNumber bottomNumber)
-  (import (only (rnrs base) define quote))
+  (import (only (rnrs base) define quote integer->char)
+          (chezscheme))
 
-  (define topInt 'Data.Bounded:topInt-NOT-DEFINED)
-  (define bottomInt 'Data.Bounded:bottomInt-NOT-DEFINED)
+  (define topInt (most-positive-fixnum))
+  (define bottomInt (most-negative-fixnum))
 
-  (define topChar 'Data.Bounded:topChar-NOT-DEFINED)
-  (define bottomChar 'Data.Bounded:bottomChar-NOT-DEFINED)
+  (define topChar (integer->char 65535))
+  (define bottomChar (integer->char 0))
 
-  (define topNumber 'Data.Bounded:topNumber-NOT-DEFINED)
-  (define bottomNumber 'Data.Bounded:bottomNumber-NOT-DEFINED)
+  (define topNumber +inf.0)
+  (define bottomNumber -inf.0)
 
 )

@@ -2,11 +2,12 @@
 
 (library (Data.Functor foreign)
   (export arrayMap)
-  (import (only (rnrs base) define lambda error))
+  (import (only (rnrs base) define lambda)
+          (prefix (purs runtime srfi :214) srfi:214:))
 
   (define arrayMap
     (lambda (f)
       (lambda (arr)
-        (error #f "Data.Functor:arrayMap not implemented."))))
+        (srfi:214:flexvector-map f arr))))
 
 )

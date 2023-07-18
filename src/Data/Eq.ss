@@ -7,37 +7,38 @@
           eqCharImpl
           eqStringImpl
           eqArrayImpl)
-  (import (only (rnrs base) define lambda error))
+  (import (chezscheme))
+  (import (only (rnrs base) define lambda)
+          (prefix (purs runtime srfi :214) srfi:214:))
 
   (define eqBooleanImpl
     (lambda (r1)
       (lambda (r2)
-        (error #f "Data.Eq:eqBooleanImpl not implemented."))))
+        (eq? r1 r2))))
 
   (define eqIntImpl
     (lambda (r1)
       (lambda (r2)
-        (error #f "Data.Eq:eqIntImpl not implemented."))))
+        (= r1 r2))))
 
   (define eqNumberImpl
     (lambda (r1)
       (lambda (r2)
-        (error #f "Data.Eq:eqNumberImpl not implemented."))))
+        (= r1 r2))))
 
   (define eqCharImpl
     (lambda (r1)
       (lambda (r2)
-        (error #f "Data.Eq:eqCharImpl not implemented."))))
+        (char=? r1 r2))))
 
   (define eqStringImpl
     (lambda (r1)
       (lambda (r2)
-        (error #f "Data.Eq:eqStringImpl not implemented."))))
+        (string=? r1 r2))))
 
   (define eqArrayImpl
     (lambda (f)
       (lambda (xs)
         (lambda (ys)
-          (error #f "Data.Eq:eqArrayImpl is not implemented.")))))
-
+          (srfi:214:flexvector=? (lambda (x y) ((f x) y)) xs ys)))))
 )

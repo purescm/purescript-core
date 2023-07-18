@@ -2,11 +2,12 @@
 
 (library (Control.Apply foreign)
   (export arrayApply)
-  (import (only (rnrs base) define lambda error))
+  (import (only (rnrs base) define lambda)
+          (prefix (purs runtime srfi :214) srfi:214:))
 
   (define arrayApply
     (lambda (fs)
       (lambda (xs)
-        (error #f "Control.Apply:arrayApply not implemented."))))
+        (srfi:214:flexvector-map (lambda (f x) (f x)) fs xs))))
 
 )
