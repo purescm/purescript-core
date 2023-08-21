@@ -8,9 +8,8 @@
           showArrayImpl
           cons
           join)
-  (import (only (rnrs base) define lambda let + = cond else
+  (import (only (rnrs base) define lambda let + = cond else if 
                             string number->string string-append)
-          (only (rnrs control) do)
           (prefix (purs runtime lib) rt:)
           (prefix (purs runtime srfi :214) srfi:214:))
 
@@ -38,9 +37,9 @@
         (else
           (let recur ([i 1]
                       [buffer (rt:array-ref xs 0)])
-            (cond
-              [(= len i) buffer]
-              (else (recur (+ i 1) (string-append buffer separator (rt:array-ref xs i))))))))))
+            (if (= len i)
+              buffer
+              (recur (+ i 1) (string-append buffer separator (rt:array-ref xs i)))))))))
 
   (define showArrayImpl
     (lambda (f)

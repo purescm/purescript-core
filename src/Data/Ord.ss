@@ -67,18 +67,17 @@
         (lambda (ys)
           (let ([xlen (srfi:214:flexvector-length xs)]
                 [ylen (srfi:214:flexvector-length ys)])
-             (let loop ([xsi 0] [ysi 0])
-               (cond
-                 [(or (= xsi xlen) (= ysi ylen))
-                    (cond
-                      [(= xlen ylen) 0]
-                      [(> xlen ylen) -1]
-                      (else 1))]
-                 [else
-                   (let ([o ((f (srfi:214:flexvector-ref xs xsi)) (srfi:214:flexvector-ref ys ysi))])
-                     (if (not (fx=? o 0))
-                       o
-                       (loop
-                         (+ xsi 1)
-                         (+ ysi 1))))])))))))
+             (let loop ([xsi 0]
+                        [ysi 0])
+               (if (or (= xsi xlen) (= ysi ylen))
+                 (cond
+                   [(= xlen ylen) 0]
+                   [(> xlen ylen) -1]
+                   (else 1))
+                 (let ([o ((f (srfi:214:flexvector-ref xs xsi)) (srfi:214:flexvector-ref ys ysi))])
+                   (if (not (fx=? o 0))
+                     o
+                     (loop
+                       (+ xsi 1)
+                       (+ ysi 1)))))))))))
 )
