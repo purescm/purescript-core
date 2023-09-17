@@ -5,26 +5,33 @@
           unsafeGet
           unsafeSet
           unsafeDelete)
-  (import (only (rnrs base) define lambda error))
+  (import (only (rnrs base) define lambda let)
+          (prefix (purs runtime lib) rt:)
+          (prefix (purs runtime srfi :125) srfi:125:))
 
   (define unsafeHas
     (lambda (label)
       (lambda (rec)
-        (error #f "Record.Unsafe:unsafeHas not implemented."))))
+        (srfi:125:hash-table-contains? rec label))))
 
   (define unsafeGet
     (lambda (label)
       (lambda (rec)
-        (error #f "Record.Unsafe:unsafeGet not implemented."))))
+        (rt:object-ref rec label))))
 
   (define unsafeSet
     (lambda (label)
-      (lambda (rec)
-        (error #f "Record.Unsafe:unsafeSet not implemented."))))
+      (lambda (value)
+        (lambda (rec)
+          (let ([rec-copy (rt:object-copy rec)])
+            (rt:object-set! rec-copy label value)
+            rec-copy)))))
 
   (define unsafeDelete
     (lambda (label)
       (lambda (rec)
-        (error #f "Record.Unsafe:unsafeDelete not implemented."))))
+        (let ([rec-copy (rt:object-copy rec)])
+          (srfi:125:hash-table-delete! rec-copy label)
+          rec-copy))))
 
 )
