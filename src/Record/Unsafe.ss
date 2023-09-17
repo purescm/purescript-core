@@ -31,7 +31,7 @@
     (lambda (label)
       (lambda (rec)
         (let ([rec-copy (rt:object-copy rec)])
-            (srfi:125:hash-table-delete! rec-copy label)
-            rec-copy))))
+          (srfi:125:hash-table-delete! rec-copy label)
+          rec-copy))))
 
 )
