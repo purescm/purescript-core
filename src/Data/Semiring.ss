@@ -5,26 +5,27 @@
           intMul
           numAdd
           numMul)
-  (import (only (rnrs base) define lambda error))
+  (import (only (rnrs base) define lambda)
+          (chezscheme))
 
   (define intAdd
     (lambda (x)
       (lambda (y)
-        (error #f "Data.Semiring:intAdd not implemented."))))
+        (fx+ x y))))
 
   (define intMul
     (lambda (x)
       (lambda (y)
-        (error #f "Data.Semiring:intMul not implemented."))))
+        (fx* x y))))
 
   (define numAdd
     (lambda (n1)
       (lambda (n2)
-        (error #f "Data.Semiring:numAdd not implemented."))))
+        (fl+ n1 n2))))
 
   (define numMul
     (lambda (n1)
       (lambda (n2)
-        (error #f "Data.Semiring:numMul not implemented."))))
+        (fl* n1 n2))))
 
 )
