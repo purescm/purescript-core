@@ -1,10 +1,11 @@
 module Test.Main where
 
 import Prelude
+import Effect (Effect)
 import Data.HeytingAlgebra (ff, tt, implies)
 import Data.Ord (abs)
 import Test.Data.Generic.Rep (testGenericRep)
-import Test.Utils (Effect, assert)
+import Test.Utils (assert)
 
 main :: Effect Unit
 main = do
