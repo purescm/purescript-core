@@ -1,5 +1,5 @@
 (library (Test.Utils foreign)
-  (export throwErr pureE bindE)
+  (export throwErr)
   (import (chezscheme))
 
   (define throwErr
@@ -9,12 +9,4 @@
           (make-serious-condition)
           (make-message-condition msg)))))
 
-  (define pureE
-    (lambda (a) (lambda () a)))
-
-  (define bindE
-    (lambda (a)
-      (lambda (f)
-        (lambda ()
-          ((f (a)))))))
   )
