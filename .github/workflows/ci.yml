@@ -25,6 +25,14 @@ jobs:
       - name: Build source
         run: npm run build
 
+      - name: Cache PureScript dependencies
+        uses: actions/cache@v2
+        with:
+          key: ${{ runner.os }}-spago-${{ hashFiles('**/spago.yaml') }}
+          path: |
+            .spago
+            output
+
       - name: Run tests
         run: |
           npm run test
