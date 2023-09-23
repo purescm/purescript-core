@@ -20,7 +20,7 @@ jobs:
           sudo apt install chezscheme
 
       - name: Setup PureScript dependencies
-        run: npm i --global purescript@0.15.10 purs-tidy@latest spago@next purescript-psa@latest purescm@next
+        run: npm i --global purescript@0.15.10 spago@next purescm@next
 
       - name: Build source
         run: npm run build

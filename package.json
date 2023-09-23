@@ -3,8 +3,5 @@
   "scripts": {
     "build": "spago build",
     "test": "spago build && purescm bundle-app --main Test.Main && scheme --program output/main"
-  },
-  "devDependencies": {
-    "purescm": "1.0.0"
   }
 }
