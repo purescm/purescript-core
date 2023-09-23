@@ -11,7 +11,8 @@ import Data.Ring.Generic as GRing
 import Data.Semiring.Generic as GSemiring
 import Data.Show.Generic as GShow
 import Data.HeytingAlgebra (ff, tt, implies)
-import Test.Utils (AlmostEff, assert)
+import Effect (Effect)
+import Test.Utils (assert)
 
 data List a = Nil | Cons { head :: a, tail :: List a }
 
@@ -118,7 +119,7 @@ instance heytingAlgebraB1 :: HeytingAlgebra B1 where
 
 instance booleanAlgebraB1 :: BooleanAlgebra B1
 
-testGenericRep :: AlmostEff
+testGenericRep :: Effect Unit
 testGenericRep = do
   assert "Checking show" $
     show (cons 1 (cons 2 Nil)) == "(Cons { head: 1, tail: (Cons { head: 2, tail: Nil }) })"

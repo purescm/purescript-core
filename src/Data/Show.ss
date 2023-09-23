@@ -8,11 +8,11 @@
           showArrayImpl
           cons
           join)
-  (import (only (rnrs base) define lambda let* quote begin if set!
-                            + - < >=
-                            error number->string string-append
-                            vector-ref vector-length)
-          (only (rnrs control) do))
+  (import (only (rnrs base) define lambda let + = cond else if 
+                            string number->string string-append)
+          (only (chezscheme) format)
+          (prefix (purs runtime lib) rt:)
+          (prefix (purs runtime srfi :214) srfi:214:))
 
   (define showIntImpl
     (lambda (n)
@@ -24,34 +24,37 @@
 
   (define showCharImpl
     (lambda (c)
-      (error #f "Data.Show:showCharImpl not implemented.")))
+      (format "~s" c)))
 
   (define showStringImpl
     (lambda (s)
-      (error #f "Data.Show:showStringImpl not implemented.")))
+      (format "~s" s)))
+
+  (define (string-join xs separator)
+    (let ([len (rt:array-length xs)])
+      (cond
+        [(= len 0) ""]
+        [(= len 1) (rt:array-ref xs 0)]
+        (else
+          (let recur ([i 1]
+                      [buffer (rt:array-ref xs 0)])
+            (if (= len i)
+              buffer
+              (recur (+ i 1) (string-append buffer separator (rt:array-ref xs i)))))))))
 
   (define showArrayImpl
     (lambda (f)
       (lambda (xs)
-        (let* ([buffer  "["]
-               [append! (lambda (str) (set! buffer (string-append buffer str)))])
-          (do ([i 0 (+ i 1)])
-              ((>= i (vector-length xs)) '())
-            (begin 
-              (append! (f (vector-ref xs i)))
-              (if (< i (- (vector-length xs) 1))
-                  (append! ","))))
-          (append! "]")
-          buffer))))
+        (string-append "[" (string-join (srfi:214:flexvector-map f xs) ",") "]"))))
 
   (define cons
     (lambda (head)
       (lambda (tail)
-        (error #f "Data.Show:cons not implemented."))))
+        (srfi:214:flexvector-append (rt:make-array head) tail))))
 
   (define join
     (lambda (separator)
       (lambda (xs)
-        (error #f "Data.Show:join not implemented."))))
+        (string-join xs separator))))
 
 )

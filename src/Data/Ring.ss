@@ -3,16 +3,17 @@
 (library (Data.Ring foreign)
   (export intSub
           numSub)
-  (import (only (rnrs base) define lambda error))
+  (import (only (rnrs base) define lambda)
+          (chezscheme))
 
   (define intSub
     (lambda (x)
       (lambda (y)
-        (error #f "Data.Ring:intSub not implemented."))))
+        (fx- x y))))
 
   (define numSub
     (lambda (x)
       (lambda (y)
-        (error #f "Data.Ring:numSub not implemented."))))
+        (fl- x y))))
 
 )

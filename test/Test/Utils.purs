@@ -2,9 +2,9 @@ module Test.Utils where
 
 import Prelude
 
-type AlmostEff = Unit -> Unit
+import Effect (Effect)
 
-assert :: String -> Boolean -> AlmostEff
-assert msg condition = if condition then const unit else throwErr msg
+assert :: String -> Boolean -> Effect Unit
+assert msg condition = if condition then pure unit else throwErr msg
 
-foreign import throwErr :: String -> AlmostEff
+foreign import throwErr :: String -> Effect Unit

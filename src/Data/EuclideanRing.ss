@@ -5,24 +5,28 @@
           intDiv
           intMod
           numDiv)
-  (import (only (rnrs base) define lambda error))
+  (import (only (rnrs base) define lambda if)
+          (chezscheme))
 
   (define intDegree
     (lambda (x)
-      (error #f "Data.EuclideanRing:intDegree not implemented")))
+      (fxmin (fxabs x) (most-positive-fixnum))))
 
   (define intDiv
     (lambda (x)
       (lambda (y)
-        (error #f "Data.EuclideanRing:intDiv not implemented"))))
+        (if (fx= y 0)
+          0
+          (fx/ x y)))))
 
   (define intMod
     (lambda (x)
       (lambda (y)
-        (error #f "Data.EuclideanRing:intMod not implemented"))))
+        (if (fx= y 0) 0
+          (fxmod x y)))))
 
   (define numDiv
     (lambda (n1)
       (lambda (n2)
-        (error #f "Data.EuclideanRing:numDiv not implemented"))))
+        (fl/ n1 n2))))
 )

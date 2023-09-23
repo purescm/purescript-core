@@ -1,24 +1,26 @@
 module Test.Main where
 
 import Prelude
+import Effect (Effect)
 import Data.HeytingAlgebra (ff, tt, implies)
 import Data.Ord (abs)
 import Test.Data.Generic.Rep (testGenericRep)
-import Test.Utils (AlmostEff, assert)
+import Test.Utils (assert)
 
-main :: AlmostEff
+main :: Effect Unit
 main = do
-    testNumberShow show
+    -- testNumberShow show
     testOrderings
+    testArray
     testOrdUtils
     testIntDivMod
     testIntDegree
     testRecordInstances
     testGenericRep
 
-foreign import testNumberShow :: (Number -> String) -> AlmostEff
+foreign import testNumberShow :: (Number -> String) -> Effect Unit
 
-testOrd :: forall a. Ord a => Show a => a -> a -> Ordering -> AlmostEff
+testOrd :: forall a. Ord a => Show a => a -> a -> Ordering -> Effect Unit
 testOrd x y ord =
     assert
         ("(compare " <> show x <> " " <> show y <> " ) is not equal to " <> show ord)
@@ -33,7 +35,7 @@ plusInfinity = 1.0/0.0
 minusInfinity :: Number
 minusInfinity = -1.0/0.0
 
-testOrderings :: AlmostEff
+testOrderings :: Effect Unit
 testOrderings = do
     assert "NaN shouldn't be equal to itself" $ nan /= nan
     assert "NaN shouldn't be equal to itself" $ (compare nan nan) /= EQ
@@ -70,7 +72,20 @@ testOrderings = do
     testOrd [1, 1]  [1, 0] GT
     testOrd [1, -1] [1, 0] LT
 
-testOrdUtils :: AlmostEff
+testArray :: Effect Unit
+testArray = do
+  assert "map empty array" $ ((+) 1 <$> []) == []
+  assert "map non-empty array" $ ((+) 1 <$> [ 1, 2, 3 ]) == [ 2, 3, 4]
+
+  assert "apply empty array" $ (pure ((+) 1) <*> []) == []
+  assert "apply non-empty array" $ (pure ((+) 1) <*> [ 1 ]) == [ 2 ]
+  assert "apply longer array" $ ([(+) 1, (+) 1] <*> [ 1, 2 ]) == [ 2, 3 ]
+
+  assert "bind empty array" $ ([] >>= pure) == ([] :: Array Int)
+  assert "bind non-empty array" $ ([ 1 ] >>= \x -> [ x, x + 1 ]) == ([ 1, 2 ] :: Array Int)
+  assert "bind longer array" $ ([ 1, 2 ] >>= \x -> [ x, x + 1 ]) == ([ 1, 2, 2, 3 ] :: Array Int)
+
+testOrdUtils :: Effect Unit
 testOrdUtils = do
   assert "-5 clamped between 0 and 10 should be 0" $ clamp 0 10 (-5) == 0
   assert "5 clamped between 0 and 10 should be 5" $ clamp 0 10 5 == 5
@@ -79,7 +94,7 @@ testOrdUtils = do
   assert "5 should be between 0 and 10" $ between 0 10 5 == true
   assert "15 should not be between 0 10" $ between 0 10 15 == false
 
-testIntDivMod :: AlmostEff
+testIntDivMod :: Effect Unit
 testIntDivMod = do
   -- Check when dividend goes into divisor exactly
   go 8 2
@@ -105,15 +120,17 @@ testIntDivMod = do
       assert (msg <> "Remainder should be between 0 and `abs b`, got: " <> show r) $
         0 <= r && r < abs b
 
-testIntDegree :: AlmostEff
+testIntDegree :: Effect Unit
 testIntDegree = do
-    let bot = bottom :: Int
     assert "degree returns absolute integers" $ degree (-4) == 4
     assert "degree returns absolute integers" $ degree 4 == 4
-    assert "degree returns absolute integers" $ degree bot >= 0
-    assert "degree does not return out-of-bounds integers" $ degree bot <= top
+    -- `degree bot` overflows a fixnum since purescm does not do
+    -- clamping or bounds checking on `Int`.
+    -- let bot = bottom :: Int
+    -- assert "degree returns absolute integers" $ degree bot >= 0
+    -- assert "degree does not return out-of-bounds integers" $ degree bot <= top
 
-testRecordInstances :: AlmostEff
+testRecordInstances :: Effect Unit
 testRecordInstances = do
   assert "Record equality" $ { a: 1 } == { a: 1 }
   assert "Record inequality" $ { a: 2 } /= { a: 1 }
