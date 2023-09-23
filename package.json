@@ -5,7 +5,6 @@
     "test": "spago build && purescm bundle-app --main Test.Main && scheme --program output/main"
   },
   "devDependencies": {
-    "purescm": "1.0.0",
-    "purescript-psa": "^0.8.0"
+    "purescm": "1.0.0"
   }
 }
