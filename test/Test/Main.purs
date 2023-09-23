@@ -122,9 +122,11 @@ testIntDivMod = do
 
 testIntDegree :: Effect Unit
 testIntDegree = do
-    -- let bot = bottom :: Int
     assert "degree returns absolute integers" $ degree (-4) == 4
     assert "degree returns absolute integers" $ degree 4 == 4
+    -- `degree bot` overflows a fixnum since purescm does not do
+    -- clamping or bounds checking on `Int`.
+    -- let bot = bottom :: Int
     -- assert "degree returns absolute integers" $ degree bot >= 0
     -- assert "degree does not return out-of-bounds integers" $ degree bot <= top
 
