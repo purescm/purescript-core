@@ -11,8 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: purescript-contrib/setup-purescript@main
-
       - uses: actions/setup-node@v1
         with:
           node-version: "18"
@@ -20,7 +18,9 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt install chezscheme
-          npm install spago@next
+
+      - name: Setup PureScript dependencies
+        run: npm i --global purescript@0.15.10 purs-tidy@latest spago@latest purescript-psa@latest
 
       - name: Build source
         run: npm run build
