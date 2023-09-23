@@ -19,7 +19,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt install chezscheme
+          sudo apt install chezscheme
           npm install spago@next
 
       - name: Build source
