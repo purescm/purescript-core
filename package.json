@@ -2,6 +2,6 @@
   "private": true,
   "scripts": {
     "build": "spago build",
-    "test": "spago build && purescm bundle-app --main Test.Main && scheme --program output/main"
+    "test": "spago build && purescm run --main Test.Main"
   }
 }
