@@ -1,0 +1,17 @@
+package:
+  name: control
+  dependencies:
+    - prelude
+    - newtype
+  test:
+    main: Test.Main
+    dependencies:
+      - effect
+workspace:
+  backend:
+    cmd: purescm
+    args:
+      - build
+  package_set:
+    url: https://raw.githubusercontent.com/purescm/purescm/8270ce4b1440e0a5ef24c305d66e724cbfd40cf6/package-sets/1.0.0.json
+    hash: sha256-TYqHZC4HgihXfU/1utOM6BG6FXuENyzkf8lRObClgbE=
