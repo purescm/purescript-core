@@ -5,5 +5,7 @@
 /.psci*
 /src/.webpack.js
 
-# PureScheme
+# purescm
 !/.dir-locals.el
+
+/.spago
