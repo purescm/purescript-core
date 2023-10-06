@@ -5,22 +5,28 @@
           toFixedNative
           toExponentialNative
           toString)
-  (import (only (rnrs base) define lambda error))
+  (import (only (rnrs base) define lambda string-append number->string)
+          (only (chezscheme) format))
 
+  ;; TODO add a proper implementation
   (define toPrecisionNative
-    (lambda (num)
-      (error #f "Data.Number.Format:toPrecisionNative not implemented.")))
+    (lambda (d)
+      (lambda (num)
+        (format "~d" num))))
 
   (define toFixedNative
-    (lambda (num)
-      (error #f "Data.Number.Format:toFixedNative not implemented.")))
+    (lambda (d)
+      (lambda (num)
+        (format (string-append "~," (number->string d) "F") num))))
 
+  ;; TODO add a proper implementation
   (define toExponentialNative
-    (lambda (num)
-      (error #f "Data.Number.Format:toExponentialNative not implemented.")))
+    (lambda (d)
+      (lambda (num)
+        (format "~d" num))))
 
   (define toString
     (lambda (num)
-      (error #f "Data.Number.Format:toString not implemented.")))
+      (format "~d" num)))
 
 )
