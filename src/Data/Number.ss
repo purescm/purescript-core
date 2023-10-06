@@ -27,10 +27,10 @@
           tan
           trunc
           )
-  (import (only (rnrs base) define lambda error quote nan? finite? cond else)
+  (import (only (rnrs base) define lambda nan? finite? cond else let if and string->number)
           (only (chezscheme) flabs flacos flasin flatan flceiling flcos flexp
                              flfloor fllog flmax flmin flexpt flmod flround
-                             fl= fl< flsin flsqrt fltan fltruncate))
+                             fl= fl< flsin flsqrt fltan fltruncate flonum?))
 
   (define nan +nan.0)
 
@@ -42,7 +42,10 @@
 
   (define fromStringImpl
     (lambda (str isFinite just nothing)
-      (error #f "Data.Number:fromStringImpl not implemented.")))
+      (let ([num (string->number str)])
+        (if (and (flonum? num) (isFinite num))
+          (just num)
+          nothing))))
 
   (define abs flabs)
 
