@@ -12,7 +12,7 @@
           debug)
   (import (only (rnrs base) define lambda begin)
           (prefix (rnrs base) scm:)
-          (only (rnrs io ports) current-output-port put-string)
+          (only (rnrs io ports) current-output-port current-error-port put-string)
           (only (rnrs io simple) newline))
 
   (define log
@@ -25,17 +25,23 @@
   (define warn
     (lambda (s)
       (lambda ()
-        (scm:error #f "Effect.Console:warn not implemented."))))
+        (begin 
+          (put-string (current-error-port) s)
+          (newline (current-error-port))))))
 
   (define error
     (lambda (s)
       (lambda ()
-        (scm:error #f "Effect.Console:error not implemented."))))
+        (begin 
+          (put-string (current-error-port) s)
+          (newline (current-error-port))))))
 
   (define info
     (lambda (s)
       (lambda ()
-        (scm:error #f "Effect.Console:info not implemented."))))
+        (begin 
+          (put-string (current-output-port) s)
+          (newline (current-output-port))))))
 
   (define time
     (lambda (s)
@@ -59,5 +65,7 @@
   (define debug
     (lambda (s)
       (lambda ()
-        (scm:error #f "Effect.Console:debug not implemented."))))
+        (begin 
+          (put-string (current-output-port) s)
+          (newline (current-output-port))))))
 )
