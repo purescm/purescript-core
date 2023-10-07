@@ -8,41 +8,39 @@
           shr
           zshr
           complement)
-  (import (only (rnrs base) define lambda error))
+  (import (only (rnrs base) define lambda)
+          (only (chezscheme) fxlogand fxlogior fxlogxor fxsll fxsra fxsrl fxnot))
 
   (define and
     (lambda (n1)
       (lambda (n2)
-        (error #f "Data.Int.Bits:and not implemented."))))
+        (fxlogand n1 n2))))
 
   (define or
     (lambda (n1)
       (lambda (n2)
-        (error #f "Data.Int.Bits:or not implemented."))))
+        (fxlogior n1 n2))))
 
   (define xor
     (lambda (n1)
       (lambda (n2)
-        (error #f "Data.Int.Bits:xor not implemented."))))
+        (fxlogxor n1 n2))))
 
   (define shl
     (lambda (n1)
       (lambda (n2)
-        (error #f "Data.Int.Bits:shl not implemented."))))
+        (fxsll n1 n2))))
 
   (define shr
     (lambda (n1)
       (lambda (n2)
-        (error #f "Data.Int.Bits:shr not implemented."))))
+        (fxsra n1 n2))))
 
   (define zshr
     (lambda (n1)
       (lambda (n2)
-        (error #f "Data.Int.Bits:zshr not implemented."))))
+        (fxsrl n1 n2))))
 
-  (define complement
-    (lambda (n1)
-      (lambda (n2)
-        (error #f "Data.Int.Bits:complement not implemented."))))
+  (define complement fxnot)
 
 )
