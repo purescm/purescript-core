@@ -72,7 +72,7 @@ testInt = do
   assert $ fromString "0.1" == Nothing
   assert $ fromString "42.000000000000001" == Nothing
 
-  -- NOTE purescm _does_ support ints outside of 32-bit range
+  -- TODO these literals are not supported by the current corefn json format
   -- log "fromString should fail to read integers outside of the int32 range"
   -- assert $ fromString "2147483648" == Nothing
   -- assert $ fromString "-2147483649" == Nothing
