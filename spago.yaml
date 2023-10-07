@@ -1,0 +1,20 @@
+package:
+  name: integers
+  dependencies:
+    - maybe
+    - numbers
+    - prelude
+  test:
+    main: Test.Main
+    dependencies:
+      - assert
+      - console
+      - partial
+workspace:
+  backend:
+    cmd: purescm
+    args:
+      - build
+  package_set:
+    url: https://raw.githubusercontent.com/purescm/purescm/22e833b1ca0b68f7477e0b634dba57babd27ee0a/package-sets/1.0.0.json
+    hash: sha256-mTGmkX6TGgoiCkChumGc3MVpp9BwumGa2L55q4RD77E=
