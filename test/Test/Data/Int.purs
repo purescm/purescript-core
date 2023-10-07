@@ -72,9 +72,10 @@ testInt = do
   assert $ fromString "0.1" == Nothing
   assert $ fromString "42.000000000000001" == Nothing
 
-  log "fromString should fail to read integers outside of the int32 range"
-  assert $ fromString "2147483648" == Nothing
-  assert $ fromString "-2147483649" == Nothing
+  -- NOTE purescm _does_ support ints outside of 32-bit range
+  -- log "fromString should fail to read integers outside of the int32 range"
+  -- assert $ fromString "2147483648" == Nothing
+  -- assert $ fromString "-2147483649" == Nothing
 
   log "fromString should fail to read strings with other non-integer values"
   assert $ fromString "" == Nothing
@@ -104,10 +105,10 @@ testInt = do
   assert $ fromStringAs hexadecimal "1g" == Nothing
 
   log "toStringAs should transform to a different base"
-  assert $ toStringAs hexadecimal 255 == "ff"
+  assert $ toStringAs hexadecimal 255 == "FF"
   assert $ toStringAs binary 4 == "100"
   assert $ toStringAs binary (-4) == "-100"
-  assert $ toStringAs hexadecimal 2147483647 == "7fffffff"
+  assert $ toStringAs hexadecimal 2147483647 == "7FFFFFFF"
 
   log "zero is even"
   assert $ even 0 == true
