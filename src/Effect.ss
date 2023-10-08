@@ -9,7 +9,8 @@
           foreachE)
   (import (only (rnrs base) define lambda error quote)
           (only (rnrs arithmetic fixnums) fx+ fx>=?)
-          (only (rnrs control) do))
+          (only (rnrs control) do)
+          (prefix (purs runtime srfi :214) srfi:214:))
 
   (define pureE
     (lambda (a)
@@ -46,6 +47,6 @@
     (lambda (as)
       (lambda (f)
         (lambda ()
-          (error #f "Effect:foreacE not implemented")))))
+          (srfi:214:flexvector-for-each (lambda (x) ((f x))) as)))))
 
 )
