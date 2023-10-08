@@ -1,0 +1,12 @@
+package:
+  name: effect
+  dependencies:
+    - prelude
+workspace:
+  backend:
+    cmd: purescm
+    args:
+      - build
+  package_set:
+    url: https://raw.githubusercontent.com/purescm/purescm/25fedb4457e92365ddcbd7cbadb2eed6a5de810b/package-sets/1.0.0.json
+    hash: sha256-mTGmkX6TGgoiCkChumGc3MVpp9BwumGa2L55q4RD77E=
