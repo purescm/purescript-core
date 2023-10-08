@@ -8,6 +8,7 @@ import Data.Bitraversable (class Bitraversable, bisequenceDefault, bitraverse, b
 import Data.Foldable (class Foldable, find, findMap, fold, indexl, indexr, foldMap, foldMapDefaultL, foldMapDefaultR, foldl, foldlDefault, foldr, foldrDefault, length, maximum, maximumBy, minimum, minimumBy, null, surroundMap)
 import Data.FoldableWithIndex (class FoldableWithIndex, findWithIndex, findMapWithIndex, foldMapWithIndex, foldMapWithIndexDefaultL, foldMapWithIndexDefaultR, foldlWithIndex, foldlWithIndexDefault, foldrWithIndex, foldrWithIndexDefault, surroundMapWithIndex)
 import Data.Function (on)
+import Data.Function.Uncurried (Fn0, mkFn0)
 import Data.FunctorWithIndex (class FunctorWithIndex, mapWithIndex)
 import Data.Int (toNumber, pow)
 import Data.Maybe (Maybe(..))
@@ -20,7 +21,6 @@ import Data.Traversable (class Traversable, sequenceDefault, traverse, sequence,
 import Data.TraversableWithIndex (class TraversableWithIndex, traverseWithIndex)
 import Effect (Effect, foreachE)
 import Effect.Console (log)
-import Performance.Minibench (benchWith)
 import Test.Assert (assert, assert')
 import Unsafe.Coerce (unsafeCoerce)
 
@@ -48,7 +48,7 @@ foldableLength :: forall f a. Foldable f => f a -> Int
 foldableLength = unwrap <<< foldMap (const (Additive 1))
 
 -- Ensure that a value is evaluated 'lazily' by treating it as an Eff action.
-deferEff :: forall a. (Unit -> a) -> Effect a
+deferEff :: forall a. Fn0 a -> Effect a
 deferEff = unsafeCoerce
 
 main :: Effect Unit
@@ -316,7 +316,7 @@ testTraversableFWith f n = do
   assert' "traverse pure == pure (Array)" $ traverse pure dat == [dat]
 
   when (len <= 10) do
-    result <- deferEff \_ -> traverse (\x -> [x,x]) dat == arrayReplicate (pow 2 len) dat
+    result <- deferEff $ mkFn0 \_ -> traverse (\x -> [x,x]) dat == arrayReplicate (pow 2 len) dat
     assert' "traverse with Array as underlying applicative" result
 
   assert' "traverse (const Nothing) == const Nothing" $
@@ -576,20 +576,21 @@ instance bitraversableBSD :: Bitraversable BisequenceDefault where
   bisequence m           = bisequenceDefault m
 
 
-benchmarkDefaultFolds :: Effect Unit
-benchmarkDefaultFolds = do
-  let 
-    sm = arrayFrom1UpTo 1_000
-    m = arrayFrom1UpTo 10_000
-    lg = arrayFrom1UpTo 100_000
-    xl = arrayFrom1UpTo 1_000_000
-
-  log "\nbenching 1,000"
-  benchWith 1000 $ \_ -> foldrDefault (+) 0 sm
-  log "\nbenching 10,000"
-  benchWith 1000 $ \_ -> foldrDefault (+) 0 m
-  log "\nbenching 100,000"
-  benchWith 100 $ \_ -> foldrDefault (+) 0 lg
-  log "\nbenching 1,000,000"
-  benchWith 50 $ \_ -> foldrDefault (+) 0 xl
+-- TODO port minibench for `purescm`
+-- benchmarkDefaultFolds :: Effect Unit
+-- benchmarkDefaultFolds = do
+--   let 
+--     sm = arrayFrom1UpTo 1_000
+--     m = arrayFrom1UpTo 10_000
+--     lg = arrayFrom1UpTo 100_000
+--     xl = arrayFrom1UpTo 1_000_000
+-- 
+--   log "\nbenching 1,000"
+--   benchWith 1000 $ \_ -> foldrDefault (+) 0 sm
+--   log "\nbenching 10,000"
+--   benchWith 1000 $ \_ -> foldrDefault (+) 0 m
+--   log "\nbenching 100,000"
+--   benchWith 100 $ \_ -> foldrDefault (+) 0 lg
+--   log "\nbenching 1,000,000"
+--   benchWith 50 $ \_ -> foldrDefault (+) 0 xl
 
