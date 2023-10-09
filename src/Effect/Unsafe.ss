@@ -2,10 +2,10 @@
 
 (library (Effect.Unsafe foreign)
   (export unsafePerformEffect)
-  (import (only (rnrs base) define lambda error))
+  (import (only (rnrs base) define lambda))
 
   (define unsafePerformEffect
     (lambda (f)
-      (error #f "Effect.Unsafe:unsafePerformeffect not implemented.")))
+      (f)))
 
 )

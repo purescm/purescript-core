@@ -7,7 +7,7 @@
           whileE
           forE
           foreachE)
-  (import (only (rnrs base) define lambda error quote)
+  (import (only (rnrs base) define lambda quote)
           (only (rnrs arithmetic fixnums) fx+ fx>=?)
           (only (rnrs control) do)
           (prefix (purs runtime srfi :214) srfi:214:))
@@ -26,13 +26,15 @@
   (define untilE
     (lambda (f)
       (lambda ()
-        (error #f "Effect:untilE not implemented"))))
+        (do () ((f))
+          'unit))))
 
   (define whileE
     (lambda (f)
       (lambda (a)
         (lambda ()
-          (error #f "Effect:whileE not implemented.")))))
+          (do () ((not (f)))
+            (a))))))
 
   (define forE
     (lambda (lo)

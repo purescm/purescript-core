@@ -10,57 +10,171 @@
           mkEffectFn7
           mkEffectFn8
           mkEffectFn9
-          mkEffectFn10)
-  (import (only (rnrs base) define lambda error))
+          mkEffectFn10
+          runEffectFn1
+          runEffectFn2
+          runEffectFn3
+          runEffectFn4
+          runEffectFn5
+          runEffectFn6
+          runEffectFn7
+          runEffectFn8
+          runEffectFn9
+          runEffectFn10)
+  (import (only (rnrs base) define lambda))
 
-  (define mkEffectFn1
+   (define mkEffectFn1
+     (lambda (fn)
+       (lambda (x)
+         (fn x))))
+ 
+   (define mkEffectFn2
+     (lambda (fn)
+       (lambda (a b)
+         ((fn a) b))))
+ 
+   (define mkEffectFn3
+     (lambda (fn)
+       (lambda (a b c)
+         (((fn a) b) c))))
+ 
+   (define mkEffectFn4
+     (lambda (fn)
+       (lambda (a b c d)
+         ((((fn a) b) c) d))))
+ 
+   (define mkEffectFn5
+     (lambda (fn)
+       (lambda (a b c d e)
+         (((((fn a) b) c) d) e))))
+ 
+   (define mkEffectFn6
+     (lambda (fn)
+       (lambda (a b c d e f)
+         ((((((fn a) b) c) d) e) f))))
+ 
+   (define mkEffectFn7
+     (lambda (fn)
+       (lambda (a b c d e f g)
+         (((((((fn a) b) c) d) e) f) g))))
+ 
+   (define mkEffectFn8
+     (lambda (fn)
+       (lambda (a b c d e f g h)
+         ((((((((fn a) b) c) d) e) f) g) h))))
+ 
+   (define mkEffectFn9
+     (lambda (fn)
+       (lambda (a b c d e f g h i)
+         (((((((((fn a) b) c) d) e) f) g) h) i))))
+ 
+   (define mkEffectFn10
+     (lambda (fn)
+       (lambda (a b c d e f g h i j)
+         ((((((((((fn a) b) c) d) e) f) g) h) i) j))))
+ 
+  (define runEffectFn1
     (lambda (fn)
-      (lambda (x)
-        (error #f "Effect.Uncurried:mkEffectFn1"))))
+      (lambda (a)
+        (lambda ()
+          (fn a)))))
 
-  (define mkEffectFn2
+  (define runEffectFn2
     (lambda (fn)
-      (lambda (a b)
-        (error #f "Effect.Uncurried:mkEffectFn2"))))
+      (lambda (a)
+        (lambda (b)
+          (lambda ()
+            (fn a b))))))
 
-  (define mkEffectFn3
+  (define runEffectFn3
     (lambda (fn)
-      (lambda (a b c)
-        (error #f "Effect.Uncurried:mkEffectFn3"))))
+      (lambda (a)
+        (lambda (b)
+          (lambda (c)
+            (lambda ()
+              (fn a b c)))))))
 
-  (define mkEffectFn4
+  (define runEffectFn4
     (lambda (fn)
-      (lambda (a b c d)
-        (error #f "Effect.Uncurried:mkEffectFn4"))))
+      (lambda (a)
+        (lambda (b)
+          (lambda (c)
+            (lambda (d)
+              (lambda ()
+                (fn a b c d))))))))
 
-  (define mkEffectFn5
+  (define runEffectFn5
     (lambda (fn)
-      (lambda (a b c d e)
-        (error #f "Effect.Uncurried:mkEffectFn5"))))
+      (lambda (a)
+        (lambda (b)
+          (lambda (c)
+            (lambda (d)
+              (lambda (e)
+                (lambda ()
+                  (fn a b c d e)))))))))
 
-  (define mkEffectFn6
+  (define runEffectFn6
     (lambda (fn)
-      (lambda (a b c d e f)
-        (error #f "Effect.Uncurried:mkEffectFn6"))))
+      (lambda (a)
+        (lambda (b)
+          (lambda (c)
+            (lambda (d)
+              (lambda (e)
+                (lambda (f)
+                  (lambda ()
+                    (fn a b c d e f))))))))))
 
-  (define mkEffectFn7
+  (define runEffectFn7
     (lambda (fn)
-      (lambda (a b c d e f g)
-        (error #f "Effect.Uncurried:mkEffectFn7"))))
+      (lambda (a)
+        (lambda (b)
+          (lambda (c)
+            (lambda (d)
+              (lambda (e)
+                (lambda (f)
+                  (lambda (g)
+                    (lambda ()
+                      (fn a b c d e f g)))))))))))
 
-  (define mkEffectFn8
+  (define runEffectFn8
     (lambda (fn)
-      (lambda (a b c d e f g h)
-        (error #f "Effect.Uncurried:mkEffectFn8"))))
+      (lambda (a)
+        (lambda (b)
+          (lambda (c)
+            (lambda (d)
+              (lambda (e)
+                (lambda (f)
+                  (lambda (g)
+                    (lambda (h)
+                      (lambda ()
+                        (fn a b c d e f g h))))))))))))
 
-  (define mkEffectFn9
+  (define runEffectFn9
     (lambda (fn)
-      (lambda (a b c d e f g h i)
-        (error #f "Effect.Uncurried:mkEffectFn9"))))
+      (lambda (a)
+        (lambda (b)
+          (lambda (c)
+            (lambda (d)
+              (lambda (e)
+                (lambda (f)
+                  (lambda (g)
+                    (lambda (h)
+                      (lambda (i)
+                        (lambda ()
+                          (fn a b c d e f g h i)))))))))))))
 
-  (define mkEffectFn10
+  (define runEffectFn10
     (lambda (fn)
-      (lambda (a b c d e f g h i j)
-        (error #f "Effect.Uncurried:mkEffectFn10"))))
-
+      (lambda (a)
+        (lambda (b)
+          (lambda (c)
+            (lambda (d)
+              (lambda (e)
+                (lambda (f)
+                  (lambda (g)
+                    (lambda (h)
+                      (lambda (i)
+                        (lambda (j)
+                          (lambda ()
+                            (fn a b c d e f g h i j))))))))))))))
 )
