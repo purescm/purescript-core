@@ -31,3 +31,6 @@ workspace:
     effect:
       git: https://github.com/purescm/purescript-effect.git
       ref: abb3d8ab0ac534194f2d05f978167b8c48666484
+    prelude:
+      git: https://github.com/purescm/purescript-prelude.git
+      ref: ab7dfc91e44096254caae017c2fce12d50ae114a
