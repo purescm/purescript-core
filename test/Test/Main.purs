@@ -79,7 +79,7 @@ testArray = do
 
   assert "apply empty array" $ (pure ((+) 1) <*> []) == []
   assert "apply non-empty array" $ (pure ((+) 1) <*> [ 1 ]) == [ 2 ]
-  assert "apply longer array" $ ([(+) 1, (+) 1] <*> [ 1, 2 ]) == [ 2, 3 ]
+  assert "apply longer array" $ ([(+) 1, (+) 1] <*> [ 1, 2 ]) == [ 2, 3, 2, 3 ]
 
   assert "bind empty array" $ ([] >>= pure) == ([] :: Array Int)
   assert "bind non-empty array" $ ([ 1 ] >>= \x -> [ x, x + 1 ]) == ([ 1, 2 ] :: Array Int)
