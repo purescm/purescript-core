@@ -1,0 +1,21 @@
+package:
+  name: st
+  dependencies:
+    - partial
+    - prelude
+    - tailrec
+    - unsafe-coerce
+  test:
+    main: Test.Main
+    dependencies:
+      - assert
+      - console
+      - partial
+workspace:
+  backend:
+    cmd: purescm
+    args:
+      - build
+  package_set:
+    url: https://raw.githubusercontent.com/purescm/purescm/f38b86497b300103fe1a752b66e569b75feef78b/package-sets/1.0.0.json
+    hash: sha256-Eyrbvc7v1Sv7Wc4UBR0Rk/fY/rebHRJcTE6rX+F1/Zg=
