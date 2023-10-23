@@ -1,0 +1,32 @@
+package:
+  name: arrays
+  dependencies:
+    - bifunctors
+    - control
+    - foldable-traversable
+    - functions
+    - maybe
+    - nonempty
+    - partial
+    - prelude
+    - safe-coerce
+    - st
+    - tailrec
+    - tuples
+    - unfoldable
+    - unsafe-coerce
+  test:
+    main: Test.Main
+    dependencies:
+      - assert
+      - console
+      - const
+      - minibench
+workspace:
+  backend:
+    cmd: purescm
+    args:
+      - build
+  package_set:
+    url: https://raw.githubusercontent.com/purescm/purescm/c283d4308e66b4653a6babc9a4b4532f2636073a/package-sets/1.0.0.json
+    hash: sha256-nHbdwreTi2JUlz2KvzC/ac/uJUyeXiTc8uDFE0ptNkA=

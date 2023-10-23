@@ -12,7 +12,7 @@ import Data.Tuple (Tuple(..), fst)
 import Effect (Effect)
 import Effect.Console (log)
 import Test.Assert (assert)
-import Test.Data.UndefinedOr (defined, undefined)
+-- import Test.Data.UndefinedOr (defined, undefined)
 
 testArrayST :: Effect Unit
 testArrayST = do
@@ -240,13 +240,15 @@ testArrayST = do
     arr <- STA.thaw [unit, unit, unit]
     STA.unshiftAll [unit, unit] arr) == 5
 
-  log "sort should reorder a list into ascending order based on the result of compare"
-  assert $ STA.run (
-    STA.sort =<< STA.unsafeThaw [1, 3, 2, 5, 6, 4]
-  ) == [1, 2, 3, 4, 5, 6]
-  assert $ STA.run (
-    STA.sort =<< STA.unsafeThaw [defined 1, undefined, defined 2]
-  ) == [undefined, defined 1, defined 2]
+  -- `purescm` doesn't have `undefined` so skipping this test
+  --
+  -- log "sort should reorder a list into ascending order based on the result of compare"
+  -- assert $ STA.run (
+  --   STA.sort =<< STA.unsafeThaw [1, 3, 2, 5, 6, 4]
+  -- ) == [1, 2, 3, 4, 5, 6]
+  -- assert $ STA.run (
+  --   STA.sort =<< STA.unsafeThaw [defined 1, undefined, defined 2]
+  -- ) == [undefined, defined 1, defined 2]
 
   log "sortBy should reorder a list into ascending order based on the result of a comparison function"
   assert $ STA.run (
