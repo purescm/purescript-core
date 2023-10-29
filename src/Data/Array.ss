@@ -24,7 +24,11 @@
           allImpl
           unsafeIndexImpl
           )
-  (import (only (rnrs base) define lambda let error + -)
+  (import (only (rnrs base) define lambda begin quote cons
+                            let let* let-values cond if not and or
+                            * + - = < > >= <= boolean?)
+          (only (rnrs sorting) vector-sort!)
+          (only (chezscheme) fx/)
           (prefix (purs runtime lib) rt:)
           (prefix (purs runtime srfi :214) srfi:214:))
 
@@ -34,81 +38,135 @@
 
   (define rangeImpl
     (lambda (start end)
-      (let ([res (srfi:214:make-flexvector (+ (- end start) 1))])
-        (srfi:214:flexvector-map/index! (lambda (i x) (+ i start)) res)
-        res)))
+      (let* ([step (if (> start end) -1 1)]
+             [result (srfi:214:make-flexvector (+ (* step (- end start)) 1))])
+        (let recur ([i start]
+                    [n 0])
+          (if (not (= i end))
+            (begin
+              (srfi:214:flexvector-set! result n i)
+              (recur (+ i step) (+ n 1)))
+            (begin
+              (srfi:214:flexvector-set! result n i)
+              result))))))
 
   (define replicateImpl
     (lambda (count value)
-      (error #f "replicateImpl not implemented")))
-
+      (if (< count 1)
+        (rt:make-array)
+        (let ([result (srfi:214:make-flexvector count)])
+          (srfi:214:flexvector-fill! result value)
+          result))))
+      
   (define fromFoldableImpl
     (lambda (foldr xs)
-      (error #f "fromFoldableImpl not implemented")))
+      (define kons (lambda (head) (lambda (tail) (cons head tail))))
+      (srfi:214:list->flexvector (((foldr kons) '()) xs))))
 
-  (define length
-    (lambda (xs)
-      (error #f "length not implemented")))
+  (define length rt:array-length)
 
   (define unconsImpl
     (lambda (empty next xs)
-      (error #f "unconsImpl not implemented")))
+      (if (= (rt:array-length xs) 0)
+        (empty 'unit)
+        ((next (rt:array-ref xs 0)) (srfi:214:flexvector-copy xs 1)))))
 
   (define indexImpl
     (lambda (just nothing xs i)
-      (error #f "indexImpl not implemented")))
+      (if (or (< i 0) (>= i (rt:array-length xs)))
+        nothing
+        (just (rt:array-ref xs i)))))
 
   (define findMapImpl
     (lambda (nothing isJust f xs)
-      (error #f "findMapImpl not implemented")))
+      (let ([len (rt:array-length xs)])
+        (let recur ([i 0])
+          (if (< i len)
+            (let ([result (f (rt:array-ref xs i))])
+              (if (isJust result)
+                result
+                (recur (+ i 1))))
+            nothing)))))
 
   (define findIndexImpl
     (lambda (just nothing f xs)
-      (error #f "findIndexImpl not implemented")))
+      (let ([i (srfi:214:flexvector-index f xs)])
+        (if (boolean? i)
+          nothing
+          (just i)))))
 
   (define findLastIndexImpl
     (lambda (just nothing f xs)
-      (error #f "findLastIndexImpl not implemented")))
+      (let ([i (srfi:214:flexvector-index-right f xs)])
+        (if (boolean? i)
+          nothing
+          (just i)))))
 
   (define _insertAt
     (lambda (just nothing i a l)
-      (error #f "_insertAt not implemented")))
+      (if (or (< i 0) (> i (rt:array-length l)))
+        nothing
+        (let ([l1 (srfi:214:flexvector-copy l)])
+          (srfi:214:flexvector-add! l1 i a)
+          (just l1)))))
 
   (define _deleteAt
     (lambda (just nothing i l)
-      (error #f "_deleteAt not implemented")))
+      (if (or (< i 0) (>= i (rt:array-length l)))
+        nothing
+        (let ([l1 (srfi:214:flexvector-copy l)])
+          (srfi:214:flexvector-remove! l1 i)
+          (just l1)))))
 
   (define _updateAt
     (lambda (just nothing i a l)
-      (error #f "_updateAt not implemented")))
+      (if (or (< i 0) (>= i (rt:array-length l)))
+        nothing
+        (let ([l1 (srfi:214:flexvector-copy l)])
+          (srfi:214:flexvector-set! l1 i a)
+          (just l1)))))
+
 
 ;;------------------------------------------------------------------------------
 ;; Transformations -------------------------------------------------------------
 ;;------------------------------------------------------------------------------
 
-  (define reverse
-    (lambda (l)
-      (error #f "reverse not implemented")))
+  (define reverse srfi:214:flexvector-reverse-copy)
 
   (define concat
     (lambda (xss)
-      (error #f "concat not implemented")))
+      (srfi:214:flexvector-concatenate (srfi:214:flexvector->list xss))))
 
-  (define filterImpl
-    (lambda (f xs)
-      (error #f "filterImpl not implemented")))
+  (define filterImpl srfi:214:flexvector-filter)
 
   (define partitionImpl
     (lambda (f xs)
-      (error #f "partitionImpl not implemented")))
+      (let-values ([(yes no) (srfi:214:flexvector-partition f xs)])
+        (rt:make-object (cons "yes" yes) (cons "no" no)))))
 
   (define scanlImpl
     (lambda (f b xs)
-      (error #f "scanlImpl not implemented")))
+      (let* ([len (rt:array-length xs)]
+             [out (srfi:214:make-flexvector len)])
+        (let recur ([i 0]
+                    [acc b])
+          (if (< i len)
+            (let ([next ((f acc) (rt:array-ref xs i))])
+              (srfi:214:flexvector-set! out i next)
+              (recur (+ i 1) next))
+            out)))))
 
   (define scanrImpl
     (lambda (f b xs)
-      (error #f "scanrImpl not implemented")))
+      (let* ([len (rt:array-length xs)]
+             [out (srfi:214:make-flexvector len)])
+        (let recur ([i (- len 1)]
+                    [acc b])
+          (if (>= i 0)
+            (let ([next ((f (rt:array-ref xs i)) acc)])
+              (srfi:214:flexvector-set! out i next)
+              (recur (- i 1) next))
+            out)))))
 
 ;;------------------------------------------------------------------------------
 ;; Sorting ---------------------------------------------------------------------
@@ -116,7 +174,12 @@
 
   (define sortByImpl
     (lambda (compare fromOrdering xs)
-      (error #f "sortByImpl not implemented")))
+      (let ([tmp (srfi:214:flexvector->vector xs)])
+        (vector-sort!
+          (lambda (x y) (> (fromOrdering ((compare y) x)) 0))
+          tmp)
+        (srfi:214:vector->flexvector tmp))))
+
 
 ;;------------------------------------------------------------------------------
 ;; Subarrays -------------------------------------------------------------------
@@ -124,7 +187,9 @@
 
   (define sliceImpl
     (lambda (s e l)
-      (srfi:214:flexvector-copy l s e)))
+      (if (> s e)
+        (rt:make-array)
+        (srfi:214:flexvector-copy l s e))))
 
 ;;------------------------------------------------------------------------------
 ;; Zipping ---------------------------------------------------------------------
@@ -132,19 +197,15 @@
 
   (define zipWithImpl
     (lambda (f xs ys)
-      (error #f "zipWithImpl not implemented")))
+      (srfi:214:flexvector-map (lambda (x y) ((f x) y)) xs ys)))
 
 ;;------------------------------------------------------------------------------
 ;; Folding ---------------------------------------------------------------------
 ;;------------------------------------------------------------------------------
 
-  (define anyImpl
-    (lambda (p xs)
-      (error #f "anyImpl not implemented")))
+  (define anyImpl srfi:214:flexvector-any)
 
-  (define allImpl
-    (lambda (p xs)
-      (error #f "allImpl not implemented")))
+  (define allImpl srfi:214:flexvector-every)
 
 ;;------------------------------------------------------------------------------
 ;; Partial ---------------------------------------------------------------------

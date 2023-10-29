@@ -15,8 +15,9 @@
           sortByImpl
           thawImpl
           freezeImpl)
-  (import (only (rnrs base) define lambda let begin cons if and < > >= +)
-          (only (rnrs sorting) list-sort)
+  (import (only (rnrs base) define lambda cond let let* begin cons if and < > >= <= + -)
+          (only (rnrs sorting) vector-sort!)
+          (only (chezscheme) fx/)
           (prefix (purs runtime lib) rt:)
           (prefix (purs runtime srfi :214) srfi:214:))
           
@@ -82,12 +83,16 @@
       (srfi:214:flexvector-append! xs as)
       (rt:array-length xs)))
 
+  ;; NOTE this is actually slower than the immutable
+  ;; version in `Data.Array` because of the extra copy
+  ;; operation
   (define sortByImpl
     (lambda (compare fromOrdering xs)
-      (srfi:214:list->flexvector
-        (list-sort
+      (let ([tmp (srfi:214:flexvector->vector xs)])
+        (vector-sort!
           (lambda (x y) (> (fromOrdering ((compare y) x)) 0))
-          (srfi:214:flexvector->list xs)))))
+          tmp)
+        (srfi:214:flexvector-copy! xs 0 (srfi:214:vector->flexvector tmp)))))
 
   (define toAssocArrayImpl
     (lambda (xs)
