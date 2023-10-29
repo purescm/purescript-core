@@ -15,8 +15,7 @@
           sortByImpl
           thawImpl
           freezeImpl)
-  (import (only (rnrs base) define lambda error list let begin cons if and < > >= +)
-          (only (chezscheme) display format newline)
+  (import (only (rnrs base) define lambda let begin cons if and < > >= +)
           (only (rnrs sorting) list-sort)
           (prefix (purs runtime lib) rt:)
           (prefix (purs runtime srfi :214) srfi:214:))
