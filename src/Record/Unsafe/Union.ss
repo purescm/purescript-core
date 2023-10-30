@@ -1,8 +1,12 @@
 (library (Record.Unsafe.Union foreign)
   (export unsafeUnionFn)
-  (import (prefix (chezscheme) scm:))
+  (import (only (rnrs base) define lambda let)
+          (prefix (purs runtime lib) rt:)
+          (prefix (purs runtime srfi :125) srfi:125:))
 
-  (scm:define unsafeUnionFn
-    (scm:lambda (r1 r2)
-      (scm:error #f "unsafeUnionFn: unimplemented!")))
-  )
+  (define unsafeUnionFn
+    (lambda (r1 r2)
+      (let ([r1copy (srfi:125:hash-table-copy r1)])
+        (srfi:125:hash-table-union! r1copy r2))))
+
+)
