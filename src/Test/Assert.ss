@@ -23,6 +23,6 @@
                   (make-violation)
                   (make-message-condition "Threw something other than a serious condition"))))
             #t)
-          (lambda () (eq? (fn) #t))))))
+          (lambda () (eq? (fn 'unit) #t))))))
 
   )
