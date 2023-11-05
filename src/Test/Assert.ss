@@ -9,20 +9,14 @@
           (if (not success) 
             (raise-continuable
               (condition
-                (make-serious-condition)
                 (make-message-condition message))))))))
 
   (define checkThrows
     (lambda (fn)
       (lambda ()
-        (with-exception-handler
-          (lambda (e)
-            (unless (serious-condition? e)
-              (raise
-                (condition
-                  (make-violation)
-                  (make-message-condition "Threw something other than a serious condition"))))
-            #t)
-          (lambda () (eq? (fn 'unit) #t))))))
+        (call/cc (lambda (k)
+          (with-exception-handler
+            (lambda (e) (k #t))
+            (lambda () (eq? (fn 'unit) #t))))))))
 
   )
