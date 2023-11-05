@@ -1,5 +1,8 @@
 # purescript-lists
 
+This is a fork of the `lists` package for the `purescm` Chez Scheme backend for PureScript.
+The `purescm` backend compiles the `List` data type to native scheme lists and this fork further optimizes some of the operations by providing native implementations.
+
 [![Latest release](http://img.shields.io/github/release/purescript/purescript-lists.svg)](https://github.com/purescript/purescript-lists/releases)
 [![Build status](https://github.com/purescript/purescript-lists/workflows/CI/badge.svg?branch=master)](https://github.com/purescript/purescript-lists/actions?query=workflow%3ACI+branch%3Amaster)
 [![Pursuit](https://pursuit.purescript.org/packages/purescript-lists/badge)](https://pursuit.purescript.org/packages/purescript-lists)

@@ -18,6 +18,7 @@ import Control.Plus (class Plus)
 import Data.Eq (class Eq1, eq1)
 import Data.Foldable (class Foldable, foldl, foldr, intercalate)
 import Data.FoldableWithIndex (class FoldableWithIndex, foldlWithIndex, foldrWithIndex, foldMapWithIndex)
+import Data.Function.Uncurried (Fn2, Fn3, runFn2, runFn3)
 import Data.FunctorWithIndex (class FunctorWithIndex, mapWithIndex)
 import Data.Maybe (Maybe(..), maybe)
 import Data.Newtype (class Newtype)
@@ -71,46 +72,20 @@ instance semigroupList :: Semigroup (List a) where
 instance monoidList :: Monoid (List a) where
   mempty = Nil
 
+foreign import mapImpl :: forall a b. Fn2 (a -> b) (List a) (List b)
+
 instance functorList :: Functor List where
-  map = listMap
-
--- chunked list Functor inspired by OCaml
--- https://discuss.ocaml.org/t/a-new-list-map-that-is-both-stack-safe-and-fast/865
--- chunk sizes determined through experimentation
-listMap :: forall a b. (a -> b) -> List a -> List b
-listMap f = chunkedRevMap Nil
-  where
-  chunkedRevMap :: List (List a) -> List a -> List b
-  chunkedRevMap chunksAcc chunk@(_ : _ : _ : xs) =
-    chunkedRevMap (chunk : chunksAcc) xs
-  chunkedRevMap chunksAcc xs =
-    reverseUnrolledMap chunksAcc $ unrolledMap xs
-    where
-    unrolledMap :: List a -> List b
-    unrolledMap (x1 : x2 : Nil) = f x1 : f x2 : Nil
-    unrolledMap (x1 : Nil) = f x1 : Nil
-    unrolledMap _ = Nil
-
-    reverseUnrolledMap :: List (List a) -> List b -> List b
-    reverseUnrolledMap ((x1 : x2 : x3 : _) : cs) acc =
-      reverseUnrolledMap cs (f x1 : f x2 : f x3 : acc)
-    reverseUnrolledMap _ acc = acc
+  map f xs = runFn2 mapImpl f xs
 
 instance functorWithIndexList :: FunctorWithIndex Int List where
   mapWithIndex f = foldrWithIndex (\i x acc -> f i x : acc) Nil
 
+foreign import foldrImpl :: forall a b. Fn3 (a -> b -> b) b (List a) b
+foreign import foldlImpl :: forall a b. Fn3 (b -> a -> b) b (List a) b
+
 instance foldableList :: Foldable List where
-  foldr f b = foldl (flip f) b <<< rev
-    where
-    rev = go Nil
-      where
-      go acc Nil = acc
-      go acc (x : xs) = go (x : acc) xs
-  foldl f = go
-    where
-    go b = case _ of
-      Nil -> b
-      a : as -> go (f b a) as
+  foldr = runFn3 foldrImpl
+  foldl = runFn3 foldlImpl
   foldMap f = foldl (\acc -> append acc <<< f) mempty
 
 instance foldableWithIndexList :: FoldableWithIndex Int List where
