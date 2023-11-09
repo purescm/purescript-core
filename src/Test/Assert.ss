@@ -17,6 +17,6 @@
         (call/cc (lambda (k)
           (with-exception-handler
             (lambda (e) (k #t))
-            (lambda () (eq? (fn 'unit) #t))))))))
+            (lambda () (begin (fn 'unit) #f))))))))
 
   )
