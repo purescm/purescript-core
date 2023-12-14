@@ -18,7 +18,7 @@
   (import (only (rnrs base) define lambda cond let let* begin cons if and < > >= <= + -)
           (only (rnrs sorting) vector-sort!)
           (only (chezscheme) fx/)
-          (prefix (purs runtime lib) rt:)
+          (prefix (purs runtime) rt:)
           (prefix (purs runtime srfi :214) srfi:214:))
           
   (define new
