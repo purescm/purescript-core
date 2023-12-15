@@ -3,7 +3,7 @@
 (library (Control.Bind foreign)
   (export arrayBind)
   (import (only (rnrs base) define lambda if = + begin let)
-          (prefix (purs runtime lib) rt:)
+          (prefix (purs runtime) rt:)
           (prefix (purs runtime srfi :214) srfi:214:))
 
   (define arrayBind

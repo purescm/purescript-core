@@ -3,7 +3,7 @@
 (library (Control.Apply foreign)
   (export arrayApply)
   (import (only (rnrs base) define lambda let * + set!)
-          (prefix (purs runtime lib) rt:)
+          (prefix (purs runtime) rt:)
           (prefix (purs runtime srfi :214) srfi:214:))
 
   (define arrayApply
