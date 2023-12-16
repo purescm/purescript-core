@@ -4,7 +4,7 @@
           mkNEArray
           foldMap1NEArray)
   (import (only (rnrs base) define lambda let if + > <)
-          (prefix (purs runtime lib) rt:)
+          (prefix (purs runtime) rt:)
           (prefix (purs runtime srfi :214) srfi:214:))
 
   (define arrayFrom1UpTo
