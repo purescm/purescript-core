@@ -5,7 +5,7 @@
   (import (only (rnrs base) define lambda let quote if begin list cons = +)
           (only (chezscheme) do)
           (prefix (purs runtime srfi :214) srfi:214:)
-          (prefix (purs runtime lib) rt:))
+          (prefix (purs runtime) rt:))
 
   (define map_
     (lambda (f)
