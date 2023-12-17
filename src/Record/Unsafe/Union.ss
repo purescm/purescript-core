@@ -1,7 +1,7 @@
 (library (Record.Unsafe.Union foreign)
   (export unsafeUnionFn)
   (import (only (rnrs base) define lambda let)
-          (prefix (purs runtime lib) rt:)
+          (prefix (purs runtime) rt:)
           (prefix (purs runtime srfi :125) srfi:125:))
 
   (define unsafeUnionFn
