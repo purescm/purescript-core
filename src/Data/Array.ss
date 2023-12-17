@@ -29,7 +29,7 @@
                             * + - = < > >= <= boolean?)
           (only (rnrs sorting) vector-sort!)
           (only (chezscheme) fx/)
-          (prefix (purs runtime lib) rt:)
+          (prefix (purs runtime) rt:)
           (prefix (purs runtime srfi :214) srfi:214:))
 
 ;;------------------------------------------------------------------------------

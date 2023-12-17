@@ -4,7 +4,7 @@
           traverse1Impl)
   (import (only (rnrs base) define lambda list cons let if)
           (only (chezscheme) fx- fx< fx>= fx1- fx1+)
-          (prefix (purs runtime lib) rt:)
+          (prefix (purs runtime) rt:)
           (prefix (purs runtime srfi :214) srfi:214:))
 
   (define foldr1Impl
