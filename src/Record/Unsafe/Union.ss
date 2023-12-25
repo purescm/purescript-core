@@ -1,12 +1,20 @@
 (library (Record.Unsafe.Union foreign)
   (export unsafeUnionFn)
-  (import (only (rnrs base) define lambda let)
-          (prefix (purs runtime) rt:)
-          (prefix (purs runtime srfi :125) srfi:125:))
+  (import (chezscheme)
+          (prefix (purs runtime) rt:))
+
+  (define (hashtable-for-each f ht)
+    (let-values ([(keys values) (hashtable-entries ht)])
+      (vector-for-each f keys values)))
 
   (define unsafeUnionFn
     (lambda (r1 r2)
-      (let ([r1copy (srfi:125:hash-table-copy r1)])
-        (srfi:125:hash-table-union! r1copy r2))))
+      (let ([r1copy (rt:object-copy r1)])
+        (hashtable-for-each
+          (lambda (key2 val2)
+            (if (not (symbol-hashtable-contains? r1copy key2))
+                (rt:object-set! r1copy key2 val2)))
+          r2)
+        r1copy)))
 
 )

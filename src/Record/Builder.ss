@@ -1,37 +1,36 @@
 (library (Record.Builder foreign)
   (export copyRecord unsafeInsert unsafeModify unsafeDelete unsafeRename)
-  (import (prefix (chezscheme) scm:))
+  (import (chezscheme)
+          (prefix (purs runtime) rt:))
   
-  (scm:define copyRecord
-    (scm:lambda (rec)
-      (scm:hashtable-copy rec #t)))
+  (define copyRecord rt:object-copy)
 
-  (scm:define unsafeInsert
-    (scm:lambda (l)
-      (scm:lambda (a)
-        (scm:lambda (rec)
-          (scm:hashtable-set! rec l a)
+  (define unsafeInsert
+    (lambda (l)
+      (lambda (a)
+        (lambda (rec)
+          (rt:object-set! rec (string->symbol l) a)
           rec))))
 
-  (scm:define unsafeModify
-    (scm:lambda (l)
-      (scm:lambda (f)
-        (scm:lambda (rec)
-          (scm:hashtable-set! rec l (f (scm:hashtable-ref rec l (scm:quote undefined))))
+  (define unsafeModify
+    (lambda (l)
+      (lambda (f)
+        (lambda (rec)
+          (rt:object-set! rec (string->symbol l) (f (rt:object-ref rec (string->symbol l))))
           rec))))
 
-  (scm:define unsafeDelete
-    (scm:lambda (l)
-      (scm:lambda (rec)
-        (scm:hashtable-delete! rec l)
+  (define unsafeDelete
+    (lambda (l)
+      (lambda (rec)
+        (hashtable-delete! rec (string->symbol l))
         rec)))
 
-  (scm:define unsafeRename
-    (scm:lambda (l1)
-      (scm:lambda (l2)
-        (scm:lambda (rec)
-          (scm:hashtable-set! rec l1 (scm:hashtable-ref rec l2 (scm:quote undefined)))
-          (scm:hashtable-delete! rec l1)
+  (define unsafeRename
+    (lambda (l1)
+      (lambda (l2)
+        (lambda (rec)
+          (rt:object-set! rec (string->symbol l1) (rt:object-ref rec (string->symbol l2)))
+          (symbol-hashtable-delete! rec (string->symbol l1))
           rec))))
 
   )
