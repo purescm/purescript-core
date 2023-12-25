@@ -15,9 +15,8 @@
           sortByImpl
           thawImpl
           freezeImpl)
-  (import (only (rnrs base) define lambda cond let let* begin cons if and < > >= <= + -)
+  (import (chezscheme)
           (only (rnrs sorting) vector-sort!)
-          (only (chezscheme) fx/)
           (prefix (purs runtime) rt:)
           (prefix (purs runtime srfi :214) srfi:214:))
           
@@ -98,7 +97,7 @@
     (lambda (xs)
       (srfi:214:flexvector-map/index
         (lambda (i x)
-          (rt:make-object (cons "index" i) (cons "value" x)))
+          (rt:make-object (cons 'index i) (cons 'value x)))
         xs)))
             
   (define copyImpl

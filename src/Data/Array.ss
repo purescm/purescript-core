@@ -24,11 +24,8 @@
           allImpl
           unsafeIndexImpl
           )
-  (import (only (rnrs base) define lambda begin quote cons
-                            let let* let-values cond if not and or
-                            * + - = < > >= <= boolean?)
+  (import (except (chezscheme) length reverse)
           (only (rnrs sorting) vector-sort!)
-          (only (chezscheme) fx/)
           (prefix (purs runtime) rt:)
           (prefix (purs runtime srfi :214) srfi:214:))
 
@@ -142,7 +139,7 @@
   (define partitionImpl
     (lambda (f xs)
       (let-values ([(yes no) (srfi:214:flexvector-partition f xs)])
-        (rt:make-object (cons "yes" yes) (cons "no" no)))))
+        (rt:make-object (cons 'yes yes) (cons 'no no)))))
 
   (define scanlImpl
     (lambda (f b xs)
