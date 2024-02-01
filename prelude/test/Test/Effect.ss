@@ -1,5 +1,5 @@
 (library (Test.Effect foreign)
-  (export throwErr pureE bindE)
+  (export pureE bindE)
   (import (chezscheme))
 
   (define pureE
