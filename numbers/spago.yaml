@@ -1,0 +1,18 @@
+package:
+  name: numbers
+  dependencies:
+    - functions
+    - maybe
+  test:
+    main: Test.Main
+    dependencies:
+      - assert
+      - console
+workspace:
+  backend:
+    cmd: purescm
+    args:
+      - build
+  package_set:
+    url: https://raw.githubusercontent.com/purescm/purescm/7c1026db7636c7ce149cdf24d102767bb5b67685/package-sets/1.0.0.json
+    hash: sha256-S08+jERBraARRld3beBwtL6MgUdG36dHmtO73iL2FsQ=

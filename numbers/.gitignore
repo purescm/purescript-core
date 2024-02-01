@@ -1,0 +1,11 @@
+/bower_components/
+/node_modules/
+/.pulp-cache/
+/output/
+/.psci*
+/src/.webpack.js
+
+# purescm
+!/.dir-locals.el
+
+/.spago
