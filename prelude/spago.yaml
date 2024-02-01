@@ -1,13 +1,6 @@
 package:
-  name: purescm
+  name: prelude
   dependencies: []
   test:
     main: Test.Main
     dependencies: []
-workspace:
-  package_set:
-    registry: 41.2.0
-  backend:
-    cmd: purescm
-    args:
-      - "build"

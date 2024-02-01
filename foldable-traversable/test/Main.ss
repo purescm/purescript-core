@@ -1,4 +1,4 @@
-(library (Test.Main foreign)
+(library (Test.Foldable.Main foreign)
   (export arrayFrom1UpTo
           arrayReplicate
           mkNEArray

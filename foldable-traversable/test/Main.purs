@@ -1,4 +1,4 @@
-module Test.Main where
+module Test.Foldable.Main where
 
 import Prelude
 

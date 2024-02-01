@@ -1,4 +1,4 @@
-(library (Test.Main foreign)
+(library (Test.Prelude.Main foreign)
    (export testNumberShow)
    (import (chezscheme))
   

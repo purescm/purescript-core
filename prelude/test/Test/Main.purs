@@ -1,7 +1,7 @@
-module Test.Main where
+module Test.Prelude.Main where
 
 import Prelude
-import Effect (Effect)
+import Test.Effect (Effect)
 import Data.HeytingAlgebra (ff, tt, implies)
 import Data.Ord (abs)
 import Test.Data.Generic.Rep (testGenericRep)

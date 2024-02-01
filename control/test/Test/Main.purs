@@ -1,4 +1,4 @@
-module Test.Main (main) where
+module Test.Control.Main (main) where
 
 import Effect (Effect)
 import Data.Unit (Unit)

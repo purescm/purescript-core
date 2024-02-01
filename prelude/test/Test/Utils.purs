@@ -2,7 +2,7 @@ module Test.Utils where
 
 import Prelude
 
-import Effect (Effect)
+import Test.Effect (Effect)
 
 assert :: String -> Boolean -> Effect Unit
 assert msg condition = if condition then pure unit else throwErr msg

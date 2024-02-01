@@ -1,4 +1,4 @@
-(library (Effect foreign)
+(library (Test.Effect foreign)
   (export throwErr pureE bindE)
   (import (chezscheme))
 

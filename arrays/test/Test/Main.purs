@@ -1,4 +1,4 @@
-module Test.Main where
+module Test.Array.Main where
 
 import Prelude
 

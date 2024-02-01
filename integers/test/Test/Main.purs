@@ -1,4 +1,4 @@
-module Test.Main where
+module Test.Int.Main where
 
 import Prelude
 

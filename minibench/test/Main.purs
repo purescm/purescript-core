@@ -1,4 +1,4 @@
-module Test.Main where
+module Test.Minibench.Main where
 
 import Prelude
 
