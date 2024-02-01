@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        run: |
+          sudo apt install chezscheme
+
+      - name: Setup PureScript dependencies
+        run: npm i --global purescript@0.15.10 spago@next purescm@next
+
+      - name: Build source
+        run: spago build
+
+      - name: Cache PureScript dependencies
+        uses: actions/cache@v2
+        with:
+          key: ${{ runner.os }}-spago-${{ hashFiles('**/spago.yaml') }}
+          path: |
+            .spago
+            output
+
+      - name: Run tests
+        run: |
+          purescm run --main Test.Array.Main
+          purescm run --main Test.Console.Main
+          purescm run --main Test.Control.Main
+          purescm run --main Test.Foldable.Main
+          purescm run --main Test.Int.Main
+          purescm run --main Test.Lazy.Main
+          purescm run --main Test.List.Main
+          purescm run --main Test.Main
+          purescm run --main Test.Minibench.Main
+          purescm run --main Test.Number.Main
+          purescm run --main Test.Prelude.Main
+          purescm run --main Test.Record.Main
