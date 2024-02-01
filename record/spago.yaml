@@ -1,0 +1,18 @@
+package:
+  name: record
+  dependencies:
+    - functions
+    - prelude
+    - unsafe-coerce
+  test:
+    main: Test.Main
+    dependencies:
+      - assert
+workspace:
+  backend:
+    cmd: purescm
+    args:
+      - build
+  package_set:
+    url: https://raw.githubusercontent.com/purescm/purescm/de46f5c70c04750dd3fb9a8547f6c0a1a7b42f41/package-sets/1.0.0.json
+    hash: sha256-tFSnDJvZktWmVPPBYhDlF43+b+zFctobPU2Onw3VBTo=
