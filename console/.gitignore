@@ -1,0 +1,9 @@
+/.*
+!/.gitignore
+!/.eslintrc.json
+!/.github/
+/bower_components/
+/node_modules/
+/output/
+package-lock.json
+test/actual_output.txt
