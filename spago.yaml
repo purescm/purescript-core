@@ -1,0 +1,14 @@
+package:
+  dependencies: []
+  name: core
+  test:
+    dependencies: []
+    main: Test.Main
+workspace:
+  extra_packages: {}
+  package_set:
+    registry: 46.2.0
+  backend:
+    cmd: purescm
+    args:
+      - "build"
