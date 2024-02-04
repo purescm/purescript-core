@@ -27,6 +27,6 @@
   (define unsafeDelete
     (lambda (label)
       (lambda (rec)
-        (rt:record-delete rec (string->symbol label)))))
+        (rt:record-remove rec (string->symbol label)))))
 
 )

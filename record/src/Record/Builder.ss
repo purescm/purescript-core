@@ -18,13 +18,13 @@
   (define unsafeDelete
     (lambda (l)
       (lambda (rec)
-        (rt:record-delete rec (string->symbol l)))))
+        (rt:record-remove rec (string->symbol l)))))
 
   (define unsafeRename
     (lambda (l1)
       (lambda (l2)
         (lambda (rec)
-          (rt:record-delete
+          (rt:record-remove
             (rt:record-set rec (string->symbol l2) (rt:record-ref rec (string->symbol l1)))
             (string->symbol l1))))))
 
