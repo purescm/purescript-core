@@ -11,26 +11,22 @@
   (define unsafeHas
     (lambda (label)
       (lambda (rec)
-        (symbol-hashtable-contains? rec (string->symbol label)))))
+        (rt:record-has rec (string->symbol label)))))
 
   (define unsafeGet
     (lambda (label)
       (lambda (rec)
-        (rt:object-ref rec (string->symbol label)))))
+        (rt:record-ref rec (string->symbol label)))))
 
   (define unsafeSet
     (lambda (label)
       (lambda (value)
         (lambda (rec)
-          (let ([rec-copy (rt:object-copy rec)])
-            (rt:object-set! rec-copy (string->symbol label) value)
-            rec-copy)))))
+          (rt:record-set rec (string->symbol label) value)))))
 
   (define unsafeDelete
     (lambda (label)
       (lambda (rec)
-        (let ([rec-copy (rt:object-copy rec)])
-          (symbol-hashtable-delete! rec-copy (string->symbol label))
-          rec-copy))))
+        (rt:record-delete rec (string->symbol label)))))
 
 )
