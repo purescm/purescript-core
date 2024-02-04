@@ -23,7 +23,6 @@ import Record.Unsafe.Union (unsafeUnionFn)
 import Type.Proxy (Proxy)
 import Unsafe.Coerce (unsafeCoerce)
 
-foreign import copyRecord :: forall r1. Record r1 -> Record r1
 foreign import unsafeInsert :: forall a r1 r2. String -> a -> Record r1 -> Record r2
 foreign import unsafeModify :: forall a b r1 r2. String -> (a -> b) -> Record r1 -> Record r2
 foreign import unsafeDelete :: forall r1 r2. String -> Record r1 -> Record r2
@@ -47,7 +46,7 @@ newtype Builder a b = Builder (a -> b)
 
 -- | Build a record, starting from some other record.
 build :: forall r1 r2. Builder (Record r1) (Record r2) -> Record r1 -> Record r2
-build (Builder b) r1 = b (copyRecord r1)
+build (Builder b) r1 = b r1
 
 -- | Build a record from scratch.
 buildFromScratch :: forall r. Builder (Record ()) (Record r) -> Record r
