@@ -2,8 +2,7 @@
   (export map_ pure_ bind_ run while read for
           new foreach modifyImpl write)
 
-  (import (only (rnrs base) define lambda let quote if begin list cons = +)
-          (only (chezscheme) do)
+  (import (except (chezscheme) read write)
           (prefix (purs runtime srfi :214) srfi:214:)
           (prefix (purs runtime) rt:))
 
@@ -54,24 +53,24 @@
   (define new
     (lambda (val)
       (lambda ()
-        (rt:make-object (list (cons "value" val))))))
+        (box val))))
 
   (define read
     (lambda (ref)
       (lambda ()
-        (rt:object-ref ref "value"))))
+        (unbox ref))))
 
   (define modifyImpl
     (lambda (f)
       (lambda (ref)
-        (let ([t (f (rt:object-ref ref "value"))])
-          (rt:object-set! ref "value" (rt:object-ref t "state"))
-          (rt:object-ref t "value")))))
+        (let ([t (f (unbox ref))])
+          (set-box! ref (rt:record-ref t 'state))
+          (rt:record-ref t 'value)))))
 
   (define write
     (lambda (a)
       (lambda (ref)
         (lambda ()
-          (rt:object-set! ref "value" a)
+          (set-box! ref a)
           a))))
 )
