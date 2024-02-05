@@ -139,7 +139,7 @@
   (define partitionImpl
     (lambda (f xs)
       (let-values ([(yes no) (srfi:214:flexvector-partition f xs)])
-        (rt:make-object (cons 'yes yes) (cons 'no no)))))
+        (list (cons 'yes yes) (cons 'no no)))))
 
   (define scanlImpl
     (lambda (f b xs)

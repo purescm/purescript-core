@@ -1,3 +1,9 @@
+-- @inline Record.Builder.build never
+-- @inline Record.Builder.insert never
+-- @inline Record.Builder.merge never
+-- @inline Record.Builder.delete never
+-- @inline Record.Builder.modify never
+-- @inline Record.Builder.rename never
 module Test.Record.Main where
 
 import Prelude

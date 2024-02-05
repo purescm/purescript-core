@@ -97,7 +97,7 @@
     (lambda (xs)
       (srfi:214:flexvector-map/index
         (lambda (i x)
-          (rt:make-object (cons 'index i) (cons 'value x)))
+          (list (cons 'index i) (cons 'value x)))
         xs)))
             
   (define copyImpl
