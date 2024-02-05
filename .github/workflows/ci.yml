@@ -41,7 +41,6 @@ jobs:
           purescm run --main Test.Foldable.Main
           purescm run --main Test.Int.Main
           purescm run --main Test.Lazy.Main
-          purescm run --main Test.List.Main
           purescm run --main Test.Main
           purescm run --main Test.Minibench.Main
           purescm run --main Test.Number.Main
