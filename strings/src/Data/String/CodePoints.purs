@@ -30,7 +30,6 @@ module Data.String.CodePoints
 
 import Prelude
 
-import Data.Array as Array
 import Data.Enum (class BoundedEnum, class Enum, Cardinality(..), defaultPred, defaultSucc, fromEnum, toEnum, toEnumWithDefaults)
 import Data.Int (hexadecimal, toStringAs)
 import Data.Maybe (Maybe(..))
@@ -38,7 +37,6 @@ import Data.String.CodeUnits (contains, stripPrefix, stripSuffix) as Exports
 import Data.String.CodeUnits as CU
 import Data.String.Common (toUpper)
 import Data.String.Pattern (Pattern)
-import Data.String.Unsafe as Unsafe
 import Data.Tuple (Tuple(..))
 import Data.Unfoldable (unfoldr)
 
@@ -85,20 +83,7 @@ codePointFromChar = fromEnum >>> CodePoint
 -- | Just "𝐀"
 -- | ```
 -- |
-singleton :: CodePoint -> String
-singleton = _singleton singletonFallback
-
-foreign import _singleton
-  :: (CodePoint -> String)
-  -> CodePoint
-  -> String
-
-singletonFallback :: CodePoint -> String
-singletonFallback (CodePoint cp) | cp <= 0xFFFF = fromCharCode cp
-singletonFallback (CodePoint cp) =
-  let lead = ((cp - 0x10000) / 0x400) + 0xD800 in
-  let trail = (cp - 0x10000) `mod` 0x400 + 0xDC00 in
-  fromCharCode lead <> fromCharCode trail
+foreign import singleton :: CodePoint -> String
 
 -- | Creates a string from an array of code points. Operates in space and time
 -- | linear to the length of the array.
@@ -111,13 +96,7 @@ singletonFallback (CodePoint cp) =
 -- | "c 𝐀"
 -- | ```
 -- |
-fromCodePointArray :: Array CodePoint -> String
-fromCodePointArray = _fromCodePointArray singletonFallback
-
-foreign import _fromCodePointArray
-  :: (CodePoint -> String)
-  -> Array CodePoint
-  -> String
+foreign import fromCodePointArray :: Array CodePoint -> String
 
 -- | Creates an array of code points from a string. Operates in space and time
 -- | linear to the length of the string.
@@ -161,21 +140,14 @@ codePointAt :: Int -> String -> Maybe CodePoint
 codePointAt n _ | n < 0 = Nothing
 codePointAt 0 "" = Nothing
 codePointAt 0 s = Just (unsafeCodePointAt0 s)
-codePointAt n s = _codePointAt codePointAtFallback Just Nothing unsafeCodePointAt0 n s
+codePointAt n s = _codePointAt Just Nothing n s
 
 foreign import _codePointAt
-  :: (Int -> String -> Maybe CodePoint)
-  -> (forall a. a -> Maybe a)
+  :: (forall a. a -> Maybe a)
   -> (forall a. Maybe a)
-  -> (String -> CodePoint)
   -> Int
   -> String
   -> Maybe CodePoint
-
-codePointAtFallback :: Int -> String -> Maybe CodePoint
-codePointAtFallback n s = case uncons s of
-  Just { head, tail } -> if n == 0 then Just head else codePointAtFallback (n - 1) tail
-  _ -> Nothing
 
 -- | Returns a record with the first code point and the remaining code points
 -- | of the string. Returns `Nothing` if the string is empty. Operates in
@@ -189,17 +161,13 @@ codePointAtFallback n s = case uncons s of
 -- | ```
 -- |
 uncons :: String -> Maybe { head :: CodePoint, tail :: String }
-uncons s = case CU.length s of
-  0 -> Nothing
-  1 -> Just { head: CodePoint (fromEnum (Unsafe.charAt 0 s)), tail: "" }
-  _ ->
-    let
-      cu0 = fromEnum (Unsafe.charAt 0 s)
-      cu1 = fromEnum (Unsafe.charAt 1 s)
-    in
-      if isLead cu0 && isTrail cu1
-        then Just { head: unsurrogate cu0 cu1, tail: CU.drop 2 s }
-        else Just { head: CodePoint cu0, tail: CU.drop 1 s }
+uncons = _uncons Just Nothing
+
+foreign import _uncons
+  :: (forall a. a -> Maybe a)
+  -> (forall a. Maybe a)
+  -> String
+  -> Maybe { head :: CodePoint, tail :: String }
 
 -- | Returns the number of code points in the string. Operates in constant
 -- | space and in time linear to the length of the string.
@@ -212,8 +180,7 @@ uncons s = case CU.length s of
 -- | 11
 -- | ```
 -- |
-length :: String -> Int
-length = Array.length <<< toCodePointArray
+foreign import length :: String -> Int
 
 -- | Returns the number of code points in the leading sequence of code points
 -- | which all match the given predicate. Operates in constant space and in
@@ -224,18 +191,7 @@ length = Array.length <<< toCodePointArray
 -- | 2
 -- | ```
 -- |
-countPrefix :: (CodePoint -> Boolean) -> String -> Int
-countPrefix = _countPrefix countFallback unsafeCodePointAt0
-
-foreign import _countPrefix
-  :: ((CodePoint -> Boolean) -> String -> Int)
-  -> (String -> CodePoint)
-  -> (CodePoint -> Boolean)
-  -> String
-  -> Int
-
-countFallback :: (CodePoint -> Boolean) -> String -> Int
-countFallback p s = countTail p s 0
+foreign import countPrefix :: (CodePoint -> Boolean) -> String -> Int
 
 countTail :: (CodePoint -> Boolean) -> String -> Int -> Int
 countTail p s accum = case uncons s of
@@ -326,15 +282,9 @@ lastIndexOf' p i s =
 -- | ```
 -- |
 take :: Int -> String -> String
-take = _take takeFallback
+take = _take
 
-foreign import _take :: (Int -> String -> String) -> Int -> String -> String
-
-takeFallback :: Int -> String -> String
-takeFallback n _ | n < 1 = ""
-takeFallback n s = case uncons s of
-  Just { head, tail } -> singleton head <> takeFallback (n - 1) tail
-  _ -> s
+foreign import _take :: Int -> String -> String
 
 -- | Returns a string containing the leading sequence of code points which all
 -- | match the given predicate from the string. Operates in constant space and
@@ -402,35 +352,8 @@ splitAt i s =
   , after: CU.drop (CU.length before) s
   }
 
-unsurrogate :: Int -> Int -> CodePoint
-unsurrogate lead trail = CodePoint ((lead - 0xD800) * 0x400 + (trail - 0xDC00) + 0x10000)
-
-isLead :: Int -> Boolean
-isLead cu = 0xD800 <= cu && cu <= 0xDBFF
-
-isTrail :: Int -> Boolean
-isTrail cu = 0xDC00 <= cu && cu <= 0xDFFF
-
 fromCharCode :: Int -> String
 fromCharCode = CU.singleton <<< toEnumWithDefaults bottom top
 
 -- WARN: this function expects the String parameter to be non-empty
-unsafeCodePointAt0 :: String -> CodePoint
-unsafeCodePointAt0 = _unsafeCodePointAt0 unsafeCodePointAt0Fallback
-
-foreign import _unsafeCodePointAt0
-  :: (String -> CodePoint)
-  -> String
-  -> CodePoint
-
-unsafeCodePointAt0Fallback :: String -> CodePoint
-unsafeCodePointAt0Fallback s =
-  let
-    cu0 = fromEnum (Unsafe.charAt 0 s)
-  in
-    if isLead cu0 && CU.length s > 1
-       then
-         let cu1 = fromEnum (Unsafe.charAt 1 s) in
-         if isTrail cu1 then unsurrogate cu0 cu1 else CodePoint cu0
-       else
-         CodePoint cu0
+foreign import unsafeCodePointAt0 :: String -> CodePoint

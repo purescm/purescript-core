@@ -330,7 +330,7 @@ workspace:
         - unsafe-coerce
   package_set:
     address:
-      url: https://raw.githubusercontent.com/purescm/purescm/14a9497e54da7890374d19544629d4dbca62fa7d/package-sets/1.0.0.json
+      url: https://raw.githubusercontent.com/purescm/purescm/3c0074b172a12bb9ee353c9ad6031d64d10b8b01/package-sets/1.0.0.json
     compiler: ">=0.15.10 <0.16.0"
     content:
       arrays:

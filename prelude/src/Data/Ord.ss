@@ -9,6 +9,7 @@
           ordArrayImpl)
   (import (chezscheme))
   (import (only (rnrs base) define lambda)
+          (only (purs runtime pstring) pstring<? pstring=?)
           (prefix (purs runtime srfi :214) srfi:214:))
 
   (define ordBooleanImpl
@@ -47,9 +48,9 @@
         (lambda (gt)
           (lambda (x)
             (lambda (y)
-              (if (string<? x y)
+              (if (pstring<? x y)
                   lt
-                  (if (string=? x y) eq gt))))))))
+                  (if (pstring=? x y) eq gt))))))))
 
   (define ordCharImpl
     (lambda (lt)

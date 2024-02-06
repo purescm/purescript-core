@@ -138,8 +138,13 @@ foreign import _toChar
 -- | ```
 -- |
 uncons :: String -> Maybe { head :: Char, tail :: String }
-uncons "" = Nothing
-uncons s  = Just { head: U.charAt zero s, tail: drop one s }
+uncons = _uncons Just Nothing
+
+foreign import _uncons
+  :: (forall a. a -> Maybe a)
+  -> (forall a. Maybe a)
+  -> String
+  -> Maybe { head :: Char, tail :: String }
 
 -- | Returns the number of characters the string is composed of.
 -- |

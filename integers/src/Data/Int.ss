@@ -11,7 +11,8 @@
   (import (only (rnrs base) define lambda if let cond else call-with-current-continuation)
           (only (rnrs arithmetic flonums) fixnum->flonum fltruncate fl=?)
           (only (chezscheme) format flonum->fixnum fixnum? fx=? fx/ fxremainder expt
-                             with-exception-handler string-append number->string string->number))
+                             with-exception-handler string-append number->string string->number)
+          (only (purs runtime pstring) pstring->string string->pstring))
 
   (define fromNumberImpl
     (lambda (just)
@@ -35,7 +36,7 @@
       (lambda (nothing)
         (lambda (radix)
           (lambda (s)
-            (let ([res (string->number (string-append "#" (number->string radix) "r" s))])
+            (let ([res (string->number (string-append "#" (number->string radix) "r" (pstring->string s)))])
               (if (fixnum? res)
                 (just res)
                 nothing)))))))
@@ -44,13 +45,14 @@
   (define toStringAs
     (lambda (radix)
       (lambda (i)
-        (cond
-          [(fx=? radix 2) (format "~b" i)]
-          [(fx=? radix 8) (format "~o" i)]
-          [(fx=? radix 10) (format "~d" i)]
-          [(fx=? radix 16) (format "~x" i)]
-          ;; Fall back to decimal
-          [else (format "~d" i)]))))
+        (string->pstring
+          (cond
+            [(fx=? radix 2) (format "~b" i)]
+            [(fx=? radix 8) (format "~o" i)]
+            [(fx=? radix 10) (format "~d" i)]
+            [(fx=? radix 16) (format "~x" i)]
+            ;; Fall back to decimal
+            [else (format "~d" i)])))))
 
   (define quot
     (lambda (x)

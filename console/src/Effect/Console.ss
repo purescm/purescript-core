@@ -12,6 +12,7 @@
           debug)
   (import (only (rnrs base) define lambda begin)
           (prefix (rnrs base) scm:)
+          (only (purs runtime pstring) pstring->string)
           (only (rnrs io ports) current-output-port current-error-port put-string)
           (only (rnrs io simple) newline))
 
@@ -19,28 +20,28 @@
     (lambda (s)
       (lambda ()
         (begin 
-          (put-string (current-output-port) s)
+          (put-string (current-output-port) (pstring->string s))
           (newline (current-output-port))))))
 
   (define warn
     (lambda (s)
       (lambda ()
         (begin 
-          (put-string (current-error-port) s)
+          (put-string (current-error-port) (pstring->string s))
           (newline (current-error-port))))))
 
   (define error
     (lambda (s)
       (lambda ()
         (begin 
-          (put-string (current-error-port) s)
+          (put-string (current-error-port) (pstring->string s))
           (newline (current-error-port))))))
 
   (define info
     (lambda (s)
       (lambda ()
         (begin 
-          (put-string (current-output-port) s)
+          (put-string (current-output-port) (pstring->string s))
           (newline (current-output-port))))))
 
   (define time
@@ -66,6 +67,6 @@
     (lambda (s)
       (lambda ()
         (begin 
-          (put-string (current-output-port) s)
+          (put-string (current-output-port) (pstring->string s))
           (newline (current-output-port))))))
 )
