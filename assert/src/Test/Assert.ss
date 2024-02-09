@@ -7,7 +7,7 @@
     (lambda (message)
       (lambda (success)
         (lambda ()
-          (if (not success) 
+          (when (not success)
             (raise-continuable
               (condition
                 (make-message-condition (pstring->string message)))))))))
