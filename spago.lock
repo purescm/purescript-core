@@ -328,6 +328,66 @@ workspace:
         - tailrec
         - tuples
         - unsafe-coerce
+    strings:
+      path: strings
+      dependencies:
+        - arrays
+        - control
+        - either
+        - enums
+        - foldable-traversable
+        - gen
+        - integers
+        - maybe
+        - newtype
+        - nonempty
+        - partial
+        - prelude
+        - tailrec
+        - tuples
+        - unfoldable
+        - unsafe-coerce
+      test_dependencies:
+        - assert
+        - console
+        - minibench
+      build_plan:
+        - arrays
+        - assert
+        - bifunctors
+        - console
+        - const
+        - contravariant
+        - control
+        - distributive
+        - effect
+        - either
+        - enums
+        - exists
+        - foldable-traversable
+        - functions
+        - functors
+        - gen
+        - identity
+        - integers
+        - invariant
+        - maybe
+        - minibench
+        - newtype
+        - nonempty
+        - numbers
+        - orders
+        - partial
+        - prelude
+        - profunctor
+        - refs
+        - safe-coerce
+        - st
+        - tailrec
+        - tuples
+        - type-equality
+        - unfoldable
+        - unsafe-coerce
   package_set:
     address:
       url: https://raw.githubusercontent.com/purescm/purescm/3c0074b172a12bb9ee353c9ad6031d64d10b8b01/package-sets/1.0.0.json
@@ -497,6 +557,22 @@ packages:
       - invariant
       - maybe
       - prelude
+  enums:
+    type: git
+    url: https://github.com/purescm/purescript-core.git
+    rev: 154d77119aa25b70f07f4b880dcba41ed811a852
+    subdir: enums
+    dependencies:
+      - control
+      - either
+      - gen
+      - maybe
+      - newtype
+      - nonempty
+      - partial
+      - prelude
+      - tuples
+      - unfoldable
   exists:
     type: registry
     version: 6.0.0
@@ -528,6 +604,21 @@ packages:
       - profunctor
       - tuples
       - unsafe-coerce
+  gen:
+    type: registry
+    version: 4.0.0
+    integrity: sha256-f7yzAXWwr+xnaqEOcvyO3ezKdoes8+WXWdXIHDBCAPI=
+    dependencies:
+      - either
+      - foldable-traversable
+      - identity
+      - maybe
+      - newtype
+      - nonempty
+      - prelude
+      - tailrec
+      - tuples
+      - unfoldable
   identity:
     type: registry
     version: 6.0.0
