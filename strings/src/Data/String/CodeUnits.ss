@@ -25,7 +25,7 @@
                                     pstring-length
                                     string->pstring
                                     pstring-ref
-                                    pstring-uncons-code-unit
+                                    pstring-uncons-char
                                     pstring-take
                                     pstring-drop
                                     pstring-index-of
@@ -63,7 +63,7 @@
         (lambda (s)
           (if (pstring-empty? s)
             nothing
-            (let-values ([(head tail) (pstring-uncons-code-unit s)])
+            (let-values ([(head tail) (pstring-uncons-char s)])
               (just (list (cons 'head head)
                           (cons 'tail tail)))))))))
 
@@ -75,7 +75,7 @@
         (let loop ([i 0] [rest s])
           (if (pstring-empty? rest)
             i
-            (let-values ([(head tail) (pstring-uncons-code-unit rest)])
+            (let-values ([(head tail) (pstring-uncons-char rest)])
               (if (p head)
                 (loop (fx1+ i) tail)
                 i)))))))

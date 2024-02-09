@@ -13,7 +13,7 @@
           (only (purs runtime pstring) pstring
                                           number->pstring
                                           string->pstring
-                                          pstring-uncons-code-unit
+                                          pstring-uncons-char
                                           pstring->string
                                           pstring-concat
                                           pstring-make-regex
@@ -36,7 +36,7 @@
     (lambda (s)
       (let ([regex (pstring-make-regex (string->pstring "[\\x00-\\x1F\\x7F\"]") (list (cons 'global #t)))]
             [replacement (lambda (match _)
-                           (let-values ([(c _) (pstring-uncons-code-unit match)])
+                           (let-values ([(c _) (pstring-uncons-char match)])
                              (cond
                                [(char=? c #\") (pstring #\\ c)]
                                [(char=? c #\\) (pstring #\\ c)]
