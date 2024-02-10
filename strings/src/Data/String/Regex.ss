@@ -1,31 +1,30 @@
 (library (Data.String.Regex foreign)
-  (export showRegexImpl
-          regexImpl
-          source
-          flagsImpl
-          test
+  (export flagsImpl
           _match
+          regexImpl
           replace
           _replaceBy
           _search
+          showRegexImpl
+          source
           split
-          )
+          test)
   (import
     (except (chezscheme) length)
     (only (purs runtime pstring) pstring=?
-                                    pstring-singleton
-                                    pstring-slice
-                                    pstring-length
-                                    string->pstring
-                                    pstring->string
-                                    pstring-ref
-                                    regex-source
-                                    regex-flags
-                                    pstring-make-regex
-                                    pstring-regex-match
-                                    pstring-regex-search
-                                    pstring-regex-replace
-                                    pstring-regex-replace-by)
+                                 pstring-length
+                                 pstring-make-regex
+                                 pstring-ref
+                                 pstring-regex-match
+                                 pstring-regex-replace
+                                 pstring-regex-replace-by
+                                 pstring-regex-search
+                                 pstring-singleton
+                                 pstring-slice
+                                 pstring->string
+                                 regex-flags
+                                 regex-source
+                                 string->pstring)
     (prefix (purs runtime srfi :214) srfi:214:)
     (prefix (purs runtime) rt:))
 
