@@ -4,7 +4,7 @@
           _codePointAt
           countPrefix
           fromCodePointArray
-          _toCodePointArray
+          toCodePointArray
           singleton
           _take
           _uncons)
@@ -12,13 +12,14 @@
     (except (chezscheme) length)
     (prefix (purs runtime) rt:)
     (prefix (purs runtime srfi :214) srfi:214:)
-    (only (purs runtime pstring) string->pstring
-                                    pstring-length-code-points
-                                    pstring-ref-code-point
-                                    pstring-empty?
-                                    pstring-uncons-code-point
-                                    pstring-take-code-points
-                                    code-points->pstring)
+    (only (purs runtime pstring) code-points->pstring
+                                 pstring->code-point-flexvector
+                                 pstring-empty?
+                                 pstring-length-code-points
+                                 pstring-ref-code-point
+                                 pstring-take-code-points
+                                 pstring-uncons-code-point
+                                 string->pstring)
     (only (chezscheme) fx1+ fx=?))
 
   (define length pstring-length-code-points)
@@ -73,10 +74,6 @@
                       (cons 'head c)
                       (cons 'tail tail)))))))))
 
-  (define _toCodePointArray
-    (lambda (fallback)
-      (lambda (unsafeCodePointAt0)
-        (lambda (s)
-          (error #f "Data.String.CodePoints._toCodePointArray not implemented")))))
+  (define toCodePointArray pstring->code-point-flexvector)
 
   )

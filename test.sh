@@ -34,7 +34,7 @@ echo "Testing st"
 purescm run --main Test.Main
 echo
 
-echo "Testing st"
+echo "Testing string"
 purescm run --main Test.Data.String.Main
 echo
 

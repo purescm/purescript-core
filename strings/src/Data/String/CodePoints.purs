@@ -109,20 +109,7 @@ foreign import fromCodePointArray :: Array CodePoint -> String
 -- | ["b", " ", "𝐀", "𝐀"]
 -- | ```
 -- |
-toCodePointArray :: String -> Array CodePoint
-toCodePointArray = _toCodePointArray toCodePointArrayFallback unsafeCodePointAt0
-
-foreign import _toCodePointArray
-  :: (String -> Array CodePoint)
-  -> (String -> CodePoint)
-  -> String
-  -> Array CodePoint
-
-toCodePointArrayFallback :: String -> Array CodePoint
-toCodePointArrayFallback s = unfoldr unconsButWithTuple s
-
-unconsButWithTuple :: String -> Maybe (Tuple CodePoint String)
-unconsButWithTuple s = (\{ head, tail } -> Tuple head tail) <$> uncons s
+foreign import toCodePointArray :: String -> Array CodePoint
 
 -- | Returns the first code point of the string after dropping the given number
 -- | of code points from the beginning, if there is such a code point. Operates

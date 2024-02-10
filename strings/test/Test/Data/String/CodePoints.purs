@@ -4,6 +4,7 @@ import Prelude
 
 import Data.Enum (fromEnum, toEnum)
 import Data.Maybe (Maybe(..), fromJust)
+import Data.String (CodePoint)
 import Data.String.CodePoints as SCP
 import Data.String.Pattern (Pattern(..))
 import Effect (Effect)
@@ -647,6 +648,12 @@ testStringCodePoints = do
   assertEqual
     { actual: SCP.splitAt 8 str
     , expected: {before: str, after: ""}
+    }
+
+  log "toCodePointArray"
+  assertEqual
+    { actual: SCP.toCodePointArray "b 𝐀𝐀"
+    , expected: [cp 0x62, cp 0x20, cp 0x1D400, cp 0x1D400]
     }
 
 cp :: Int -> SCP.CodePoint
