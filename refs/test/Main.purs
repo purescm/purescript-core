@@ -1,4 +1,4 @@
-module Test.Main where
+module Test.Effect.Ref.Main where
 
 import Prelude
 

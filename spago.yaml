@@ -7,4 +7,4 @@ workspace:
     args:
       - build
   package_set:
-    url: https://raw.githubusercontent.com/purescm/purescm/3c0074b172a12bb9ee353c9ad6031d64d10b8b01/package-sets/1.0.0.json
+    registry: 47.10.0

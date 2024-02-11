@@ -1,4 +1,4 @@
-module Test.Main where
+module Test.Unsafe.Coerce.Main where
 
 import Effect (Effect)
 import Effect.Console (log)

@@ -1,4 +1,4 @@
-module Test.Main where
+module Test.Data.Unfoldable.Main where
 
 import Prelude
 

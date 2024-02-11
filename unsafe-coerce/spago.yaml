@@ -1,0 +1,7 @@
+package:
+  name: unsafe-coerce
+  dependencies: []
+  test:
+    main: Test.Unsafe.Coerce.Main
+    dependencies:
+      - assert
