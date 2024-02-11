@@ -1,22 +1,14 @@
 package:
+  name: unfoldable
   dependencies:
     - foldable-traversable
     - maybe
     - partial
     - prelude
     - tuples
-  name: unfoldable
   test:
+    main: Test.Data.Unfoldable.Main
     dependencies:
       - assert
       - console
       - effect
-    main: Test.Main
-workspace:
-  backend:
-    cmd: purescm
-    args:
-      - "build"
-  package_set:
-    url: https://raw.githubusercontent.com/purescm/purescm/e52f13a111051710612104c0d5068c5c7bc73893/package-sets/1.0.0.json
-    hash: sha256-yxkZWmh2VQBGLsm7KE61xEZRNdLSmKEXV3kEwu9MyWE=
