@@ -1,4 +1,4 @@
-module Test.Main where
+module Test.Partial.Main where
 
 import Partial (crashWith)
 import Partial.Unsafe (unsafePartial)

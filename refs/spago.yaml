@@ -1,0 +1,9 @@
+package:
+  name: refs
+  dependencies:
+    - effect
+    - prelude
+  test:
+    main: Test.Effect.Ref.Main
+    dependencies:
+      - assert

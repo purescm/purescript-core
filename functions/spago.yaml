@@ -1,0 +1,4 @@
+package:
+  name: functions
+  dependencies:
+    - prelude
