@@ -38,6 +38,7 @@ jobs:
           purescm run --main Test.Array.Main
           purescm run --main Test.Console.Main
           purescm run --main Test.Control.Main
+          purescm run --main Test.Effect.Ref.Main
           purescm run --main Test.Foldable.Main
           purescm run --main Test.Int.Main
           purescm run --main Test.Lazy.Main
