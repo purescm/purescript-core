@@ -19,6 +19,7 @@
                                  pstring-regex-replace
                                  pstring-regex-replace-by
                                  pstring-regex-search
+                                 pstring-regex-split
                                  pstring-singleton
                                  pstring-slice
                                  pstring->string
@@ -92,7 +93,7 @@
   (define split
     (lambda (r)
       (lambda (s)
-        (error #f "unimplemented"))))
+        (pstring-regex-split r s))))
 
 
   )

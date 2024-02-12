@@ -44,13 +44,11 @@ testStringRegex = do
   assert $ search (unsafeRegex "b" noFlags) "abc" == Just 1
   assert $ search (unsafeRegex "d" noFlags) "abc" == Nothing
 
-  -- log "split"
-  -- assert $ split (unsafeRegex "" noFlags) "" == []
-  -- assert $ split (unsafeRegex "" noFlags) "abc" == ["a", "b", "c"]
-  -- -- purescm: irregex returns an empty list in this case
-  -- -- assert $ split (unsafeRegex "b" noFlags) "" == [""]
-  -- assert $ split (unsafeRegex "b" noFlags) "" == []
-  -- assert $ split (unsafeRegex "b" noFlags) "abc" == ["a", "c"]
+  log "split"
+  assert $ split (unsafeRegex "" noFlags) "" == []
+  assert $ split (unsafeRegex "" noFlags) "abc" == ["a", "b", "c"]
+  assert $ split (unsafeRegex "b" noFlags) "" == [""]
+  assert $ split (unsafeRegex "b" noFlags) "abc" == ["a", "c"]
 
   log "test"
   -- Ensure that we have referential transparency for calls to 'test'. No
