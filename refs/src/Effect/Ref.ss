@@ -12,12 +12,12 @@
   (scm:define _new
     (scm:lambda (v)
       (scm:lambda ()
-        (scm:list (scm:box v) (scm:make-mutex)))))
+        (scm:cons (scm:box v) (scm:make-mutex)))))
 
   (scm:define newWithSelf
     (scm:lambda (f)
       (scm:lambda ()
-        (scm:let ([ref (scm:list (scm:box (scm:quote ())) (scm:make-mutex))])
+        (scm:let ([ref (scm:cons (scm:box (scm:quote ())) (scm:make-mutex))])
           (scm:set-box! (scm:car ref) (f ref))
           ref))))
 
@@ -30,7 +30,7 @@
     (scm:lambda (f)
       (scm:lambda (ref)
         (scm:lambda ()
-          (scm:with-mutex (scm:cadr ref)
+          (scm:with-mutex (scm:cdr ref)
             (scm:let* ([t (f (scm:unbox (scm:car ref)))]
                        [v (rt:record-ref t (scm:quote state))])
               (scm:set-box! (scm:car ref) v)
@@ -40,7 +40,7 @@
     (scm:lambda (val)
       (scm:lambda (ref)
         (scm:lambda ()
-          (scm:with-mutex (scm:cadr ref)
+          (scm:with-mutex (scm:cdr ref)
             (scm:set-box! (scm:car ref) val))))))
 
 )
