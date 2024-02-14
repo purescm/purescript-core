@@ -17,7 +17,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt install chezscheme
+          sudo apt install chezscheme libpcre2-16-0
 
       - name: Setup PureScript dependencies
         run: npm i --global purescript@0.15.10 spago@next purescm@next
