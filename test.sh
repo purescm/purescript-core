@@ -30,6 +30,10 @@ echo "Testing lazy"
 purescm run --main Test.Lazy.Main
 echo
 
+echo "Testing refs"
+purescm run --main Test.Effect.Ref.Main
+echo
+
 echo "Testing st"
 purescm run --main Test.Main
 echo
