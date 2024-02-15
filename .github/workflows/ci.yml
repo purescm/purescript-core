@@ -15,9 +15,12 @@ jobs:
         with:
           node-version: "18"
 
+      - name: Install Nix
+        uses: cachix/install-nix-action@v16
+
       - name: Install dependencies
         run: |
-          sudo apt install chezscheme libpcre2-16-0
+          sudo apt install libpcre2-16-0
 
       - name: Setup PureScript dependencies
         run: npm i --global purescript@0.15.10 spago@next purescm@next
@@ -35,4 +38,4 @@ jobs:
 
       - name: Run tests
         run: |
-          ./test.sh
+          nix-shell -p chez-racket --run "./test.sh"
