@@ -20,10 +20,6 @@ jobs:
         with:
           nix_path: nixpkgs=channel:nixos-unstable
 
-      - name: Install dependencies
-        run: |
-          sudo apt install libpcre2-dev
-
       - name: Setup PureScript dependencies
         run: npm i --global purescript@0.15.10 spago@next purescm@next
 
@@ -40,4 +36,4 @@ jobs:
 
       - name: Run tests
         run: |
-          nix-shell -p chez-racket --run "./test.sh"
+          nix-shell --run "./test.sh"
