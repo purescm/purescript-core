@@ -18,6 +18,10 @@ echo "Testing control"
 purescm run --main Test.Control.Main
 echo
 
+echo "Testing enums"
+purescm run --main Test.Enum.Main
+echo
+
 echo "Testing foldable"
 purescm run --main Test.Foldable.Main
 echo

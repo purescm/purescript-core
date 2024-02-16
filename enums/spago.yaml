@@ -17,11 +17,3 @@ package:
       - console
       - effect
     main: Test.Main
-workspace:
-  backend:
-    cmd: purescm
-    args:
-      - "build"
-  package_set:
-    url: https://raw.githubusercontent.com/purescm/purescm/639f99b0c910a81d07e4ae64cb8bc6799afee50d/package-sets/1.0.0.json
-    hash: sha256-AknHzlPBB6OxDVM4TjIixH5Q//n5sdxsEBY9NeJ+hkE=

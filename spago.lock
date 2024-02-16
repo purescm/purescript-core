@@ -103,6 +103,56 @@ workspace:
       test_dependencies: []
       build_plan:
         - prelude
+    enums:
+      path: enums
+      dependencies:
+        - control
+        - either
+        - gen
+        - maybe
+        - newtype
+        - nonempty
+        - partial
+        - prelude
+        - tuples
+        - unfoldable
+      test_dependencies:
+        - assert
+        - console
+        - effect
+      build_plan:
+        - assert
+        - bifunctors
+        - console
+        - const
+        - contravariant
+        - control
+        - distributive
+        - effect
+        - either
+        - exists
+        - foldable-traversable
+        - functions
+        - functors
+        - gen
+        - identity
+        - integers
+        - invariant
+        - maybe
+        - newtype
+        - nonempty
+        - numbers
+        - orders
+        - partial
+        - prelude
+        - profunctor
+        - refs
+        - safe-coerce
+        - tailrec
+        - tuples
+        - type-equality
+        - unfoldable
+        - unsafe-coerce
     exceptions:
       path: exceptions
       dependencies:
@@ -1008,21 +1058,6 @@ packages:
       - invariant
       - maybe
       - prelude
-  enums:
-    type: registry
-    version: 6.0.1
-    integrity: sha256-HWaD73JFLorc4A6trKIRUeDMdzE+GpkJaEOM1nTNkC8=
-    dependencies:
-      - control
-      - either
-      - gen
-      - maybe
-      - newtype
-      - nonempty
-      - partial
-      - prelude
-      - tuples
-      - unfoldable
   exists:
     type: registry
     version: 6.0.0
