@@ -63,9 +63,10 @@
   (define modifyImpl
     (lambda (f)
       (lambda (ref)
-        (let ([t (f (unbox ref))])
-          (set-box! ref (rt:record-ref t 'state))
-          (rt:record-ref t 'value)))))
+        (lambda ()
+          (let ([t (f (unbox ref))])
+            (set-box! ref (rt:record-ref t 'state))
+            (rt:record-ref t 'value))))))
 
   (define write
     (lambda (a)

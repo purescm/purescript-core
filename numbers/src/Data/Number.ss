@@ -27,10 +27,11 @@
           tan
           trunc
           )
-  (import (only (rnrs base) define lambda nan? finite? cond else let and or not string->number number?)
+  (import (only (rnrs base) define lambda nan? finite? cond else let and or not number?)
           (only (chezscheme) flabs flacos flasin flatan flceiling flcos flexp
                              flfloor fllog flmax flmin flexpt flmod0 flround
-                             fl= fl< flsin flsqrt fltan fltruncate flonum? fixnum? fixnum->flonum))
+                             fl= fl< flsin flsqrt fltan fltruncate flonum? fixnum? fixnum->flonum)
+          (only (purs runtime pstring) pstring->number))
 
   (define nan +nan.0)
 
@@ -42,7 +43,7 @@
 
   (define fromStringImpl
     (lambda (str isFinite just nothing)
-      (let ([num (string->number str)])
+      (let ([num (pstring->number str)])
         (cond
           [(or (not (number? num)) (not (isFinite num))) nothing]
           [(fixnum? num) (just (fixnum->flonum num))] 

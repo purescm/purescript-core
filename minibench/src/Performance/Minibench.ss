@@ -9,6 +9,7 @@
   (import (only (rnrs base) define let lambda quote)
           (only (chezscheme)
             collect format time-difference current-time time-nanosecond fixnum->flonum)
+          (only (purs runtime pstring) string->pstring)
   )
 
   (define timeNs
@@ -22,5 +23,5 @@
 
   (define toFixed
     (lambda (n)
-      (format #f "~,2F" n)))
+      (string->pstring (format #f "~,2F" n))))
 )

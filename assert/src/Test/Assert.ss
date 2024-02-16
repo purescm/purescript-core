@@ -1,15 +1,16 @@
 (library (Test.Assert foreign)
   (export assertImpl checkThrows)
-  (import (chezscheme))
+  (import (chezscheme)
+          (only (purs runtime pstring) pstring->string))
 
   (define assertImpl
     (lambda (message)
       (lambda (success)
         (lambda ()
-          (if (not success) 
+          (when (not success)
             (raise-continuable
               (condition
-                (make-message-condition message))))))))
+                (make-message-condition (pstring->string message)))))))))
 
   (define checkThrows
     (lambda (fn)

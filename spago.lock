@@ -103,6 +103,56 @@ workspace:
       test_dependencies: []
       build_plan:
         - prelude
+    enums:
+      path: enums
+      dependencies:
+        - control
+        - either
+        - gen
+        - maybe
+        - newtype
+        - nonempty
+        - partial
+        - prelude
+        - tuples
+        - unfoldable
+      test_dependencies:
+        - assert
+        - console
+        - effect
+      build_plan:
+        - assert
+        - bifunctors
+        - console
+        - const
+        - contravariant
+        - control
+        - distributive
+        - effect
+        - either
+        - exists
+        - foldable-traversable
+        - functions
+        - functors
+        - gen
+        - identity
+        - integers
+        - invariant
+        - maybe
+        - newtype
+        - nonempty
+        - numbers
+        - orders
+        - partial
+        - prelude
+        - profunctor
+        - refs
+        - safe-coerce
+        - tailrec
+        - tuples
+        - type-equality
+        - unfoldable
+        - unsafe-coerce
     exceptions:
       path: exceptions
       dependencies:
@@ -381,6 +431,66 @@ workspace:
         - safe-coerce
         - tailrec
         - tuples
+        - unsafe-coerce
+    strings:
+      path: strings
+      dependencies:
+        - arrays
+        - control
+        - either
+        - enums
+        - foldable-traversable
+        - gen
+        - integers
+        - maybe
+        - newtype
+        - nonempty
+        - partial
+        - prelude
+        - tailrec
+        - tuples
+        - unfoldable
+        - unsafe-coerce
+      test_dependencies:
+        - assert
+        - console
+        - minibench
+      build_plan:
+        - arrays
+        - assert
+        - bifunctors
+        - console
+        - const
+        - contravariant
+        - control
+        - distributive
+        - effect
+        - either
+        - enums
+        - exists
+        - foldable-traversable
+        - functions
+        - functors
+        - gen
+        - identity
+        - integers
+        - invariant
+        - maybe
+        - minibench
+        - newtype
+        - nonempty
+        - numbers
+        - orders
+        - partial
+        - prelude
+        - profunctor
+        - refs
+        - safe-coerce
+        - st
+        - tailrec
+        - tuples
+        - type-equality
+        - unfoldable
         - unsafe-coerce
     unfoldable:
       path: unfoldable
@@ -972,6 +1082,21 @@ packages:
       - profunctor
       - tuples
       - unsafe-coerce
+  gen:
+    type: registry
+    version: 4.0.0
+    integrity: sha256-f7yzAXWwr+xnaqEOcvyO3ezKdoes8+WXWdXIHDBCAPI=
+    dependencies:
+      - either
+      - foldable-traversable
+      - identity
+      - maybe
+      - newtype
+      - nonempty
+      - prelude
+      - tailrec
+      - tuples
+      - unfoldable
   identity:
     type: registry
     version: 6.0.0

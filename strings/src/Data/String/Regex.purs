@@ -37,13 +37,13 @@ foreign import regexImpl
   :: (String -> Either String Regex)
   -> (Regex -> Either String Regex)
   -> String
-  -> String
+  -> RegexFlags
   -> Either String Regex
 
 -- | Constructs a `Regex` from a pattern string and flags. Fails with
 -- | `Left error` if the pattern contains a syntax error.
 regex :: String -> RegexFlags -> Either String Regex
-regex s f = regexImpl Left Right s $ renderFlags f
+regex s f = regexImpl Left Right s f
 
 -- | Returns the pattern string used to construct the given `Regex`.
 foreign import source :: Regex -> String

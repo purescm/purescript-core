@@ -6,27 +6,28 @@
           unsafeSet
           unsafeDelete)
   (import (chezscheme)
+          (only (purs runtime pstring) pstring->symbol)
           (prefix (purs runtime) rt:))
 
   (define unsafeHas
     (lambda (label)
       (lambda (rec)
-        (rt:record-has rec (string->symbol label)))))
+        (rt:record-has rec (pstring->symbol label)))))
 
   (define unsafeGet
     (lambda (label)
       (lambda (rec)
-        (rt:record-ref rec (string->symbol label)))))
+        (rt:record-ref rec (pstring->symbol label)))))
 
   (define unsafeSet
     (lambda (label)
       (lambda (value)
         (lambda (rec)
-          (rt:record-set rec (string->symbol label) value)))))
+          (rt:record-set rec (pstring->symbol label) value)))))
 
   (define unsafeDelete
     (lambda (label)
       (lambda (rec)
-        (rt:record-remove rec (string->symbol label)))))
+        (rt:record-remove rec (pstring->symbol label)))))
 
 )

@@ -1,19 +1,25 @@
 package:
   dependencies:
+    - arrays
     - control
     - either
+    - enums
+    - foldable-traversable
     - gen
+    - integers
     - maybe
     - newtype
     - nonempty
     - partial
     - prelude
+    - tailrec
     - tuples
     - unfoldable
-  name: enums
+    - unsafe-coerce
+  name: strings
   test:
+    main: Test.Main
     dependencies:
       - assert
       - console
-      - effect
-    main: Test.Main
+      - minibench
