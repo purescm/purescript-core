@@ -1,11 +1,11 @@
 ;; -*- mode: scheme -*-
 
-(library (Random foreign)
+(library (Effect.Random foreign)
   (export random)
-  (import (only (rnrs base) define lambda))
-  (import (prefix (chezscheme) scm:))
+  (import (only (rnrs base) define lambda)
+          (prefix (chezscheme) scm:))
 
   (define random
     (lambda ()
-      (random 1.0)))
+      (scm:random 1.0)))
 )

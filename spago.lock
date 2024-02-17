@@ -354,6 +354,81 @@ workspace:
       dependencies: []
       test_dependencies: []
       build_plan: []
+    quickcheck:
+      path: quickcheck
+      dependencies:
+        - arrays
+        - console
+        - effect
+        - either
+        - enums
+        - exceptions
+        - foldable-traversable
+        - gen
+        - identity
+        - integers
+        - lazy
+        - lcg
+        - lists
+        - maybe
+        - newtype
+        - nonempty
+        - numbers
+        - partial
+        - prelude
+        - record
+        - st
+        - strings
+        - tailrec
+        - transformers
+        - tuples
+        - unfoldable
+      test_dependencies: []
+      build_plan:
+        - arrays
+        - assert
+        - bifunctors
+        - console
+        - const
+        - contravariant
+        - control
+        - distributive
+        - effect
+        - either
+        - enums
+        - exceptions
+        - exists
+        - foldable-traversable
+        - functions
+        - functors
+        - gen
+        - identity
+        - integers
+        - invariant
+        - lazy
+        - lcg
+        - lists
+        - maybe
+        - minibench
+        - newtype
+        - nonempty
+        - numbers
+        - orders
+        - partial
+        - prelude
+        - profunctor
+        - random
+        - record
+        - refs
+        - safe-coerce
+        - st
+        - strings
+        - tailrec
+        - transformers
+        - tuples
+        - type-equality
+        - unfoldable
+        - unsafe-coerce
     random:
       path: random
       dependencies:
@@ -1113,6 +1188,34 @@ packages:
     dependencies:
       - control
       - prelude
+  lcg:
+    type: registry
+    version: 4.0.0
+    integrity: sha256-h7ME5cthLfbgJOJdsZcSfFpwXsx4rf8YmhebU+3iSYg=
+    dependencies:
+      - effect
+      - integers
+      - maybe
+      - partial
+      - prelude
+      - random
+  lists:
+    type: registry
+    version: 7.0.0
+    integrity: sha256-EKF15qYqucuXP2lT/xPxhqy58f0FFT6KHdIB/yBOayI=
+    dependencies:
+      - bifunctors
+      - control
+      - foldable-traversable
+      - lazy
+      - maybe
+      - newtype
+      - nonempty
+      - partial
+      - prelude
+      - tailrec
+      - tuples
+      - unfoldable
   maybe:
     type: registry
     version: 6.0.0
@@ -1179,6 +1282,25 @@ packages:
       - partial
       - prelude
       - refs
+  transformers:
+    type: registry
+    version: 6.0.0
+    integrity: sha256-Pzw40HjthX77tdPAYzjx43LK3X5Bb7ZspYAp27wksFA=
+    dependencies:
+      - control
+      - distributive
+      - effect
+      - either
+      - exceptions
+      - foldable-traversable
+      - identity
+      - lazy
+      - maybe
+      - newtype
+      - prelude
+      - tailrec
+      - tuples
+      - unfoldable
   tuples:
     type: registry
     version: 7.0.0
