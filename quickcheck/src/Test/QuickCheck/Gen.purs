@@ -44,17 +44,15 @@ import Data.Array ((:), length, zip, sortBy)
 import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty as NEA
 import Data.Enum (class BoundedEnum, fromEnum, toEnum)
+import Data.Semigroup.Foldable (foldMap1)
 import Data.Int (toNumber, floor)
 import Data.List (List(..), toUnfoldable)
 import Data.Maybe (Maybe(..), fromJust)
 import Data.Monoid.Additive (Additive(..))
 import Data.Newtype (unwrap)
 import Data.Number ((%))
-import Data.Semigroup.Foldable (foldMap1)
 import Data.Tuple (Tuple(..), fst, snd)
 import Effect (Effect)
-import Effect.Class.Console (log)
-import Effect.Unsafe (unsafePerformEffect)
 import Partial.Unsafe (unsafePartial)
 import Random.LCG (Seed, lcgPerturb, lcgM, lcgNext, unSeed, randomSeed)
 
@@ -140,17 +138,7 @@ chooseInt a b = if a <= b then chooseInt' a b else chooseInt' b a
 
 -- guaranteed a <= b
 chooseInt' :: Int -> Int -> Gen Int
-chooseInt' a b = do
-  n <- choose32BitPosNumber
-  unsafePerformEffect do
-    log $ "numA: " <> show numA
-    log $ "numB: " <> show numB
-    log $ "number to clamp: " <> show n
-    log $ "'numB - numA + one': " <> show clampIntermediate1
-    log $ "x % (numB - numA + one): " <> show (clampIntermediate2 n)
-    log $ "clamped number: " <> show (clamp n)
-    pure $ pure $ (floor <<< clamp) n
-
+chooseInt' a b = floor <<< clamp <$> choose32BitPosNumber
   where
   choose32BitPosNumber :: Gen Number
   choose32BitPosNumber =
@@ -159,14 +147,8 @@ chooseInt' a b = do
   choose31BitPosNumber :: Gen Number
   choose31BitPosNumber = toNumber <$> lcgStep
 
-  clampIntermediate1 :: Number
-  clampIntermediate1 = numB - numA + one
-
-  clampIntermediate2 :: Number -> Number
-  clampIntermediate2 n = n % clampIntermediate1
-
   clamp :: Number -> Number
-  clamp x = numA + (clampIntermediate2 x)
+  clamp x = numA + (x % (numB - numA + one))
 
   numA = toNumber a
   numB = toNumber b
@@ -175,13 +157,8 @@ chooseInt' a b = do
 -- | a non-empty array of random generators with uniform probability.
 oneOf :: forall a. NonEmptyArray (Gen a) -> Gen a
 oneOf xs = do
-  n <- unsafePerformEffect do
-    log $ "ONEOF - len of xs is: " <> show (NEA.length xs)
-    let n = chooseInt zero (NEA.length xs - one)
-    pure n
-  unsafePerformEffect do
-    log $ "ONEOF - n is: " <> show n
-    pure $ unsafePartial $ NEA.unsafeIndex xs n
+  n <- chooseInt zero (NEA.length xs - one)
+  unsafePartial $ NEA.unsafeIndex xs n
 
 -- | Create a random generator which selects and executes a random generator from
 -- | a non-empty, weighted list of random generators.
@@ -202,17 +179,19 @@ frequency xxs =
 
 -- | Create a random generator which generates an array of random values.
 arrayOf :: forall a. Gen a -> Gen (Array a)
-arrayOf g = sized $ \n -> do
-  k <- chooseInt zero n
-  vectorOf k g
+arrayOf g = sized $ \n ->
+  do
+    k <- chooseInt zero n
+    vectorOf k g
 
 -- | Create a random generator which generates a non-empty array of random values.
 arrayOf1 :: forall a. Gen a -> Gen (NonEmptyArray a)
-arrayOf1 g = sized $ \n -> do
-  k <- chooseInt zero n
-  x <- g
-  xs <- vectorOf (k - one) g
-  pure $ unsafePartial fromJust $ NEA.fromArray $ x : xs
+arrayOf1 g = sized $ \n ->
+  do
+    k <- chooseInt zero n
+    x <- g
+    xs <- vectorOf (k - one) g
+    pure $ unsafePartial fromJust $ NEA.fromArray $ x : xs
 
 -- | Create a random generator for a finite enumeration.
 -- | `toEnum i` must be well-behaved:
@@ -228,12 +207,8 @@ replicateMRec k _ | k <= 0 = pure Nil
 replicateMRec k gen = tailRecM go (Tuple Nil k)
   where
   go :: (Tuple (List a) Int) -> m (Step (Tuple (List a) Int) (List a))
-  go (Tuple acc 0) = unsafePerformEffect do
-    log "replicateMRec 0"
-    pure $ pure $ Done acc
-  go (Tuple acc n) = unsafePerformEffect do
-    log $ "replicateMRec " <> show n
-    pure $ gen <#> \x -> Loop (Tuple (Cons x acc) (n - 1))
+  go (Tuple acc 0) = pure $ Done acc
+  go (Tuple acc n) = gen <#> \x -> Loop (Tuple (Cons x acc) (n - 1))
 
 -- | Create a random generator which generates a list of random values of the specified size.
 listOf :: forall a. Int -> Gen a -> Gen (List a)
@@ -241,11 +216,7 @@ listOf = replicateMRec
 
 -- | Create a random generator which generates a vector of random values of a specified size.
 vectorOf :: forall a. Int -> Gen a -> Gen (Array a)
-vectorOf k g = toUnfoldable <$>
-  ( unsafePerformEffect do
-      log $ "vectorOf " <> show k
-      pure (listOf k g)
-  )
+vectorOf k g = toUnfoldable <$> listOf k g
 
 -- | Create a random generator which selects a value from a non-empty array with
 -- | uniform probability.
@@ -281,9 +252,7 @@ randomSampleOne gen = do
 -- | Sample a random generator, using a randomly generated seed
 randomSample' :: forall a. Size -> Gen a -> Effect (Array a)
 randomSample' n g = do
-  log "randomSample'"
   seed <- randomSeed
-  log $ "GOT SEED: " <> show seed
   pure $ sample seed n g
 
 -- | Get a random sample of 10 values. For a single value, use `randomSampleOne`.

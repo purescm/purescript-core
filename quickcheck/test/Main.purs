@@ -8,23 +8,22 @@ import Data.Array.Partial (head)
 import Data.Either (isLeft)
 import Data.Foldable (sum)
 import Data.Generic.Rep (class Generic)
-import Data.List as List
-import Data.Maybe (Maybe(..))
-import Data.Number (isFinite)
 import Data.Show.Generic (genericShow)
 import Data.Tuple (fst)
 import Effect (Effect)
 import Effect.Console (log, logShow)
 import Effect.Exception (try)
+import Data.Number (isFinite)
 import Partial.Unsafe (unsafePartial)
-import Prim.TypeError (Quote)
 import Random.LCG (mkSeed)
 import Test.Assert (assert)
 import Test.QuickCheck (class Testable, quickCheck, quickCheckPure', (/=?), (<=?), (<?), (==?), (>=?), (>?))
 import Test.QuickCheck.Arbitrary (arbitrary, genericArbitrary, class Arbitrary)
 import Test.QuickCheck.Gen (Gen, Size, randomSample, randomSample', resize, runGen, sized, vectorOf)
+import Data.Maybe (Maybe(..))
+import Data.List as List
 
-data Foo a = F0 | F1 -- | F2 { foo :: a, bar :: Array a }
+data Foo a = F0 a | F1 a a | F2 { foo :: a, bar :: Array a }
 
 derive instance genericFoo :: Generic (Foo a) _
 instance showFoo :: Show a => Show (Foo a) where
@@ -50,12 +49,6 @@ testResize resize' =
 
 main :: Effect Unit
 main = do
-  log "Generating via Generic - small"
-  logShow =<< randomSample' 1 (arbitrary :: Gen (Foo Int))
-
-  log "Generatig via Generic - large"
-  logShow =<< randomSample' 10 (arbitrary :: Gen (Foo Int))
-
   log "MonadGen.resize"
   assert (testResize (MGen.resize <<< const))
   log "Gen.resize"
@@ -70,6 +63,9 @@ main = do
   log "Testing stack safety of Gen"
   logShow =<< go 20000
   logShow =<< go 100000
+
+  log "Generating via Generic"
+  logShow =<< randomSample' 10 (arbitrary :: Gen (Foo Int))
 
   log "Arbitrary instance for records"
   listOfRecords <- randomSample' 10 (arbitrary :: Gen { foo :: Int, nested :: { bar :: Boolean } })
