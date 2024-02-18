@@ -27,9 +27,9 @@
           tan
           trunc
           )
-  (import (only (rnrs base) define lambda nan? finite? cond else let and or not number?)
-          (only (chezscheme) flabs flacos flasin flatan flceiling flcos flexp
-                             flfloor fllog flmax flmin flexpt flmod flround
+  (import (only (rnrs base) define lambda nan? finite? cond else let and or not number? if)
+          (only (chezscheme) flabs flacos flasin flatan flceiling flcos flexp flpositive?
+                             flfloor fllog flmax flmin flexpt flmod flround fl-
                              fl= fl< flsin flsqrt fltan fltruncate flonum? fixnum? fixnum->flonum)
           (only (purs runtime pstring) pstring->number))
 
@@ -91,7 +91,9 @@
   (define remainder
     (lambda (n)
       (lambda (m)
-        (flmod n m))))
+        (if (flpositive? n)
+            (flmod n m)
+            (fl- (flmod (fl- n) m))))))
 
   (define round flround)
 
