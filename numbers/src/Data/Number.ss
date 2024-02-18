@@ -27,9 +27,9 @@
           tan
           trunc
           )
-  (import (only (rnrs base) define lambda nan? finite? cond else let and or not number?)
-          (only (chezscheme) flabs flacos flasin flatan flceiling flcos flexp
-                             flfloor fllog flmax flmin flexpt flmod0 flround
+  (import (only (rnrs base) define lambda nan? finite? cond else let and or not number? if)
+          (only (chezscheme) flabs flacos flasin flatan flceiling flcos flexp flpositive?
+                             flfloor fllog flmax flmin flexpt flmod flround fl-
                              fl= fl< flsin flsqrt fltan fltruncate flonum? fixnum? fixnum->flonum)
           (only (purs runtime pstring) pstring->number))
 
@@ -88,10 +88,24 @@
       (lambda (p)
         (flexpt n p))))
 
+  ;; This is one of those places where the PureScript behaviour is specced as
+  ;; "whatever JavaScript does" and requires a bit of care.
+  ;;
+  ;; From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Remainder:
+  ;; > The remainder (%) operator returns the remainder left over when one operand
+  ;; > is divided by a second operand. It always takes the sign of the dividend.
+  ;;
+  ;; Chez specs these a little differently (see https://scheme.com/tspl4/objects.html#./objects:s100):
+  ;; - there's `mod`, where "the value xm of (mod x1 x2) is a real number such that x1 = nd · x2 + xm and 0 ≤ xm < |x2|"
+  ;; - and `mod0`, where "the value xm of (mod0 x1 x2) is a real number such that x1 = nd · x2 + xm and -|x2/2| ≤ xm < |x2/2|"
+  ;;
+  ;; In practice we can use `flmod` and just flip the sign whenever the dividend is negative.
   (define remainder
     (lambda (n)
       (lambda (m)
-        (flmod0 n m))))
+        (if (flpositive? n)
+            (flmod n m)
+            (fl- (flmod (fl- n) m))))))
 
   (define round flround)
 

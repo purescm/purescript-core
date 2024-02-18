@@ -1,4 +1,4 @@
-module Test.Main where
+module Test.QuickCheck.Main where
 
 import Prelude
 
@@ -24,9 +24,13 @@ import Data.Maybe (Maybe(..))
 import Data.List as List
 
 data Foo a = F0 a | F1 a a | F2 { foo :: a, bar :: Array a }
+
 derive instance genericFoo :: Generic (Foo a) _
-instance showFoo :: Show a => Show (Foo a) where show = genericShow
-instance arbitraryFoo :: Arbitrary a => Arbitrary (Foo a) where arbitrary = genericArbitrary
+instance showFoo :: Show a => Show (Foo a) where
+  show = genericShow
+
+instance arbitraryFoo :: Arbitrary a => Arbitrary (Foo a) where
+  arbitrary = genericArbitrary
 
 quickCheckFail :: forall t. Testable t => t -> Effect Unit
 quickCheckFail = assert <=< map isLeft <<< try <<< quickCheck
@@ -64,7 +68,7 @@ main = do
   logShow =<< randomSample' 10 (arbitrary :: Gen (Foo Int))
 
   log "Arbitrary instance for records"
-  listOfRecords ← randomSample' 10 (arbitrary :: Gen { foo :: Int, nested :: { bar :: Boolean } })
+  listOfRecords <- randomSample' 10 (arbitrary :: Gen { foo :: Int, nested :: { bar :: Boolean } })
   let toString rec = "{ foo: " <> show rec.foo <> "; nested.bar: " <> show rec.nested.bar <> " }"
   logShow (toString <$> listOfRecords)
 
@@ -75,27 +79,28 @@ main = do
   quickCheck \(x :: Int) -> x + x ==? x * 2
   quickCheck \(x :: Int) -> x + x /=? x * 3
 
-  quickCheck     $ 1 ==? 1
+  quickCheck $ 1 ==? 1
   quickCheckFail $ 1 /=? 1
-  quickCheck     $ 1 <?  2
+  quickCheck $ 1 <? 2
   quickCheckFail $ 1 >=? 2
-  quickCheck     $ 3 <=? 3
-  quickCheckFail $ 3 >?  3
-  quickCheck     $ 3 >=? 3
-  quickCheckFail $ 3 <?  3
-  quickCheck     $ 4 /=? 3
+  quickCheck $ 3 <=? 3
+  quickCheckFail $ 3 >? 3
+  quickCheck $ 3 >=? 3
+  quickCheckFail $ 3 <? 3
+  quickCheck $ 4 /=? 3
   quickCheckFail $ 4 ==? 3
-  quickCheck     $ 4 >?  3
+  quickCheck $ 4 >? 3
   quickCheckFail $ 4 <=? 3
 
   log "Testing stack safety of quickCheckPure'"
   let n = 100_000
-  let pairs  = quickCheckPure' (mkSeed 1234) n \(x :: Int) -> x <? x + 1
+  let pairs = quickCheckPure' (mkSeed 1234) n \(x :: Int) -> x <? x + 1
   assert (Just (mkSeed 1234) /= map fst (List.last pairs))
   log ("Completed " <> show n <> " runs.")
 
   log "Checking that chooseFloat over the whole Number range always yields a finite value"
-  randomSample (MGen.chooseFloat ((-1.7976931348623157e+308)) (1.7976931348623157e+308)) >>= assert <<< all isFinite
+  randomSample (MGen.chooseFloat ((-1.7976931348623157e+308)) (1.7976931348623157e+308)) >>= assert
+    <<< all isFinite
 
   where
   go n = map (sum <<< unsafeHead) $ randomSample' 1 (vectorOf n (arbitrary :: Gen Int))

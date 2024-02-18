@@ -57,4 +57,7 @@ echo
 echo "Testing record"
 purescm run --main Test.Record.Main
 
+echo "Testing quickcheck"
+purescm run --main Test.QuickCheck.Main
+
 echo "All good!"
