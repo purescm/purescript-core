@@ -88,6 +88,18 @@
       (lambda (p)
         (flexpt n p))))
 
+  ;; This is one of those places where the PureScript behaviour is specced as
+  ;; "whatever JavaScript does" and requires a bit of care.
+  ;;
+  ;; From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Remainder:
+  ;; > The remainder (%) operator returns the remainder left over when one operand
+  ;; > is divided by a second operand. It always takes the sign of the dividend.
+  ;;
+  ;; Chez specs these a little differently (see https://scheme.com/tspl4/objects.html#./objects:s100):
+  ;; - there's `mod`, where "the value xm of (mod x1 x2) is a real number such that x1 = nd · x2 + xm and 0 ≤ xm < |x2|"
+  ;; - and `mod0`, where "the value xm of (mod0 x1 x2) is a real number such that x1 = nd · x2 + xm and -|x2/2| ≤ xm < |x2/2|"
+  ;;
+  ;; In practice we can use `flmod` and just flip the sign whenever the dividend is negative.
   (define remainder
     (lambda (n)
       (lambda (m)
