@@ -10,7 +10,7 @@
 
   (define float32ToInt32
     (lambda (f)
-      (let ([buf (scm:foreign-alloc 4)])
+      (let ([buf (scm:foreign-alloc (scm:foreign-sizeof 'single-float))])
         (scm:foreign-set! (scm:quote single-float) buf 0 f)
         (let ([n (scm:foreign-ref (scm:quote integer-32) buf 0)])
           (scm:foreign-free buf)

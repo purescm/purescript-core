@@ -5,9 +5,7 @@
           showNumberImpl
           showCharImpl
           showStringImpl
-          showArrayImpl
-          (rename [consImpl cons])
-          join)
+          showArrayImpl)
   (import (chezscheme)
           (prefix (purs runtime) rt:)
           (only (purs runtime pstring) pstring
@@ -72,15 +70,4 @@
           (pstring #\[)
           (string-join (srfi:214:flexvector-map f xs) (string->pstring ","))
           (pstring #\])))))
-
-  (define consImpl
-    (lambda (head)
-      (lambda (tail)
-        (srfi:214:flexvector-append (rt:make-array head) tail))))
-
-  (define join
-    (lambda (separator)
-      (lambda (xs)
-        (string-join xs separator))))
-
 )
