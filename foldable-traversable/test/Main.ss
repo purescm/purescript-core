@@ -3,14 +3,14 @@
           arrayReplicate
           mkNEArray
           foldMap1NEArray)
-  (import (only (rnrs base) define lambda let if + > <)
+  (import (chezscheme)
           (prefix (purs runtime) rt:)
           (prefix (purs runtime srfi :214) srfi:214:))
 
   (define arrayFrom1UpTo
     (lambda (n)
       (srfi:214:flexvector-map/index
-        (lambda (i x) (+ i 1))
+        (lambda (i x) (fx1+ i))
         (srfi:214:make-flexvector n))))
 
   (define arrayReplicate
@@ -23,7 +23,7 @@
     (lambda (nothing)
       (lambda (just)
         (lambda (arr)
-          (if (> (srfi:214:flexvector-length arr) 0)
+          (if (fx>? (srfi:214:flexvector-length arr) 0)
             (just arr)
             nothing)))))
 
@@ -34,8 +34,8 @@
           (let ([len (srfi:214:flexvector-length arr)])
             (let recur ([acc (f (rt:array-ref arr 0))]
                         [i 1])
-              (if (< i len)
-                (recur ((append acc) (f (rt:array-ref arr i))) (+ i 1))
+              (if (fx<? i len)
+                (recur ((append acc) (f (rt:array-ref arr i))) (fx1+ i))
                 acc)))))))
 
 )

@@ -20,12 +20,12 @@
   (define eqIntImpl
     (lambda (r1)
       (lambda (r2)
-        (= r1 r2))))
+        (fx=? r1 r2))))
 
   (define eqNumberImpl
     (lambda (r1)
       (lambda (r2)
-        (= r1 r2))))
+        (fl=? r1 r2))))
 
   (define eqCharImpl
     (lambda (r1)

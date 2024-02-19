@@ -7,8 +7,7 @@
           ordStringImpl
           ordCharImpl
           ordArrayImpl)
-  (import (chezscheme))
-  (import (only (rnrs base) define lambda)
+  (import (chezscheme)
           (only (purs runtime pstring) pstring<? pstring=?)
           (prefix (purs runtime srfi :214) srfi:214:))
 
@@ -28,9 +27,9 @@
         (lambda (gt)
           (lambda (x)
             (lambda (y)
-              (if (< x y)
+              (if (fx<? x y)
                   lt
-                  (if (= x y) eq gt))))))))
+                  (if (fx=? x y) eq gt))))))))
 
   (define ordNumberImpl
     (lambda (lt)
@@ -38,9 +37,9 @@
         (lambda (gt)
           (lambda (x)
             (lambda (y)
-              (if (< x y)
+              (if (fl<? x y)
                   lt
-                  (if (= x y) eq gt))))))))
+                  (if (fl=? x y) eq gt))))))))
 
   (define ordStringImpl
     (lambda (lt)
@@ -70,15 +69,15 @@
                 [ylen (srfi:214:flexvector-length ys)])
              (let loop ([xsi 0]
                         [ysi 0])
-               (if (or (= xsi xlen) (= ysi ylen))
+               (if (or (fx=? xsi xlen) (fx=? ysi ylen))
                  (cond
-                   [(= xlen ylen) 0]
-                   [(> xlen ylen) -1]
+                   [(fx=? xlen ylen) 0]
+                   [(fx>? xlen ylen) -1]
                    (else 1))
                  (let ([o ((f (srfi:214:flexvector-ref xs xsi)) (srfi:214:flexvector-ref ys ysi))])
                    (if (not (fx=? o 0))
                      o
                      (loop
-                       (+ xsi 1)
-                       (+ ysi 1)))))))))))
+                       (fx1+ xsi)
+                       (fx1+ ysi)))))))))))
 )

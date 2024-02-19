@@ -41,7 +41,7 @@
       (lambda (hi)
         (lambda (f)
           (lambda ()
-            (do ([i lo (+ i 1)]) ((= i hi) 'unit)
+            (do ([i lo (fx1+ i)]) ((fx=? i hi) 'unit)
               ((f i))))))))
 
   (define foreach

@@ -27,19 +27,19 @@
 
   (define pokeImpl
     (lambda (i a xs)
-      (let ([ret (and (>= i 0) (< i (rt:array-length xs)))])
+      (let ([ret (and (fx>=? i 0) (fx<? i (rt:array-length xs)))])
         (if ret (srfi:214:flexvector-set! xs i a))
         ret)))
 
   (define peekImpl
     (lambda (just nothing i xs)
-      (if (and (>= i 0) (< i (rt:array-length xs)))
+      (if (and (fx>=? i 0) (fx<? i (rt:array-length xs)))
         (just (rt:array-ref xs i))
         nothing)))
 
   (define popImpl
     (lambda (just nothing xs)
-      (if (> (rt:array-length xs) 0)
+      (if (fx>? (rt:array-length xs) 0)
         (just (srfi:214:flexvector-remove-back! xs))
         nothing)))
 
@@ -50,16 +50,16 @@
 
   (define shiftImpl
     (lambda (just nothing xs)
-      (if (> (rt:array-length xs) 0)
+      (if (fx>? (rt:array-length xs) 0)
         (just (srfi:214:flexvector-remove-front! xs))
         nothing)))
 
   (define spliceImpl
     (lambda (i howMany bs xs)
-      (if (> howMany 0)
+      (if (fx>? howMany 0)
         (let ([removed (srfi:214:make-flexvector howMany)])
-          (srfi:214:flexvector-copy! removed 0 xs i (+ i howMany))
-          (srfi:214:flexvector-remove-range! xs i (+ i howMany))
+          (srfi:214:flexvector-copy! removed 0 xs i (fx+ i howMany))
+          (srfi:214:flexvector-remove-range! xs i (fx+ i howMany))
           (srfi:214:flexvector-add-all! xs i (srfi:214:flexvector->list bs))
           removed)
         (begin
@@ -89,7 +89,7 @@
     (lambda (compare fromOrdering xs)
       (let ([tmp (srfi:214:flexvector->vector xs)])
         (vector-sort!
-          (lambda (x y) (> (fromOrdering ((compare y) x)) 0))
+          (lambda (x y) (fx>? (fromOrdering ((compare y) x)) 0))
           tmp)
         (srfi:214:flexvector-copy! xs 0 (srfi:214:vector->flexvector tmp)))))
 

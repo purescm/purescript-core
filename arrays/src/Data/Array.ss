@@ -35,21 +35,21 @@
 
   (define rangeImpl
     (lambda (start end)
-      (let* ([step (if (> start end) -1 1)]
+      (let* ([step (if (fx>? start end) -1 1)]
              [result (srfi:214:make-flexvector (+ (* step (- end start)) 1))])
         (let recur ([i start]
                     [n 0])
-          (if (not (= i end))
+          (if (not (fx=? i end))
             (begin
               (srfi:214:flexvector-set! result n i)
-              (recur (+ i step) (+ n 1)))
+              (recur (fx+ i step) (fx1+ n)))
             (begin
               (srfi:214:flexvector-set! result n i)
               result))))))
 
   (define replicateImpl
     (lambda (count value)
-      (if (< count 1)
+      (if (fx<? count 1)
         (rt:make-array)
         (let ([result (srfi:214:make-flexvector count)])
           (srfi:214:flexvector-fill! result value)
@@ -64,13 +64,13 @@
 
   (define unconsImpl
     (lambda (empty next xs)
-      (if (= (rt:array-length xs) 0)
+      (if (fx=? (rt:array-length xs) 0)
         (empty 'unit)
         ((next (rt:array-ref xs 0)) (srfi:214:flexvector-copy xs 1)))))
 
   (define indexImpl
     (lambda (just nothing xs i)
-      (if (or (< i 0) (>= i (rt:array-length xs)))
+      (if (or (fx<? i 0) (fx>=? i (rt:array-length xs)))
         nothing
         (just (rt:array-ref xs i)))))
 
@@ -78,11 +78,11 @@
     (lambda (nothing isJust f xs)
       (let ([len (rt:array-length xs)])
         (let recur ([i 0])
-          (if (< i len)
+          (if (fx<? i len)
             (let ([result (f (rt:array-ref xs i))])
               (if (isJust result)
                 result
-                (recur (+ i 1))))
+                (recur (fx1+ i))))
             nothing)))))
 
   (define findIndexImpl
@@ -101,7 +101,7 @@
 
   (define _insertAt
     (lambda (just nothing i a l)
-      (if (or (< i 0) (> i (rt:array-length l)))
+      (if (or (fx<? i 0) (fx>? i (rt:array-length l)))
         nothing
         (let ([l1 (srfi:214:flexvector-copy l)])
           (srfi:214:flexvector-add! l1 i a)
@@ -109,7 +109,7 @@
 
   (define _deleteAt
     (lambda (just nothing i l)
-      (if (or (< i 0) (>= i (rt:array-length l)))
+      (if (or (fx<? i 0) (fx>=? i (rt:array-length l)))
         nothing
         (let ([l1 (srfi:214:flexvector-copy l)])
           (srfi:214:flexvector-remove! l1 i)
@@ -117,7 +117,7 @@
 
   (define _updateAt
     (lambda (just nothing i a l)
-      (if (or (< i 0) (>= i (rt:array-length l)))
+      (if (or (fx<? i 0) (fx>=? i (rt:array-length l)))
         nothing
         (let ([l1 (srfi:214:flexvector-copy l)])
           (srfi:214:flexvector-set! l1 i a)
@@ -147,22 +147,22 @@
              [out (srfi:214:make-flexvector len)])
         (let recur ([i 0]
                     [acc b])
-          (if (< i len)
+          (if (fx<? i len)
             (let ([next ((f acc) (rt:array-ref xs i))])
               (srfi:214:flexvector-set! out i next)
-              (recur (+ i 1) next))
+              (recur (fx1+ i) next))
             out)))))
 
   (define scanrImpl
     (lambda (f b xs)
       (let* ([len (rt:array-length xs)]
              [out (srfi:214:make-flexvector len)])
-        (let recur ([i (- len 1)]
+        (let recur ([i (fx1- len)]
                     [acc b])
-          (if (>= i 0)
+          (if (fx>=? i 0)
             (let ([next ((f (rt:array-ref xs i)) acc)])
               (srfi:214:flexvector-set! out i next)
-              (recur (- i 1) next))
+              (recur (fx1- i) next))
             out)))))
 
 ;;------------------------------------------------------------------------------
@@ -173,7 +173,7 @@
     (lambda (compare fromOrdering xs)
       (let ([tmp (srfi:214:flexvector->vector xs)])
         (vector-sort!
-          (lambda (x y) (> (fromOrdering ((compare y) x)) 0))
+          (lambda (x y) (fx>? (fromOrdering ((compare y) x)) 0))
           tmp)
         (srfi:214:vector->flexvector tmp))))
 
@@ -184,7 +184,7 @@
 
   (define sliceImpl
     (lambda (s e l)
-      (if (> s e)
+      (if (fx>? s e)
         (rt:make-array)
         (srfi:214:flexvector-copy l s e))))
 
