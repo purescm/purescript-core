@@ -2,7 +2,7 @@
 
 (library (Data.Show.Generic foreign)
   (export intercalate)
-  (import (only (rnrs base) define lambda if let cond else = +)
+  (import (chezscheme)
           (only (purs runtime pstring) pstring pstring-concat)
           (prefix (purs runtime) rt:))
 
@@ -11,14 +11,14 @@
       (lambda (xs)
         (let ([len (rt:array-length xs)])
           (cond
-            [(= len 0) (pstring)]
-            [(= len 1) (rt:array-ref xs 0)]
+            [(fx=? len 0) (pstring)]
+            [(fx=? len 1) (rt:array-ref xs 0)]
             (else
               (let recur ([i 1]
                           [buffer (rt:array-ref xs 0)])
-                (if (= len i)
+                (if (fx=? len i)
                   buffer
-                  (recur (+ i 1)
+                  (recur (fx1+ i)
                          (pstring-concat buffer separator (rt:array-ref xs i)))))))))))
 
 )

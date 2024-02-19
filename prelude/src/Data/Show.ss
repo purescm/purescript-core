@@ -54,14 +54,14 @@
   (define (string-join xs separator)
     (let ([len (rt:array-length xs)])
       (cond
-        [(= len 0) (string->pstring "")]
-        [(= len 1) (rt:array-ref xs 0)]
+        [(fx=? len 0) (string->pstring "")]
+        [(fx=? len 1) (rt:array-ref xs 0)]
         (else
           (let recur ([i 1]
                       [buffer (rt:array-ref xs 0)])
-            (if (= len i)
+            (if (fx=? len i)
               buffer
-              (recur (+ i 1) (pstring-concat buffer separator (rt:array-ref xs i)))))))))
+              (recur (fx1+ i) (pstring-concat buffer separator (rt:array-ref xs i)))))))))
 
   (define showArrayImpl
     (lambda (f)
