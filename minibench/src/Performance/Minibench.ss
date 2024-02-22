@@ -6,9 +6,7 @@
           toFixed
   )
 
-  (import (only (rnrs base) define let lambda quote)
-          (only (chezscheme)
-            collect format time-difference current-time time-nanosecond fixnum->flonum)
+  (import (chezscheme)
           (only (purs runtime pstring) string->pstring)
   )
 
@@ -19,7 +17,7 @@
         (let ([end (current-time 'time-monotonic)])
           (fixnum->flonum (time-nanosecond (time-difference end start)))))))
 
-  (define gc collect)
+  (define gc collect-rendezvous)
 
   (define toFixed
     (lambda (n)
