@@ -18,7 +18,9 @@ import Data.Traversable (sequence, traverse)
 import Data.TraversableWithIndex (traverseWithIndex)
 import Data.Tuple (Tuple(..), fst, snd, uncurry)
 import Effect (Effect)
+import Effect.Class.Console (logShow)
 import Effect.Console (log)
+import Effect.Unsafe (unsafePerformEffect)
 import Foreign.Object as O
 import Foreign.Object.Gen (genForeignObject)
 import Partial.Unsafe (unsafePartial)
@@ -69,8 +71,12 @@ toAscArray = O.toAscUnfoldable
 objectTests :: Effect Unit
 objectTests = do
   log "Test inserting into empty tree"
-  quickCheck $ \k v -> O.lookup k (O.insert k v O.empty) == Just (number v)
-    <?> ("k: " <> show k <> ", v: " <> show v)
+  quickCheck $
+    ( \k v -> unsafePerformEffect do
+        logShow k
+        pure $ O.lookup k (O.insert k v O.empty) == Just (number v)
+          <?> ("k: " <> show k <> ", v: " <> show v)
+    )
 
   log "Test inserting two values with same key"
   quickCheck $ \k v1 v2 ->
