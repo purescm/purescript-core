@@ -25,7 +25,7 @@ derive newtype instance ordYear :: Ord Year
 -- Using these year values means `Date bottom bottom bottom` is a valid date,
 -- likewise for `top`.
 instance boundedYear :: Bounded Year where
-  bottom = Year (-271820)
+  bottom = Year 1901
   top = Year 275759
 
 instance enumYear :: Enum Year where
@@ -33,9 +33,9 @@ instance enumYear :: Enum Year where
   pred = toEnum <<< (_ - 1) <<< fromEnum
 
 instance boundedEnumYear :: BoundedEnum Year where
-  cardinality = Cardinality 547580
+  cardinality = Cardinality 273859
   toEnum n
-    | n >= (-271820) && n <= 275759 = Just (Year n)
+    | n >= 1901 && n <= 275759 = Just (Year n)
     | otherwise = Nothing
   fromEnum (Year n) = n
 
