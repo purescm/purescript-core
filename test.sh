@@ -60,4 +60,7 @@ purescm run --main Test.Record.Main
 echo "Testing quickcheck"
 purescm run --main Test.QuickCheck.Main
 
+echo "Testing datetime"
+purescm run --main Test.Data.Time.Main
+
 echo "All good!"
