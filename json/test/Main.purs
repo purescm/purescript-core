@@ -1,4 +1,4 @@
-module Test.Main where
+module Test.JSON.Main where
 
 import Prelude
 
@@ -11,6 +11,8 @@ import JSON.Array as JA
 import JSON.Object as JO
 import JSON.Path as Path
 import Test.Assert (assertTrue)
+
+foreign import testJsonParser :: Effect Unit
 
 main :: Effect Unit
 main = do
@@ -93,3 +95,9 @@ main = do
     let p1 = Path.AtKey "other" Path.Tip
     let p2 = Path.AtKey "y" $ Path.AtKey "x" $ Path.AtIndex 0 Path.Tip
     Path.stripPrefix p1 p2 == Nothing
+
+  log "Check JSON parsing"
+  testJsonParser
+  assertTrue $ J.parse "[]" == pure (J.fromJArray (JA.fromArray []))
+  let obj =J.fromJObject (JO.fromEntries [ Tuple "foo" (J.fromNumber 123.45), Tuple "bar" (J.fromString "Hello PS!"), Tuple "baz" J.null ])
+  assertTrue $ J.parse "{ \"foo\": 123.45, \"bar\": \"Hello PS!\", \"baz\": null }" == pure obj
