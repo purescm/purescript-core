@@ -30,6 +30,10 @@ echo "Testing integers"
 purescm run --main Test.Int.Main
 echo
 
+echo "Testing json"
+purescm run --main Test.JSON.Main
+echo
+
 echo "Testing lazy"
 purescm run --main Test.Lazy.Main
 echo
@@ -56,8 +60,10 @@ echo
 
 echo "Testing record"
 purescm run --main Test.Record.Main
+echo
 
 echo "Testing quickcheck"
 purescm run --main Test.QuickCheck.Main
+echo
 
 echo "All good!"
