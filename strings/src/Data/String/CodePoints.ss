@@ -18,8 +18,9 @@
                                  pstring-length-code-points
                                  pstring-ref-code-point
                                  pstring-take-code-points
-                                 pstring-uncons-code-point
-                                 string->pstring)
+                                 pstring-cursor-read-code-point
+                                 pstring->cursor
+                                 cursor->pstring)
     (only (chezscheme) fx1+ fx=?))
 
   (define length pstring-length-code-points)
@@ -33,24 +34,23 @@
       (lambda (Nothing)
         (lambda (index)
           (lambda (s)
-            (let loop ([i 0] [cur s])
-              (if (pstring-empty? cur)
-                Nothing
-                (let-values ([(head tail) (pstring-uncons-code-point cur)])
-                  (if (fx=? i index)
-                    (Just head)
-                    (loop (fx1+ i) tail))))))))))
+            (let ([cur (pstring->cursor s)])
+              (let loop ([i 0] [cp (pstring-cursor-read-code-point cur)])
+                (cond
+                  [(eof-object? cp) Nothing]
+                  [(fx=? i index) (Just cp)]
+                  [else (loop (fx1+ i) (pstring-cursor-read-code-point cur))]))))))))
 
   (define countPrefix
     (lambda (pred)
       (lambda (s)
-        (let loop ([count 0] [rest s])
-          (if (pstring-empty? rest)
-            count
-            (let-values ([(head tail) (pstring-uncons-code-point rest)])
-              (if (pred head)
-                (loop (fx1+ count) tail)
-                count)))))))
+        (let ([cursor (pstring->cursor s)])
+          (let loop ([count 0])
+            (let ([cp (pstring-cursor-read-code-point cursor)])
+              (cond
+                [(eof-object? cp) count]
+                [(pred cp) (loop (fx1+ count))]
+                [else count])))))))
 
   (define fromCodePointArray
     (lambda (cps)
@@ -67,12 +67,13 @@
     (lambda (Just)
       (lambda (Nothing)
         (lambda (s)
-          (if (pstring-empty? s)
-            Nothing
-            (let-values ([(c tail) (pstring-uncons-code-point s)])
+          (let* ([cur (pstring->cursor s)]
+                 [cp (pstring-cursor-read-code-point cur)])
+            (if (eof-object? cp)
+              Nothing
               (Just (list
-                      (cons 'head c)
-                      (cons 'tail tail)))))))))
+                    (cons 'head cp)
+                    (cons 'tail (cursor->pstring cur))))))))))
 
   (define toCodePointArray pstring->code-point-flexvector)
 
