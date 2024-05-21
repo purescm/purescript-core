@@ -307,6 +307,60 @@ workspace:
         - prelude
         - safe-coerce
         - unsafe-coerce
+    json:
+      path: json
+      dependencies:
+        - arrays
+        - either
+        - foldable-traversable
+        - functions
+        - gen
+        - integers
+        - maybe
+        - prelude
+        - strings
+        - tuples
+        - unfoldable
+      test_dependencies:
+        - assert
+      build_plan:
+        - arrays
+        - assert
+        - bifunctors
+        - console
+        - const
+        - contravariant
+        - control
+        - distributive
+        - effect
+        - either
+        - enums
+        - exists
+        - foldable-traversable
+        - functions
+        - functors
+        - gen
+        - identity
+        - integers
+        - invariant
+        - maybe
+        - minibench
+        - newtype
+        - nonempty
+        - numbers
+        - orders
+        - partial
+        - prelude
+        - profunctor
+        - refs
+        - safe-coerce
+        - st
+        - strings
+        - tailrec
+        - tuples
+        - type-equality
+        - unfoldable
+        - unsafe-coerce
     lazy:
       path: lazy
       dependencies:
