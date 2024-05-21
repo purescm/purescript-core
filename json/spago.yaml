@@ -1,0 +1,18 @@
+package:
+  name: json
+  dependencies:
+  - prelude
+  - arrays
+  - functions
+  - integers
+  - maybe
+  - either
+  - tuples
+  - foldable-traversable
+  - gen
+  - strings
+  - unfoldable
+  test:
+    main: Test.JSON.Main
+    dependencies:
+      - assert
