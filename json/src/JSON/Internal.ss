@@ -180,7 +180,7 @@
          (* 16 third)
          fourth)))
 
-  (define (read-unicode-char cur)
+  (define (read-unicode-code-point cur)
     (let ([w1 (read-unicode-escape cur)])
       (cond
         ; If it's a two-word encoded value we need to read a second escape
@@ -189,16 +189,15 @@
                  [_ (expect-char cur #\u)]
                  [w2 (read-unicode-escape cur)])
             (if (fx<= #xDC00 w2 #xDFFF)
-              (code-points->pstring
-                (fx+
-                  (fxlogor
-                    (fxsll (fx- w1 #xD800) 10)
-                    (fx- w2 #xDC00))
-                  #x10000))
+              (fx+
+                (fxlogor
+                  (fxsll (fx- w1 #xD800) 10)
+                  (fx- w2 #xDC00))
+                #x10000)
               (error #f (format "Invalid unicode surrogate pair ~a ~a" w1 w2))))]
         [(fx<= #xDC00 w1 #xDFFF)
           (error #f (format "Invalid unicode escape ~,x" w1))]
-        [else (code-points->pstring w1)])))
+        [else w1])))
 
   (define (read-escape cur)
     (let ([ch (pstring-cursor-read-char cur)])
@@ -209,7 +208,7 @@
         [(eqv? ch #\n) (pstring #\newline)]
         [(eqv? ch #\t) (pstring #\tab)]
         [(eqv? ch #\/) (pstring #\/)]
-        [(eqv? ch #\u) (read-unicode-char cur)]
+        [(eqv? ch #\u) (code-points->pstring (read-unicode-code-point cur))]
         [else (error #f (format "Invalid string escape ~a" ch))])))
 
   (define (control-char? ch)
