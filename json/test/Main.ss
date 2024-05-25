@@ -64,6 +64,12 @@
       (assert-roundtrip "\"foo \\u03BB \\u03bc\"" "\"foo λ μ\"")
       (assert-fail "\"\\u03z\"" "Unexpected token 'z', was expecting a hex digit")
       (assert-fail "\"\\u03" "Unexpected end of input, was expecting a hex digit")
+      ; surrogate pairs
+      (assert-roundtrip "\"\\uD801\\uDC37\"" "\"𐐷\"")
+      (assert-roundtrip "\" \\uD801\\uDC37 foo\"" "\" 𐐷 foo\"")
+      (assert-fail "\"\\uD801 \"" "Unexpected ' ', was expecting '\\'")
+      (assert-fail "\"\\uDC37 \"" "Invalid unicode escape DC37")
+      (assert-fail "\" \\uD801\\uD802 foo\"" "Invalid unicode surrogate pair D801 D802")
 
       (display "  Leading whitespace\n")
       (assert-roundtrip "\n\r  \"\\nbar\"" "\"\\nbar\"")
