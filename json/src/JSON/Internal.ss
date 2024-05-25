@@ -194,7 +194,7 @@
                   (fxsll (fx- w1 #xD800) 10)
                   (fx- w2 #xDC00))
                 #x10000)
-              (error #f (format "Invalid unicode surrogate pair ~a ~a" w1 w2))))]
+              (error #f (format "Invalid unicode surrogate pair ~,x ~,x" w1 w2))))]
         [(fx<= #xDC00 w1 #xDFFF)
           (error #f (format "Invalid unicode escape ~,x" w1))]
         [else w1])))
