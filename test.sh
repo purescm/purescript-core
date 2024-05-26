@@ -66,4 +66,7 @@ echo "Testing quickcheck"
 purescm run --main Test.QuickCheck.Main
 echo
 
+echo "Test foreign-object"
+purescm run --main Test.Foreign.Object.Main
+
 echo "All good!"

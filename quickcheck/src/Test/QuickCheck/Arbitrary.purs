@@ -17,7 +17,7 @@ import Control.Monad.Gen.Class (chooseBool)
 import Control.Monad.Gen.Common as MGC
 import Control.Monad.ST as ST
 import Data.Array ((:))
-import Data.Array.NonEmpty (NonEmptyArray)
+import Data.Array.NonEmpty (NonEmptyArray, cons')
 import Data.Array.NonEmpty as NEA
 import Data.Array.ST as STA
 import Data.Either (Either(..))
@@ -106,7 +106,8 @@ instance coarbNonEmptyString :: Coarbitrary NonEmptyString where
   coarbitrary = coarbitrary <<< NES.toString
 
 instance arbChar :: Arbitrary Char where
-  arbitrary = toEnumWithDefaults bottom top <$> chooseInt 0 65536
+  arbitrary = toEnumWithDefaults bottom top <$> oneOf
+    (cons' (chooseInt 0 55295) [ chooseInt 57344 65536 ])
 
 instance coarbChar :: Coarbitrary Char where
   coarbitrary c = coarbitrary $ fromEnum c

@@ -219,6 +219,63 @@ workspace:
         - tuples
         - type-equality
         - unsafe-coerce
+    foreign-object:
+      path: foreign-object
+      dependencies:
+        - arrays
+        - foldable-traversable
+        - functions
+        - gen
+        - lists
+        - maybe
+        - prelude
+        - st
+        - tailrec
+        - tuples
+        - typelevel-prelude
+        - unfoldable
+      test_dependencies:
+        - ordered-collections
+      build_plan:
+        - arrays
+        - assert
+        - bifunctors
+        - console
+        - const
+        - contravariant
+        - control
+        - distributive
+        - effect
+        - either
+        - exists
+        - foldable-traversable
+        - functions
+        - functors
+        - gen
+        - identity
+        - integers
+        - invariant
+        - lazy
+        - lists
+        - maybe
+        - minibench
+        - newtype
+        - nonempty
+        - numbers
+        - ordered-collections
+        - orders
+        - partial
+        - prelude
+        - profunctor
+        - refs
+        - safe-coerce
+        - st
+        - tailrec
+        - tuples
+        - type-equality
+        - typelevel-prelude
+        - unfoldable
+        - unsafe-coerce
     functions:
       path: functions
       dependencies:

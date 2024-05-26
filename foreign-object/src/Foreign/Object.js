@@ -99,6 +99,10 @@ export function _lookupST(no, yes, k, m) {
   };
 }
 
+export function fromHomogeneousImpl(r) {
+  return r;
+}
+
 export function toArrayWithKey(f) {
   return function (m) {
     var r = [];

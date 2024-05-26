@@ -2,10 +2,11 @@
 
 (library (Partial foreign)
   (export _crashWith)
-  (import (only (rnrs base) define lambda error))
+  (import (only (rnrs base) define lambda error)
+          (only (purs runtime pstring) pstring->string))
 
   (define _crashWith
     (lambda (msg)
-      (error #f msg)))
+      (error #f (pstring->string msg))))
 
 )
