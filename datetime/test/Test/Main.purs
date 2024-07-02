@@ -1,4 +1,4 @@
-module Test.Main where
+module Test.Data.Time.Main where
 
 import Prelude
 
@@ -41,12 +41,13 @@ main = do
   assert $ IsoDuration.mkIsoDuration (mempty)
     == Left (pure IsoDuration.IsEmpty)
 
-  let epochDate = unsafePartial fromJust $ Date.canonicalDate
-                  <$> toEnum 1
-                  <*> pure bottom
-                  <*> pure bottom
+  let
+    epochDate = unsafePartial fromJust $ Date.canonicalDate
+      <$> toEnum 1901
+      <*> pure bottom
+      <*> pure bottom
   let epochDateTime = DateTime.DateTime epochDate bottom
-  let epochMillis = -62135596800000.0
+  let epochMillis = -2177452800000.0
   -- time --------------------------------------------------------------------
 
   log "Check that Hour is a good BoundedEnum"
@@ -130,7 +131,7 @@ main = do
   assert $ Date.isLeapYear (unsafeYear 2016)
 
   log "Check that epoch is correctly constructed"
-  assert $ Just (Date.year epochDate) == toEnum 1
+  assert $ Just (Date.year epochDate) == toEnum 1901
   assert $ Date.month epochDate == bottom
   assert $ Date.day epochDate == bottom
 
@@ -139,7 +140,7 @@ main = do
   assert $ Date.adjust (Duration.Days 999.0) d1 == Just d4
   assert $ Date.adjust (Duration.Days 10000.0) d5 == Just d1
   assert $ Date.adjust (Duration.Days (-31.0)) d2 == Just d1
-  assert $ Date.adjust (Duration.Days (- 999.0)) d4 == Just d1
+  assert $ Date.adjust (Duration.Days (-999.0)) d4 == Just d1
   assert $ Date.adjust (Duration.Days (-10000.0)) d1 == Just d5
 
   -- datetime ----------------------------------------------------------------
@@ -151,10 +152,15 @@ main = do
   let dt5 = DateTime.DateTime d3 t1
 
   log "Check that adjust behaves as expected"
-  assert $ DateTime.adjust (Duration.fromDuration (Duration.Days 31.0) <> Duration.fromDuration (Duration.Minutes 40.0)) dt1 == Just dt4
-  assert $ (Date.year <<< DateTime.date <$>
-           (DateTime.adjust (Duration.Days 735963.0) epochDateTime))
-           == toEnum 2016
+  assert $
+    DateTime.adjust
+      (Duration.fromDuration (Duration.Days 31.0) <> Duration.fromDuration (Duration.Minutes 40.0))
+      dt1 == Just dt4
+  assert $
+    ( Date.year <<< DateTime.date <$>
+        (DateTime.adjust (Duration.Days 735963.0) epochDateTime)
+    )
+      == toEnum 3916
 
   log "Check that diff behaves as expected"
   assert $ DateTime.diff dt2 dt1 == Duration.Minutes 40.0
@@ -162,8 +168,9 @@ main = do
   assert $ DateTime.diff dt3 dt1 == Duration.Days 31.0
   assert $ DateTime.diff dt5 dt3 == Duration.Days 29.0
   assert $ DateTime.diff dt1 dt3 == Duration.Days (-31.0)
-  assert $ DateTime.diff dt4 dt1 == Duration.fromDuration (Duration.Days 31.0) <> Duration.fromDuration (Duration.Minutes 40.0)
-  assert $ over Duration.Days floor (DateTime.diff dt1 epochDateTime) == Duration.Days 735963.0
+  assert $ DateTime.diff dt4 dt1 == Duration.fromDuration (Duration.Days 31.0) <>
+    Duration.fromDuration (Duration.Minutes 40.0)
+  assert $ over Duration.Days floor (DateTime.diff dt1 epochDateTime) == Duration.Days 42003.0
 
   -- instant -----------------------------------------------------------------
 
