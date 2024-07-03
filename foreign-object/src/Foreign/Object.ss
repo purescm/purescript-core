@@ -119,14 +119,14 @@
       (lambda (m)
         (let* ([len (scm:length (scm:unbox m))]
               [arr (arrays:make-flexvector len)])
-          (let loop ([i (scm:- len 1)]
+          (let loop ([i (scm:fx- len 1)]
                     [els (scm:unbox m)])
             (if (scm:null? els)
               arr
               (begin
                 (let ([el (scm:car els)])
                   (arrays:flexvector-set! arr i ((f (symbol->pstring (scm:car el))) (scm:cdr el))))
-                (loop (scm:- i 1) (scm:cdr els)))))))))
+                (loop (scm:fx- i 1) (scm:cdr els)))))))))
 
   (define keys
     (lambda (m)

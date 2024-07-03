@@ -90,6 +90,69 @@ workspace:
         - prelude
         - safe-coerce
         - unsafe-coerce
+    datetime:
+      path: datetime
+      dependencies:
+        - bifunctors
+        - control
+        - either
+        - enums
+        - foldable-traversable
+        - functions
+        - gen
+        - integers
+        - lists
+        - maybe
+        - newtype
+        - numbers
+        - ordered-collections
+        - partial
+        - prelude
+        - tuples
+      test_dependencies:
+        - arrays
+        - assert
+        - console
+        - effect
+      build_plan:
+        - arrays
+        - assert
+        - bifunctors
+        - console
+        - const
+        - contravariant
+        - control
+        - distributive
+        - effect
+        - either
+        - enums
+        - exists
+        - foldable-traversable
+        - functions
+        - functors
+        - gen
+        - identity
+        - integers
+        - invariant
+        - lazy
+        - lists
+        - maybe
+        - newtype
+        - nonempty
+        - numbers
+        - ordered-collections
+        - orders
+        - partial
+        - prelude
+        - profunctor
+        - refs
+        - safe-coerce
+        - st
+        - tailrec
+        - tuples
+        - type-equality
+        - unfoldable
+        - unsafe-coerce
     effect:
       path: effect
       dependencies:
@@ -231,7 +294,13 @@ workspace:
         - typelevel-prelude
         - unfoldable
       test_dependencies:
+        - assert
+        - console
+        - effect
         - ordered-collections
+        - partial
+        - quickcheck
+        - transformers
       build_plan:
         - arrays
         - assert
@@ -243,6 +312,8 @@ workspace:
         - distributive
         - effect
         - either
+        - enums
+        - exceptions
         - exists
         - foldable-traversable
         - functions
@@ -252,9 +323,9 @@ workspace:
         - integers
         - invariant
         - lazy
+        - lcg
         - lists
         - maybe
-        - minibench
         - newtype
         - nonempty
         - numbers
@@ -263,10 +334,15 @@ workspace:
         - partial
         - prelude
         - profunctor
+        - quickcheck
+        - random
+        - record
         - refs
         - safe-coerce
         - st
+        - strings
         - tailrec
+        - transformers
         - tuples
         - type-equality
         - typelevel-prelude
@@ -1353,6 +1429,22 @@ packages:
       - prelude
       - tuples
       - unfoldable
+  ordered-collections:
+    type: registry
+    version: 3.1.1
+    integrity: sha256-boSYHmlz4aSbwsNN4VxiwCStc0t+y1F7BXmBS+1JNtI=
+    dependencies:
+      - arrays
+      - foldable-traversable
+      - gen
+      - lists
+      - maybe
+      - partial
+      - prelude
+      - st
+      - tailrec
+      - tuples
+      - unfoldable
   orders:
     type: registry
     version: 6.0.0
@@ -1424,3 +1516,10 @@ packages:
     version: 4.0.1
     integrity: sha256-Hs9D6Y71zFi/b+qu5NSbuadUQXe5iv5iWx0226vOHUw=
     dependencies: []
+  typelevel-prelude:
+    type: registry
+    version: 7.0.0
+    integrity: sha256-uFF2ph+vHcQpfPuPf2a3ukJDFmLhApmkpTMviHIWgJM=
+    dependencies:
+      - prelude
+      - type-equality
