@@ -1,0 +1,19 @@
+package:
+  name: datetime
+  dependencies:
+    - bifunctors
+    - control
+    - either
+    - enums
+    - foldable-traversable
+    - functions
+    - gen
+    - integers
+    - lists
+    - maybe
+    - newtype
+    - numbers
+    - ordered-collections
+    - partial
+    - prelude
+    - tuples
