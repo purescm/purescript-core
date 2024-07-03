@@ -9,4 +9,5 @@ package:
     dependencies:
       - assert
       - console
+      - effect
       - partial

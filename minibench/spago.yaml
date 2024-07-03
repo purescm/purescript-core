@@ -5,12 +5,10 @@ package:
     - effect
     - integers
     - numbers
-    - partial
     - prelude
     - refs
   test:
     dependencies:
-      - assert
       - console
       - effect
     main: Test.Main

@@ -3,5 +3,4 @@ package:
   dependencies: []
   test:
     main: Test.Partial.Main
-    dependencies:
-      - assert
+    dependencies: []

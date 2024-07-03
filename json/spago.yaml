@@ -1,18 +1,23 @@
 package:
   name: json
   dependencies:
-  - prelude
-  - arrays
-  - functions
-  - integers
-  - maybe
-  - either
-  - tuples
-  - foldable-traversable
-  - gen
-  - strings
-  - unfoldable
+    - arrays
+    - control
+    - either
+    - foldable-traversable
+    - functions
+    - gen
+    - integers
+    - maybe
+    - nonempty
+    - prelude
+    - strings
+    - tailrec
+    - tuples
+    - unfoldable
   test:
     main: Test.JSON.Main
     dependencies:
       - assert
+      - console
+      - effect

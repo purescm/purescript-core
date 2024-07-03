@@ -3,3 +3,4 @@ package:
   dependencies:
     - effect
     - integers
+    - prelude
