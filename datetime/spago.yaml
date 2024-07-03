@@ -17,3 +17,10 @@ package:
     - partial
     - prelude
     - tuples
+  test:
+    main: Test.Main
+    dependencies:
+      - arrays
+      - assert
+      - console
+      - effect

@@ -1,0 +1,25 @@
+package:
+  name: foreign-object
+  dependencies:
+    - arrays
+    - foldable-traversable
+    - functions
+    - gen
+    - lists
+    - maybe
+    - prelude
+    - st
+    - tailrec
+    - tuples
+    - typelevel-prelude
+    - unfoldable
+  test:
+    main: Test.Foreign.Object.Main
+    dependencies:
+      - assert
+      - console
+      - effect
+      - ordered-collections
+      - partial
+      - quickcheck
+      - transformers

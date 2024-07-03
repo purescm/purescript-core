@@ -45,7 +45,7 @@
                                [(char=? c #\return) (pstring #\\ #\r)]
                                [(char=? c #\tab) (pstring #\\ #\t)]
                                [(char=? c #\vtab) (pstring #\\ #\v)]
-                               [else c])))])
+                               [else (pstring c)])))])
         (pstring-concat
           (pstring #\")
           (pstring-regex-replace-by regex s replacement)

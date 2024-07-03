@@ -16,37 +16,40 @@
             make-message-condition
             condition?
             message-condition?)
+          (only (purs runtime pstring) pstring->string string->pstring)
           (only (rnrs io ports) call-with-string-output-port)
           (only (rnrs exceptions) with-exception-handler raise-continuable)
           (only (chezscheme) format call/cc display-condition))
 
   (define showErrorImpl
     (lambda (err)
-      (if (condition? err)
-        (call-with-string-output-port
-          (lambda (p) (display-condition err p)))
-        (format "Exception: ~s" err))))
+      (string->pstring
+        (if (condition? err)
+          (call-with-string-output-port
+            (lambda (p) (display-condition err p)))
+          (format "Exception: ~s" err)))))
 
   (define error
     (lambda (msg)
-      (make-message-condition msg)))
+      (make-message-condition (pstring->string msg))))
 
   (define errorWithCause
     (lambda (msg)
       (lambda (cause)
         (condition
-          (make-message-condition msg)
+          (make-message-condition (pstring->string msg))
           cause))))
 
   (define message
     (lambda (e)
-      (if (message-condition? e)
-        (condition-message e)
-        (format "Exception: ~s" e))))
+      (string->pstring
+        (if (message-condition? e)
+          (condition-message e)
+          (format "Exception: ~s" e)))))
 
   (define name
     (lambda (e)
-      "Exception"))
+      (string->pstring "Exception")))
 
   (define stackImpl
     (lambda (just)

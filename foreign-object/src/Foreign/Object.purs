@@ -61,7 +61,6 @@ import Data.Unfoldable (class Unfoldable)
 import Foreign.Object.ST (STObject)
 import Foreign.Object.ST as OST
 import Type.Row.Homogeneous (class Homogeneous)
-import Unsafe.Coerce (unsafeCoerce)
 
 -- | `Object a` represents a homogeneous JS Object with values of type `a`.
 foreign import data Object :: Type -> Type
@@ -98,7 +97,8 @@ instance functorObject :: Functor Object where
 instance functorWithIndexObject :: FunctorWithIndex String Object where
   mapWithIndex = mapWithKey
 
-foreign import _foldM :: forall a m z. (m -> (z -> m) -> m) -> (z -> String -> a -> m) -> m -> Object a -> m
+foreign import _foldM
+  :: forall a m z. (m -> (z -> m) -> m) -> (z -> String -> a -> m) -> m -> Object a -> m
 
 -- | Fold the keys and values of an object
 fold :: forall a z. (z -> String -> a -> z) -> z -> Object a -> z
@@ -135,7 +135,8 @@ instance traversableWithIndexObject :: TraversableWithIndex String Object where
 -- Unfortunately the above are not short-circuitable (consider using purescript-machines)
 -- so we need special cases:
 
-foreign import _foldSCObject :: forall a z. Fn4 (Object a) z (z -> String -> a -> Maybe z) (forall b. b -> Maybe b -> b) z
+foreign import _foldSCObject
+  :: forall a z. Fn4 (Object a) z (z -> String -> a -> Maybe z) (forall b. b -> Maybe b -> b) z
 
 -- | Fold the keys and values of a map.
 -- |
@@ -168,7 +169,8 @@ foreign import empty :: forall a. Object a
 
 -- | Test whether one map contains all of the keys and values contained in another map
 isSubmap :: forall a. Eq a => Object a -> Object a -> Boolean
-isSubmap m1 m2 = all f m1 where
+isSubmap m1 m2 = all f m1
+  where
   f k v = runFn4 _lookup false ((==) v) k m2
 
 -- | Test whether a map is empty
@@ -234,17 +236,21 @@ foreign import _lookupST :: forall a r z. Fn4 z (a -> z) String (STObject r a) (
 -- | Create an `Object a` from a foldable collection of key/value pairs, using the
 -- | specified function to combine values for duplicate keys.
 fromFoldableWith :: forall f a. Foldable f => (a -> a -> a) -> f (Tuple String a) -> Object a
-fromFoldableWith f l = runST (do
-  s <- OST.new
-  for_ l (\(Tuple k v) -> runFn4 _lookupST v (f v) k s >>= \v' -> OST.poke k v' s)
-  pure s)
+fromFoldableWith f l = runST
+  ( do
+      s <- OST.new
+      for_ l (\(Tuple k v) -> runFn4 _lookupST v (f v) k s >>= \v' -> OST.poke k v' s)
+      pure s
+  )
 
 -- | Create an `Object a` from a homogeneous record, i.e. all of the record
 -- | fields are of the same type.
 fromHomogeneous :: forall r a. Homogeneous r a => { | r } -> Object a
-fromHomogeneous = unsafeCoerce
+fromHomogeneous = fromHomogeneousImpl
 
-foreign import toArrayWithKey :: forall a b . (String -> a -> b) -> Object a -> Array b
+foreign import fromHomogeneousImpl :: forall r a. { | r } -> Object a
+
+foreign import toArrayWithKey :: forall a b. (String -> a -> b) -> Object a -> Array b
 
 -- | Unfolds a map into a list of key/value pairs
 toUnfoldable :: forall f a. Unfoldable f => Object a -> f (Tuple String a)
@@ -275,7 +281,8 @@ union m = mutate (\s -> foldM (\s' k v -> OST.poke k v s') s m)
 -- | to combine values for duplicate keys.
 unionWith :: forall a. (a -> a -> a) -> Object a -> Object a -> Object a
 unionWith f m1 m2 =
-  mutate (\s1 -> foldM (\s2 k v1 -> OST.poke k (runFn4 _lookup v1 (\v2 -> f v1 v2) k m2) s2) s1 m1) m2
+  mutate (\s1 -> foldM (\s2 k v1 -> OST.poke k (runFn4 _lookup v1 (\v2 -> f v1 v2) k m2) s2) s1 m1)
+    m2
 
 -- | Compute the union of a collection of maps
 unions :: forall f a. Foldable f => f (Object a) -> Object a
@@ -303,7 +310,7 @@ filterWithKey predicate m = runST go
     m' <- OST.new
     foldM step m' m
     where
-      step acc k v = if predicate k v then OST.poke k v acc else pure acc
+    step acc k v = if predicate k v then OST.poke k v acc else pure acc
 
 -- | Filter out those key/value pairs of a map for which a predicate
 -- | on the key fails to hold.

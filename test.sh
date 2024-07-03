@@ -68,5 +68,10 @@ echo
 
 echo "Testing datetime"
 purescm run --main Test.Data.Time.Main
+echo
+
+echo "Testing foreign-object"
+purescm run --main Test.Foreign.Object.Main
+echo
 
 echo "All good!"
