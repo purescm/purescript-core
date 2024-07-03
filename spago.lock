@@ -21,7 +21,8 @@ workspace:
         - assert
         - console
         - const
-        - minibench
+        - effect
+        - orders
       build_plan:
         - assert
         - bifunctors
@@ -40,7 +41,6 @@ workspace:
         - integers
         - invariant
         - maybe
-        - minibench
         - newtype
         - nonempty
         - numbers
@@ -84,18 +84,12 @@ workspace:
       test_dependencies:
         - effect
       build_plan:
-        - assert
         - console
         - effect
         - newtype
         - prelude
         - safe-coerce
         - unsafe-coerce
-    core:
-      path: ./
-      dependencies: []
-      test_dependencies: []
-      build_plan: []
     effect:
       path: effect
       dependencies:
@@ -162,7 +156,6 @@ workspace:
         - prelude
       test_dependencies: []
       build_plan:
-        - assert
         - console
         - control
         - effect
@@ -190,7 +183,10 @@ workspace:
       test_dependencies:
         - assert
         - console
+        - effect
+        - functions
         - integers
+        - numbers
         - unsafe-coerce
       build_plan:
         - assert
@@ -292,6 +288,7 @@ workspace:
       test_dependencies:
         - assert
         - console
+        - effect
         - partial
       build_plan:
         - assert
@@ -311,18 +308,23 @@ workspace:
       path: json
       dependencies:
         - arrays
+        - control
         - either
         - foldable-traversable
         - functions
         - gen
         - integers
         - maybe
+        - nonempty
         - prelude
         - strings
+        - tailrec
         - tuples
         - unfoldable
       test_dependencies:
         - assert
+        - console
+        - effect
       build_plan:
         - arrays
         - assert
@@ -344,7 +346,6 @@ workspace:
         - integers
         - invariant
         - maybe
-        - minibench
         - newtype
         - nonempty
         - numbers
@@ -365,7 +366,6 @@ workspace:
       path: lazy
       dependencies:
         - control
-        - effect
         - foldable-traversable
         - invariant
         - prelude
@@ -408,11 +408,9 @@ workspace:
         - effect
         - integers
         - numbers
-        - partial
         - prelude
         - refs
       test_dependencies:
-        - assert
         - console
         - effect
       build_plan:
@@ -436,8 +434,11 @@ workspace:
       dependencies:
         - functions
         - maybe
+        - prelude
       test_dependencies:
         - assert
+        - console
+        - effect
       build_plan:
         - assert
         - console
@@ -453,13 +454,8 @@ workspace:
     partial:
       path: partial
       dependencies: []
-      test_dependencies:
-        - assert
-      build_plan:
-        - assert
-        - console
-        - effect
-        - prelude
+      test_dependencies: []
+      build_plan: []
     prelude:
       path: prelude
       dependencies: []
@@ -470,6 +466,7 @@ workspace:
       dependencies:
         - arrays
         - console
+        - control
         - effect
         - either
         - enums
@@ -493,8 +490,8 @@ workspace:
         - tailrec
         - transformers
         - tuples
-        - unfoldable
-      test_dependencies: []
+      test_dependencies:
+        - assert
       build_plan:
         - arrays
         - assert
@@ -520,7 +517,6 @@ workspace:
         - lcg
         - lists
         - maybe
-        - minibench
         - newtype
         - nonempty
         - numbers
@@ -545,6 +541,7 @@ workspace:
       dependencies:
         - effect
         - integers
+        - prelude
       test_dependencies: []
       build_plan:
         - assert
@@ -569,6 +566,7 @@ workspace:
         - unsafe-coerce
       test_dependencies:
         - assert
+        - effect
       build_plan:
         - assert
         - console
@@ -591,6 +589,7 @@ workspace:
     st:
       path: st
       dependencies:
+        - effect
         - partial
         - prelude
         - tailrec
@@ -640,7 +639,7 @@ workspace:
       test_dependencies:
         - assert
         - console
-        - minibench
+        - effect
       build_plan:
         - arrays
         - assert
@@ -662,7 +661,6 @@ workspace:
         - integers
         - invariant
         - maybe
-        - minibench
         - newtype
         - nonempty
         - numbers
@@ -722,9 +720,10 @@ workspace:
       path: unsafe-coerce
       dependencies: []
       test_dependencies:
-        - assert
+        - console
+        - effect
+        - prelude
       build_plan:
-        - assert
         - console
         - effect
         - prelude

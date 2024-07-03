@@ -4,4 +4,6 @@ package:
   test:
     main: Test.Unsafe.Coerce.Main
     dependencies:
-      - assert
+      - console
+      - effect
+      - prelude
