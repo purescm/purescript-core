@@ -21,7 +21,7 @@ jobs:
           nix_path: nixpkgs=channel:nixos-unstable
 
       - name: Setup PureScript dependencies
-        run: npm i --global purescript@0.15.10 spago@next purescm@next
+        run: npm i --global purescript@0.15.10 spago@next purescm@latest
 
       - name: Build source
         run: spago build
