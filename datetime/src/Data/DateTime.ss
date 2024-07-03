@@ -15,20 +15,20 @@
 
   (define calcDiff
     (lambda (datetimeRecord1 datetimeRecord2)
-      (let* ([year1 (rt:record-ref datetimeRecord1 (scm:string->symbol "year"))]
-            [month1 (rt:record-ref datetimeRecord1 (scm:string->symbol "month"))]
-            [day1 (rt:record-ref datetimeRecord1 (scm:string->symbol "day"))]
-            [hour1 (rt:record-ref datetimeRecord1 (scm:string->symbol "hour"))]
-            [minute1 (rt:record-ref datetimeRecord1 (scm:string->symbol "minute"))]
-            [second1 (rt:record-ref datetimeRecord1 (scm:string->symbol "second"))]
-            [millisecond1 (rt:record-ref datetimeRecord1 (scm:string->symbol "millisecond"))]
-            [year2 (rt:record-ref datetimeRecord2 (scm:string->symbol "year"))]
-            [month2 (rt:record-ref datetimeRecord2 (scm:string->symbol "month"))]
-            [day2 (rt:record-ref datetimeRecord2 (scm:string->symbol "day"))]
-            [hour2 (rt:record-ref datetimeRecord2 (scm:string->symbol "hour"))]
-            [minute2 (rt:record-ref datetimeRecord2 (scm:string->symbol "minute"))]
-            [second2 (rt:record-ref datetimeRecord2 (scm:string->symbol "second"))]
-            [millisecond2 (rt:record-ref datetimeRecord2 (scm:string->symbol "millisecond"))]
+      (let* ([year1 (rt:record-ref datetimeRecord1 (scm:quote year))]
+            [month1 (rt:record-ref datetimeRecord1 (scm:quote month))]
+            [day1 (rt:record-ref datetimeRecord1 (scm:quote day))]
+            [hour1 (rt:record-ref datetimeRecord1 (scm:quote hour))]
+            [minute1 (rt:record-ref datetimeRecord1 (scm:quote minute))]
+            [second1 (rt:record-ref datetimeRecord1 (scm:quote second))]
+            [millisecond1 (rt:record-ref datetimeRecord1 (scm:quote millisecond))]
+            [year2 (rt:record-ref datetimeRecord2 (scm:quote year))]
+            [month2 (rt:record-ref datetimeRecord2 (scm:quote month))]
+            [day2 (rt:record-ref datetimeRecord2 (scm:quote day))]
+            [hour2 (rt:record-ref datetimeRecord2 (scm:quote hour))]
+            [minute2 (rt:record-ref datetimeRecord2 (scm:quote minute))]
+            [second2 (rt:record-ref datetimeRecord2 (scm:quote second))]
+            [millisecond2 (rt:record-ref datetimeRecord2 (scm:quote millisecond))]
             ;; note: make-date takes nanoseconds, not milliseconds
             [date1 (make-date millisecond1 second1 minute1 hour1 day1 month1 year1)]
             [date2 (make-date millisecond2 second2 minute2 hour2 day2 month2 year2)]
@@ -47,13 +47,13 @@
       (lambda (nothing)
         (lambda (offset)
           (lambda (datetime-record)
-            (let* ([year (rt:record-ref datetime-record (scm:string->symbol "year"))]
-                  [month (rt:record-ref datetime-record (scm:string->symbol "month"))]
-                  [day (rt:record-ref datetime-record (scm:string->symbol "day"))]
-                  [hour (rt:record-ref datetime-record (scm:string->symbol "hour"))]
-                  [minute (rt:record-ref datetime-record (scm:string->symbol "minute"))]
-                  [second (rt:record-ref datetime-record (scm:string->symbol "second"))]
-                  [millisecond (rt:record-ref datetime-record (scm:string->symbol "millisecond"))]
+            (let* ([year (rt:record-ref datetime-record (scm:quote year))]
+                  [month (rt:record-ref datetime-record (scm:quote month))]
+                  [day (rt:record-ref datetime-record (scm:quote day))]
+                  [hour (rt:record-ref datetime-record (scm:quote hour))]
+                  [minute (rt:record-ref datetime-record (scm:quote minute))]
+                  [second (rt:record-ref datetime-record (scm:quote second))]
+                  [millisecond (rt:record-ref datetime-record (scm:quote millisecond))]
                   [date (make-date millisecond second minute hour day month year)]
                   [time (scm:date->time-utc date)]
                   [duration-seconds (scm:flonum->fixnum (scm:fldiv offset 1000.0))]
@@ -63,12 +63,12 @@
                   [new-date (scm:time-utc->date new-time 0)]
                   [new-datetime-record
                     (scm:list
-                      (scm:cons (scm:string->symbol "year") (scm:date-year new-date))
-                      (scm:cons (scm:string->symbol "month") (scm:date-month new-date))
-                      (scm:cons (scm:string->symbol "day") (scm:date-day new-date))
-                      (scm:cons (scm:string->symbol "hour") (scm:date-hour new-date))
-                      (scm:cons (scm:string->symbol "minute") (scm:date-minute new-date))
-                      (scm:cons (scm:string->symbol "second") (scm:date-second new-date))
-                      (scm:cons (scm:string->symbol "millisecond") (scm:fx/ (scm:date-nanosecond new-date) 1000000)))])
+                      (scm:cons (scm:quote year) (scm:date-year new-date))
+                      (scm:cons (scm:quote month) (scm:date-month new-date))
+                      (scm:cons (scm:quote day) (scm:date-day new-date))
+                      (scm:cons (scm:quote hour) (scm:date-hour new-date))
+                      (scm:cons (scm:quote minute) (scm:date-minute new-date))
+                      (scm:cons (scm:quote second) (scm:date-second new-date))
+                      (scm:cons (scm:quote millisecond) (scm:fx/ (scm:date-nanosecond new-date) 1000000)))])
               (just new-datetime-record)))))))
 )
