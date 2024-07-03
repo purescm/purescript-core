@@ -23,9 +23,7 @@
 
   (define new
     (lambda ()
-      (scm:cons
-        (scm:make-hashtable scm:symbol-hash scm:symbol=? 32)
-        (scm:quote ()))))
+      (scm:box (scm:quote ()))))
 
   (define peekImpl
     (lambda (just)
@@ -33,8 +31,8 @@
         (lambda (k)
           (lambda (m)
             (lambda ()
-              (if (scm:symbol-hashtable-contains? (scm:car m) (pstring->symbol k))
-                  (just (scm:symbol-hashtable-ref (scm:car m) (pstring->symbol k) #f))
+              (if (rt:record-has (scm:unbox m) (pstring->symbol k))
+                  (just (rt:record-ref (scm:unbox m) (pstring->symbol k)))
                   nothing)))))))
 
   (define poke
@@ -42,15 +40,15 @@
       (lambda (v)
         (lambda (m)
           (lambda ()
-            (scm:symbol-hashtable-set! (scm:car m) (pstring->symbol k) v)
-            (scm:set-cdr! m (scm:cons (pstring->symbol k) (scm:cdr m)))
-            m)))))
+            (let ([new-m (rt:record-set (scm:unbox m) (pstring->symbol k) v)])
+              (scm:set-box! m new-m)
+              m))))))
 
   (define delete
     (lambda (k)
       (lambda (m)
         (lambda ()
-          (scm:symbol-hashtable-delete! (scm:car m) (pstring->symbol k))
-          (scm:set-cdr! m (remove-1st (pstring->symbol k) (scm:cdr m)))
-          m))))
+          (let ([new-m (rt:record-remove (scm:unbox m) (pstring->symbol k))])
+            (scm:set-box! m new-m)
+            m)))))
 )

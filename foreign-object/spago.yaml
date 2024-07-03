@@ -16,4 +16,10 @@ package:
   test:
     main: Test.Foreign.Object.Main
     dependencies:
+      - assert
+      - console
+      - effect
       - ordered-collections
+      - partial
+      - quickcheck
+      - transformers
