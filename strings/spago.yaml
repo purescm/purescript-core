@@ -22,4 +22,4 @@ package:
     dependencies:
       - assert
       - console
-      - minibench
+      - effect

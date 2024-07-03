@@ -17,5 +17,8 @@ package:
     dependencies:
       - assert
       - console
+      - effect
+      - functions
       - integers
+      - numbers
       - unsafe-coerce
