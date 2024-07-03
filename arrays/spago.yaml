@@ -21,4 +21,5 @@ package:
       - assert
       - console
       - const
-      - minibench
+      - effect
+      - orders

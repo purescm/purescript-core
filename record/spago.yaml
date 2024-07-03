@@ -8,3 +8,4 @@ package:
     main: Test.Main
     dependencies:
       - assert
+      - effect

@@ -2,7 +2,6 @@ package:
   name: lazy
   dependencies:
     - control
-    - effect
     - foldable-traversable
     - invariant
     - prelude

@@ -3,6 +3,7 @@ package:
   dependencies:
     - arrays
     - console
+    - control
     - effect
     - either
     - enums
@@ -26,4 +27,7 @@ package:
     - tailrec
     - transformers
     - tuples
-    - unfoldable
+  test:
+    main: Test.Main
+    dependencies:
+      - assert
