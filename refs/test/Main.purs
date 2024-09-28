@@ -29,6 +29,12 @@ main = do
   curr3 <- Ref.read ref
   assertEqual { actual: curr3, expected: 2 }
 
+  -- modify it by adding 1 to the current state, but this time we want to see the value
+  previous <- Ref.modify' (\s -> { state: s + 1, value: s }) ref
+  assertEqual { actual: previous, expected: curr3 }
+  curr4 <- Ref.read ref
+  assertEqual { actual: curr4, expected: 3 }
+
   selfRef
 
 newtype RefBox = RefBox { ref :: Ref.Ref RefBox, value :: Int }

@@ -34,7 +34,7 @@
             (scm:let* ([t (f (scm:unbox (scm:car ref)))]
                        [v (rt:record-ref t (scm:quote state))])
               (scm:set-box! (scm:car ref) v)
-              v))))))
+              (rt:record-ref t (scm:quote value))))))))
 
   (scm:define write
     (scm:lambda (val)
