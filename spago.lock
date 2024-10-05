@@ -2,807 +2,965 @@ workspace:
   packages:
     arrays:
       path: arrays
-      dependencies:
-        - bifunctors
-        - control
-        - foldable-traversable
-        - functions
-        - maybe
-        - nonempty
-        - partial
-        - prelude
-        - safe-coerce
-        - st
-        - tailrec
-        - tuples
-        - unfoldable
-        - unsafe-coerce
-      test_dependencies:
-        - assert
-        - console
-        - const
-        - effect
-        - orders
-      build_plan:
-        - assert
-        - bifunctors
-        - console
-        - const
-        - contravariant
-        - control
-        - distributive
-        - effect
-        - either
-        - exists
-        - foldable-traversable
-        - functions
-        - functors
-        - identity
-        - integers
-        - invariant
-        - maybe
-        - newtype
-        - nonempty
-        - numbers
-        - orders
-        - partial
-        - prelude
-        - profunctor
-        - refs
-        - safe-coerce
-        - st
-        - tailrec
-        - tuples
-        - type-equality
-        - unfoldable
-        - unsafe-coerce
+      core:
+        dependencies:
+          - bifunctors
+          - control
+          - foldable-traversable
+          - functions
+          - maybe
+          - nonempty
+          - partial
+          - prelude
+          - safe-coerce
+          - st
+          - tailrec
+          - tuples
+          - unfoldable
+          - unsafe-coerce
+        build_plan:
+          - bifunctors
+          - const
+          - contravariant
+          - control
+          - distributive
+          - effect
+          - either
+          - exists
+          - foldable-traversable
+          - functions
+          - functors
+          - identity
+          - invariant
+          - maybe
+          - newtype
+          - nonempty
+          - orders
+          - partial
+          - prelude
+          - profunctor
+          - refs
+          - safe-coerce
+          - st
+          - tailrec
+          - tuples
+          - type-equality
+          - unfoldable
+          - unsafe-coerce
+      test:
+        dependencies:
+          - assert
+          - console
+          - const
+          - effect
+          - orders
+        build_plan:
+          - assert
+          - console
+          - const
+          - control
+          - effect
+          - invariant
+          - newtype
+          - orders
+          - prelude
+          - safe-coerce
+          - unsafe-coerce
     assert:
       path: assert
-      dependencies:
-        - console
-        - effect
-        - prelude
-      test_dependencies: []
-      build_plan:
-        - console
-        - effect
-        - prelude
+      core:
+        dependencies:
+          - console
+          - effect
+          - prelude
+        build_plan:
+          - console
+          - effect
+          - prelude
+      test:
+        dependencies: []
+        build_plan: []
     console:
       path: console
-      dependencies:
-        - effect
-        - prelude
-      test_dependencies: []
-      build_plan:
-        - effect
-        - prelude
+      core:
+        dependencies:
+          - effect
+          - prelude
+        build_plan:
+          - effect
+          - prelude
+      test:
+        dependencies: []
+        build_plan: []
     control:
       path: control
-      dependencies:
-        - newtype
-        - prelude
-      test_dependencies:
-        - effect
-      build_plan:
-        - console
-        - effect
-        - newtype
-        - prelude
-        - safe-coerce
-        - unsafe-coerce
+      core:
+        dependencies:
+          - newtype
+          - prelude
+        build_plan:
+          - newtype
+          - prelude
+          - safe-coerce
+          - unsafe-coerce
+      test:
+        dependencies:
+          - effect
+        build_plan:
+          - effect
+          - prelude
     datetime:
       path: datetime
-      dependencies:
-        - bifunctors
-        - control
-        - either
-        - enums
-        - foldable-traversable
-        - functions
-        - gen
-        - integers
-        - lists
-        - maybe
-        - newtype
-        - numbers
-        - ordered-collections
-        - partial
-        - prelude
-        - tuples
-      test_dependencies:
-        - arrays
-        - assert
-        - console
-        - effect
-      build_plan:
-        - arrays
-        - assert
-        - bifunctors
-        - console
-        - const
-        - contravariant
-        - control
-        - distributive
-        - effect
-        - either
-        - enums
-        - exists
-        - foldable-traversable
-        - functions
-        - functors
-        - gen
-        - identity
-        - integers
-        - invariant
-        - lazy
-        - lists
-        - maybe
-        - newtype
-        - nonempty
-        - numbers
-        - ordered-collections
-        - orders
-        - partial
-        - prelude
-        - profunctor
-        - refs
-        - safe-coerce
-        - st
-        - tailrec
-        - tuples
-        - type-equality
-        - unfoldable
-        - unsafe-coerce
+      core:
+        dependencies:
+          - bifunctors
+          - control
+          - either
+          - enums
+          - foldable-traversable
+          - functions
+          - gen
+          - integers
+          - lists
+          - maybe
+          - newtype
+          - numbers
+          - ordered-collections
+          - partial
+          - prelude
+          - tuples
+        build_plan:
+          - arrays
+          - bifunctors
+          - const
+          - contravariant
+          - control
+          - distributive
+          - effect
+          - either
+          - enums
+          - exists
+          - foldable-traversable
+          - functions
+          - functors
+          - gen
+          - identity
+          - integers
+          - invariant
+          - lazy
+          - lists
+          - maybe
+          - newtype
+          - nonempty
+          - numbers
+          - ordered-collections
+          - orders
+          - partial
+          - prelude
+          - profunctor
+          - refs
+          - safe-coerce
+          - st
+          - tailrec
+          - tuples
+          - type-equality
+          - unfoldable
+          - unsafe-coerce
+      test:
+        dependencies:
+          - arrays
+          - assert
+          - console
+          - effect
+        build_plan:
+          - arrays
+          - assert
+          - bifunctors
+          - console
+          - const
+          - contravariant
+          - control
+          - distributive
+          - effect
+          - either
+          - exists
+          - foldable-traversable
+          - functions
+          - functors
+          - identity
+          - invariant
+          - maybe
+          - newtype
+          - nonempty
+          - orders
+          - partial
+          - prelude
+          - profunctor
+          - refs
+          - safe-coerce
+          - st
+          - tailrec
+          - tuples
+          - type-equality
+          - unfoldable
+          - unsafe-coerce
     effect:
       path: effect
-      dependencies:
-        - prelude
-      test_dependencies: []
-      build_plan:
-        - prelude
+      core:
+        dependencies:
+          - prelude
+        build_plan:
+          - prelude
+      test:
+        dependencies: []
+        build_plan: []
     enums:
       path: enums
-      dependencies:
-        - control
-        - either
-        - gen
-        - maybe
-        - newtype
-        - nonempty
-        - partial
-        - prelude
-        - tuples
-        - unfoldable
-      test_dependencies:
-        - assert
-        - console
-        - effect
-      build_plan:
-        - assert
-        - bifunctors
-        - console
-        - const
-        - contravariant
-        - control
-        - distributive
-        - effect
-        - either
-        - exists
-        - foldable-traversable
-        - functions
-        - functors
-        - gen
-        - identity
-        - integers
-        - invariant
-        - maybe
-        - newtype
-        - nonempty
-        - numbers
-        - orders
-        - partial
-        - prelude
-        - profunctor
-        - refs
-        - safe-coerce
-        - tailrec
-        - tuples
-        - type-equality
-        - unfoldable
-        - unsafe-coerce
+      core:
+        dependencies:
+          - control
+          - either
+          - gen
+          - maybe
+          - newtype
+          - nonempty
+          - partial
+          - prelude
+          - tuples
+          - unfoldable
+        build_plan:
+          - bifunctors
+          - const
+          - contravariant
+          - control
+          - distributive
+          - effect
+          - either
+          - exists
+          - foldable-traversable
+          - functors
+          - gen
+          - identity
+          - invariant
+          - maybe
+          - newtype
+          - nonempty
+          - orders
+          - partial
+          - prelude
+          - profunctor
+          - refs
+          - safe-coerce
+          - tailrec
+          - tuples
+          - type-equality
+          - unfoldable
+          - unsafe-coerce
+      test:
+        dependencies:
+          - assert
+          - console
+          - effect
+        build_plan:
+          - assert
+          - console
+          - effect
+          - prelude
     exceptions:
       path: exceptions
-      dependencies:
-        - effect
-        - either
-        - maybe
-        - prelude
-      test_dependencies: []
-      build_plan:
-        - console
-        - control
-        - effect
-        - either
-        - invariant
-        - maybe
-        - newtype
-        - prelude
-        - safe-coerce
-        - unsafe-coerce
+      core:
+        dependencies:
+          - effect
+          - either
+          - maybe
+          - prelude
+        build_plan:
+          - control
+          - effect
+          - either
+          - invariant
+          - maybe
+          - newtype
+          - prelude
+          - safe-coerce
+          - unsafe-coerce
+      test:
+        dependencies: []
+        build_plan: []
     foldable-traversable:
       path: foldable-traversable
-      dependencies:
-        - bifunctors
-        - const
-        - control
-        - either
-        - functors
-        - identity
-        - maybe
-        - newtype
-        - orders
-        - prelude
-        - tuples
-      test_dependencies:
-        - assert
-        - console
-        - effect
-        - functions
-        - integers
-        - numbers
-        - unsafe-coerce
-      build_plan:
-        - assert
-        - bifunctors
-        - console
-        - const
-        - contravariant
-        - control
-        - distributive
-        - effect
-        - either
-        - exists
-        - functions
-        - functors
-        - identity
-        - integers
-        - invariant
-        - maybe
-        - newtype
-        - numbers
-        - orders
-        - partial
-        - prelude
-        - profunctor
-        - safe-coerce
-        - tuples
-        - type-equality
-        - unsafe-coerce
+      core:
+        dependencies:
+          - bifunctors
+          - const
+          - control
+          - either
+          - functors
+          - identity
+          - maybe
+          - newtype
+          - orders
+          - prelude
+          - tuples
+        build_plan:
+          - bifunctors
+          - const
+          - contravariant
+          - control
+          - distributive
+          - either
+          - exists
+          - functors
+          - identity
+          - invariant
+          - maybe
+          - newtype
+          - orders
+          - prelude
+          - profunctor
+          - safe-coerce
+          - tuples
+          - type-equality
+          - unsafe-coerce
+      test:
+        dependencies:
+          - assert
+          - console
+          - effect
+          - functions
+          - integers
+          - numbers
+          - unsafe-coerce
+        build_plan:
+          - assert
+          - console
+          - control
+          - effect
+          - functions
+          - integers
+          - invariant
+          - maybe
+          - newtype
+          - numbers
+          - prelude
+          - safe-coerce
+          - unsafe-coerce
     foreign-object:
       path: foreign-object
-      dependencies:
-        - arrays
-        - foldable-traversable
-        - functions
-        - gen
-        - lists
-        - maybe
-        - prelude
-        - st
-        - tailrec
-        - tuples
-        - typelevel-prelude
-        - unfoldable
-      test_dependencies:
-        - assert
-        - console
-        - effect
-        - ordered-collections
-        - partial
-        - quickcheck
-        - transformers
-      build_plan:
-        - arrays
-        - assert
-        - bifunctors
-        - console
-        - const
-        - contravariant
-        - control
-        - distributive
-        - effect
-        - either
-        - enums
-        - exceptions
-        - exists
-        - foldable-traversable
-        - functions
-        - functors
-        - gen
-        - identity
-        - integers
-        - invariant
-        - lazy
-        - lcg
-        - lists
-        - maybe
-        - newtype
-        - nonempty
-        - numbers
-        - ordered-collections
-        - orders
-        - partial
-        - prelude
-        - profunctor
-        - quickcheck
-        - random
-        - record
-        - refs
-        - safe-coerce
-        - st
-        - strings
-        - tailrec
-        - transformers
-        - tuples
-        - type-equality
-        - typelevel-prelude
-        - unfoldable
-        - unsafe-coerce
+      core:
+        dependencies:
+          - arrays
+          - foldable-traversable
+          - functions
+          - gen
+          - lists
+          - maybe
+          - prelude
+          - st
+          - tailrec
+          - tuples
+          - typelevel-prelude
+          - unfoldable
+        build_plan:
+          - arrays
+          - bifunctors
+          - const
+          - contravariant
+          - control
+          - distributive
+          - effect
+          - either
+          - exists
+          - foldable-traversable
+          - functions
+          - functors
+          - gen
+          - identity
+          - invariant
+          - lazy
+          - lists
+          - maybe
+          - newtype
+          - nonempty
+          - orders
+          - partial
+          - prelude
+          - profunctor
+          - refs
+          - safe-coerce
+          - st
+          - tailrec
+          - tuples
+          - type-equality
+          - typelevel-prelude
+          - unfoldable
+          - unsafe-coerce
+      test:
+        dependencies:
+          - assert
+          - console
+          - effect
+          - ordered-collections
+          - partial
+          - quickcheck
+          - transformers
+        build_plan:
+          - arrays
+          - assert
+          - bifunctors
+          - console
+          - const
+          - contravariant
+          - control
+          - distributive
+          - effect
+          - either
+          - enums
+          - exceptions
+          - exists
+          - foldable-traversable
+          - functions
+          - functors
+          - gen
+          - identity
+          - integers
+          - invariant
+          - lazy
+          - lcg
+          - lists
+          - maybe
+          - newtype
+          - nonempty
+          - numbers
+          - ordered-collections
+          - orders
+          - partial
+          - prelude
+          - profunctor
+          - quickcheck
+          - random
+          - record
+          - refs
+          - safe-coerce
+          - st
+          - strings
+          - tailrec
+          - transformers
+          - tuples
+          - type-equality
+          - unfoldable
+          - unsafe-coerce
     functions:
       path: functions
-      dependencies:
-        - prelude
-      test_dependencies: []
-      build_plan:
-        - prelude
+      core:
+        dependencies:
+          - prelude
+        build_plan:
+          - prelude
+      test:
+        dependencies: []
+        build_plan: []
     integers:
       path: integers
-      dependencies:
-        - maybe
-        - numbers
-        - prelude
-      test_dependencies:
-        - assert
-        - console
-        - effect
-        - partial
-      build_plan:
-        - assert
-        - console
-        - control
-        - effect
-        - functions
-        - invariant
-        - maybe
-        - newtype
-        - numbers
-        - partial
-        - prelude
-        - safe-coerce
-        - unsafe-coerce
+      core:
+        dependencies:
+          - maybe
+          - numbers
+          - prelude
+        build_plan:
+          - control
+          - functions
+          - invariant
+          - maybe
+          - newtype
+          - numbers
+          - prelude
+          - safe-coerce
+          - unsafe-coerce
+      test:
+        dependencies:
+          - assert
+          - console
+          - effect
+          - partial
+        build_plan:
+          - assert
+          - console
+          - effect
+          - partial
+          - prelude
     json:
       path: json
-      dependencies:
-        - arrays
-        - control
-        - either
-        - foldable-traversable
-        - functions
-        - gen
-        - integers
-        - maybe
-        - nonempty
-        - prelude
-        - strings
-        - tailrec
-        - tuples
-        - unfoldable
-      test_dependencies:
-        - assert
-        - console
-        - effect
-      build_plan:
-        - arrays
-        - assert
-        - bifunctors
-        - console
-        - const
-        - contravariant
-        - control
-        - distributive
-        - effect
-        - either
-        - enums
-        - exists
-        - foldable-traversable
-        - functions
-        - functors
-        - gen
-        - identity
-        - integers
-        - invariant
-        - maybe
-        - newtype
-        - nonempty
-        - numbers
-        - orders
-        - partial
-        - prelude
-        - profunctor
-        - refs
-        - safe-coerce
-        - st
-        - strings
-        - tailrec
-        - tuples
-        - type-equality
-        - unfoldable
-        - unsafe-coerce
+      core:
+        dependencies:
+          - arrays
+          - control
+          - either
+          - foldable-traversable
+          - functions
+          - gen
+          - integers
+          - maybe
+          - nonempty
+          - prelude
+          - strings
+          - tailrec
+          - tuples
+          - unfoldable
+        build_plan:
+          - arrays
+          - bifunctors
+          - const
+          - contravariant
+          - control
+          - distributive
+          - effect
+          - either
+          - enums
+          - exists
+          - foldable-traversable
+          - functions
+          - functors
+          - gen
+          - identity
+          - integers
+          - invariant
+          - maybe
+          - newtype
+          - nonempty
+          - numbers
+          - orders
+          - partial
+          - prelude
+          - profunctor
+          - refs
+          - safe-coerce
+          - st
+          - strings
+          - tailrec
+          - tuples
+          - type-equality
+          - unfoldable
+          - unsafe-coerce
+      test:
+        dependencies:
+          - assert
+          - console
+          - effect
+        build_plan:
+          - assert
+          - console
+          - effect
+          - prelude
     lazy:
       path: lazy
-      dependencies:
-        - control
-        - foldable-traversable
-        - invariant
-        - prelude
-      test_dependencies:
-        - assert
-        - console
-        - effect
-      build_plan:
-        - assert
-        - bifunctors
-        - console
-        - const
-        - contravariant
-        - control
-        - distributive
-        - effect
-        - either
-        - exists
-        - foldable-traversable
-        - functions
-        - functors
-        - identity
-        - integers
-        - invariant
-        - maybe
-        - newtype
-        - numbers
-        - orders
-        - partial
-        - prelude
-        - profunctor
-        - safe-coerce
-        - tuples
-        - type-equality
-        - unsafe-coerce
+      core:
+        dependencies:
+          - control
+          - foldable-traversable
+          - invariant
+          - prelude
+        build_plan:
+          - bifunctors
+          - const
+          - contravariant
+          - control
+          - distributive
+          - either
+          - exists
+          - foldable-traversable
+          - functors
+          - identity
+          - invariant
+          - maybe
+          - newtype
+          - orders
+          - prelude
+          - profunctor
+          - safe-coerce
+          - tuples
+          - type-equality
+          - unsafe-coerce
+      test:
+        dependencies:
+          - assert
+          - console
+          - effect
+        build_plan:
+          - assert
+          - console
+          - effect
+          - prelude
     minibench:
       path: minibench
-      dependencies:
-        - console
-        - effect
-        - integers
-        - numbers
-        - prelude
-        - refs
-      test_dependencies:
-        - console
-        - effect
-      build_plan:
-        - assert
-        - console
-        - control
-        - effect
-        - functions
-        - integers
-        - invariant
-        - maybe
-        - newtype
-        - numbers
-        - partial
-        - prelude
-        - refs
-        - safe-coerce
-        - unsafe-coerce
+      core:
+        dependencies:
+          - console
+          - effect
+          - integers
+          - numbers
+          - prelude
+          - refs
+        build_plan:
+          - console
+          - control
+          - effect
+          - functions
+          - integers
+          - invariant
+          - maybe
+          - newtype
+          - numbers
+          - prelude
+          - refs
+          - safe-coerce
+          - unsafe-coerce
+      test:
+        dependencies:
+          - console
+          - effect
+        build_plan:
+          - console
+          - effect
+          - prelude
     numbers:
       path: numbers
-      dependencies:
-        - functions
-        - maybe
-        - prelude
-      test_dependencies:
-        - assert
-        - console
-        - effect
-      build_plan:
-        - assert
-        - console
-        - control
-        - effect
-        - functions
-        - invariant
-        - maybe
-        - newtype
-        - prelude
-        - safe-coerce
-        - unsafe-coerce
+      core:
+        dependencies:
+          - functions
+          - maybe
+          - prelude
+        build_plan:
+          - control
+          - functions
+          - invariant
+          - maybe
+          - newtype
+          - prelude
+          - safe-coerce
+          - unsafe-coerce
+      test:
+        dependencies:
+          - assert
+          - console
+          - effect
+        build_plan:
+          - assert
+          - console
+          - effect
+          - prelude
     partial:
       path: partial
-      dependencies: []
-      test_dependencies: []
-      build_plan: []
+      core:
+        dependencies: []
+        build_plan: []
+      test:
+        dependencies: []
+        build_plan: []
     prelude:
       path: prelude
-      dependencies: []
-      test_dependencies: []
-      build_plan: []
+      core:
+        dependencies: []
+        build_plan: []
+      test:
+        dependencies: []
+        build_plan: []
     quickcheck:
       path: quickcheck
-      dependencies:
-        - arrays
-        - console
-        - control
-        - effect
-        - either
-        - enums
-        - exceptions
-        - foldable-traversable
-        - gen
-        - identity
-        - integers
-        - lazy
-        - lcg
-        - lists
-        - maybe
-        - newtype
-        - nonempty
-        - numbers
-        - partial
-        - prelude
-        - record
-        - st
-        - strings
-        - tailrec
-        - transformers
-        - tuples
-      test_dependencies:
-        - assert
-      build_plan:
-        - arrays
-        - assert
-        - bifunctors
-        - console
-        - const
-        - contravariant
-        - control
-        - distributive
-        - effect
-        - either
-        - enums
-        - exceptions
-        - exists
-        - foldable-traversable
-        - functions
-        - functors
-        - gen
-        - identity
-        - integers
-        - invariant
-        - lazy
-        - lcg
-        - lists
-        - maybe
-        - newtype
-        - nonempty
-        - numbers
-        - orders
-        - partial
-        - prelude
-        - profunctor
-        - random
-        - record
-        - refs
-        - safe-coerce
-        - st
-        - strings
-        - tailrec
-        - transformers
-        - tuples
-        - type-equality
-        - unfoldable
-        - unsafe-coerce
+      core:
+        dependencies:
+          - arrays
+          - console
+          - control
+          - effect
+          - either
+          - enums
+          - exceptions
+          - foldable-traversable
+          - gen
+          - identity
+          - integers
+          - lazy
+          - lcg
+          - lists
+          - maybe
+          - newtype
+          - nonempty
+          - numbers
+          - partial
+          - prelude
+          - record
+          - st
+          - strings
+          - tailrec
+          - transformers
+          - tuples
+        build_plan:
+          - arrays
+          - bifunctors
+          - console
+          - const
+          - contravariant
+          - control
+          - distributive
+          - effect
+          - either
+          - enums
+          - exceptions
+          - exists
+          - foldable-traversable
+          - functions
+          - functors
+          - gen
+          - identity
+          - integers
+          - invariant
+          - lazy
+          - lcg
+          - lists
+          - maybe
+          - newtype
+          - nonempty
+          - numbers
+          - orders
+          - partial
+          - prelude
+          - profunctor
+          - random
+          - record
+          - refs
+          - safe-coerce
+          - st
+          - strings
+          - tailrec
+          - transformers
+          - tuples
+          - type-equality
+          - unfoldable
+          - unsafe-coerce
+      test:
+        dependencies:
+          - assert
+        build_plan:
+          - assert
+          - console
+          - effect
+          - prelude
     random:
       path: random
-      dependencies:
-        - effect
-        - integers
-        - prelude
-      test_dependencies: []
-      build_plan:
-        - assert
-        - console
-        - control
-        - effect
-        - functions
-        - integers
-        - invariant
-        - maybe
-        - newtype
-        - numbers
-        - partial
-        - prelude
-        - safe-coerce
-        - unsafe-coerce
+      core:
+        dependencies:
+          - effect
+          - integers
+          - prelude
+        build_plan:
+          - control
+          - effect
+          - functions
+          - integers
+          - invariant
+          - maybe
+          - newtype
+          - numbers
+          - prelude
+          - safe-coerce
+          - unsafe-coerce
+      test:
+        dependencies: []
+        build_plan: []
     record:
       path: record
-      dependencies:
-        - functions
-        - prelude
-        - unsafe-coerce
-      test_dependencies:
-        - assert
-        - effect
-      build_plan:
-        - assert
-        - console
-        - effect
-        - functions
-        - prelude
-        - unsafe-coerce
+      core:
+        dependencies:
+          - functions
+          - prelude
+          - unsafe-coerce
+        build_plan:
+          - functions
+          - prelude
+          - unsafe-coerce
+      test:
+        dependencies:
+          - assert
+          - effect
+        build_plan:
+          - assert
+          - console
+          - effect
+          - prelude
     refs:
       path: refs
-      dependencies:
-        - effect
-        - prelude
-      test_dependencies:
-        - assert
-      build_plan:
-        - assert
-        - console
-        - effect
-        - prelude
+      core:
+        dependencies:
+          - effect
+          - prelude
+        build_plan:
+          - effect
+          - prelude
+      test:
+        dependencies:
+          - assert
+        build_plan:
+          - assert
+          - console
+          - effect
+          - prelude
     st:
       path: st
-      dependencies:
-        - effect
-        - partial
-        - prelude
-        - tailrec
-        - unsafe-coerce
-      test_dependencies:
-        - assert
-        - console
-        - partial
-      build_plan:
-        - assert
-        - bifunctors
-        - console
-        - const
-        - control
-        - effect
-        - either
-        - identity
-        - invariant
-        - maybe
-        - newtype
-        - partial
-        - prelude
-        - refs
-        - safe-coerce
-        - tailrec
-        - tuples
-        - unsafe-coerce
+      core:
+        dependencies:
+          - effect
+          - partial
+          - prelude
+          - tailrec
+          - unsafe-coerce
+        build_plan:
+          - bifunctors
+          - const
+          - control
+          - effect
+          - either
+          - identity
+          - invariant
+          - maybe
+          - newtype
+          - partial
+          - prelude
+          - refs
+          - safe-coerce
+          - tailrec
+          - tuples
+          - unsafe-coerce
+      test:
+        dependencies:
+          - assert
+          - console
+          - partial
+        build_plan:
+          - assert
+          - console
+          - effect
+          - partial
+          - prelude
     strings:
       path: strings
-      dependencies:
-        - arrays
-        - control
-        - either
-        - enums
-        - foldable-traversable
-        - gen
-        - integers
-        - maybe
-        - newtype
-        - nonempty
-        - partial
-        - prelude
-        - tailrec
-        - tuples
-        - unfoldable
-        - unsafe-coerce
-      test_dependencies:
-        - assert
-        - console
-        - effect
-      build_plan:
-        - arrays
-        - assert
-        - bifunctors
-        - console
-        - const
-        - contravariant
-        - control
-        - distributive
-        - effect
-        - either
-        - enums
-        - exists
-        - foldable-traversable
-        - functions
-        - functors
-        - gen
-        - identity
-        - integers
-        - invariant
-        - maybe
-        - newtype
-        - nonempty
-        - numbers
-        - orders
-        - partial
-        - prelude
-        - profunctor
-        - refs
-        - safe-coerce
-        - st
-        - tailrec
-        - tuples
-        - type-equality
-        - unfoldable
-        - unsafe-coerce
+      core:
+        dependencies:
+          - arrays
+          - control
+          - either
+          - enums
+          - foldable-traversable
+          - gen
+          - integers
+          - maybe
+          - newtype
+          - nonempty
+          - partial
+          - prelude
+          - tailrec
+          - tuples
+          - unfoldable
+          - unsafe-coerce
+        build_plan:
+          - arrays
+          - bifunctors
+          - const
+          - contravariant
+          - control
+          - distributive
+          - effect
+          - either
+          - enums
+          - exists
+          - foldable-traversable
+          - functions
+          - functors
+          - gen
+          - identity
+          - integers
+          - invariant
+          - maybe
+          - newtype
+          - nonempty
+          - numbers
+          - orders
+          - partial
+          - prelude
+          - profunctor
+          - refs
+          - safe-coerce
+          - st
+          - tailrec
+          - tuples
+          - type-equality
+          - unfoldable
+          - unsafe-coerce
+      test:
+        dependencies:
+          - assert
+          - console
+          - effect
+        build_plan:
+          - assert
+          - console
+          - effect
+          - prelude
     unfoldable:
       path: unfoldable
-      dependencies:
-        - foldable-traversable
-        - maybe
-        - partial
-        - prelude
-        - tuples
-      test_dependencies:
-        - assert
-        - console
-        - effect
-      build_plan:
-        - assert
-        - bifunctors
-        - console
-        - const
-        - contravariant
-        - control
-        - distributive
-        - effect
-        - either
-        - exists
-        - foldable-traversable
-        - functions
-        - functors
-        - identity
-        - integers
-        - invariant
-        - maybe
-        - newtype
-        - numbers
-        - orders
-        - partial
-        - prelude
-        - profunctor
-        - safe-coerce
-        - tuples
-        - type-equality
-        - unsafe-coerce
+      core:
+        dependencies:
+          - foldable-traversable
+          - maybe
+          - partial
+          - prelude
+          - tuples
+        build_plan:
+          - bifunctors
+          - const
+          - contravariant
+          - control
+          - distributive
+          - either
+          - exists
+          - foldable-traversable
+          - functors
+          - identity
+          - invariant
+          - maybe
+          - newtype
+          - orders
+          - partial
+          - prelude
+          - profunctor
+          - safe-coerce
+          - tuples
+          - type-equality
+          - unsafe-coerce
+      test:
+        dependencies:
+          - assert
+          - console
+          - effect
+        build_plan:
+          - assert
+          - console
+          - effect
+          - prelude
     unsafe-coerce:
       path: unsafe-coerce
-      dependencies: []
-      test_dependencies:
-        - console
-        - effect
-        - prelude
-      build_plan:
-        - console
-        - effect
-        - prelude
+      core:
+        dependencies: []
+        build_plan: []
+      test:
+        dependencies:
+          - console
+          - effect
+          - prelude
+        build_plan:
+          - console
+          - effect
+          - prelude
   package_set:
     address:
       registry: 47.10.0
