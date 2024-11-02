@@ -8,8 +8,8 @@
           ordCharImpl
           ordArrayImpl)
   (import (chezscheme)
-          (only (purs runtime pstring) pstring<? pstring=?)
-          (prefix (purs runtime srfi :214) srfi:214:))
+          (only (purescm pstring) pstring<? pstring=?)
+          (prefix (srfi :214) srfi:214:))
 
   (define ordBooleanImpl
     (lambda (lt)

@@ -6,8 +6,8 @@
           unsafeSet
           unsafeDelete)
   (import (chezscheme)
-          (only (purs runtime pstring) pstring->symbol)
-          (prefix (purs runtime) rt:))
+          (only (purescm pstring) pstring->symbol)
+          (prefix (purescm runtime) rt:))
 
   (define unsafeHas
     (lambda (label)

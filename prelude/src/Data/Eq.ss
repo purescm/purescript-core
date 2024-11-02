@@ -9,8 +9,8 @@
           eqArrayImpl)
   (import (chezscheme))
   (import (only (rnrs base) define lambda)
-          (only (purs runtime pstring) pstring=?)
-          (prefix (purs runtime srfi :214) srfi:214:))
+          (only (purescm pstring) pstring=?)
+          (prefix (srfi :214) srfi:214:))
 
   (define eqBooleanImpl
     (lambda (r1)

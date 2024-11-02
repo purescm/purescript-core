@@ -3,7 +3,7 @@
 (library (Data.Functor foreign)
   (export arrayMap)
   (import (only (rnrs base) define lambda)
-          (prefix (purs runtime srfi :214) srfi:214:))
+          (prefix (srfi :214) srfi:214:))
 
   (define arrayMap
     (lambda (f)

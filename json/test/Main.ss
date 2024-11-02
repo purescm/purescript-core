@@ -1,9 +1,9 @@
 (library (Test.JSON.Main foreign)
   (export testJsonParser)
   (import (chezscheme)
-          (prefix (purs runtime) rt:)
-          (prefix (purs runtime srfi :214) srfi:214:)
-          (purs runtime pstring)
+          (prefix (purescm runtime) rt:)
+          (prefix (srfi :214) srfi:214:)
+          (purescm pstring)
           (only (JSON.Internal foreign) json-parse json-stringify))
 
   (define (assert-parsed input expected)

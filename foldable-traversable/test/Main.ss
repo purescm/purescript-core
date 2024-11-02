@@ -4,8 +4,8 @@
           mkNEArray
           foldMap1NEArray)
   (import (chezscheme)
-          (prefix (purs runtime) rt:)
-          (prefix (purs runtime srfi :214) srfi:214:))
+          (prefix (purescm runtime) rt:)
+          (prefix (srfi :214) srfi:214:))
 
   (define arrayFrom1UpTo
     (lambda (n)

@@ -19,8 +19,8 @@
           json-parse
           json-stringify)
   (import (except (chezscheme) length)
-          (prefix (purs runtime srfi :214) srfi:214:)
-          (purs runtime pstring))
+          (prefix (srfi :214) srfi:214:)
+          (purescm pstring))
 
   (define (_parse left right s)
     (call/cc

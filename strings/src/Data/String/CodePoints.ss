@@ -10,9 +10,9 @@
           _uncons)
   (import
     (except (chezscheme) length)
-    (prefix (purs runtime) rt:)
-    (prefix (purs runtime srfi :214) srfi:214:)
-    (only (purs runtime pstring) code-points->pstring
+    (prefix (purescm runtime) rt:)
+    (prefix (srfi :214) srfi:214:)
+    (only (purescm pstring) code-points->pstring
                                  pstring->code-point-flexvector
                                  pstring-empty?
                                  pstring-length-code-points

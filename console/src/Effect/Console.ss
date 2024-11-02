@@ -12,7 +12,7 @@
           debug)
   (import (only (rnrs base) define lambda begin)
           (prefix (rnrs base) scm:)
-          (only (purs runtime pstring) pstring->string)
+          (only (purescm pstring) pstring->string)
           (only (rnrs io ports) current-output-port current-error-port put-string)
           (only (rnrs io simple) newline))
 

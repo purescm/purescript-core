@@ -3,7 +3,7 @@
   (export _localeCompare replace replaceAll split toLower toUpper trim joinWith)
   (import
     (only (rnrs base) define lambda if)
-    (only (purs runtime pstring) pstring<? pstring=?
+    (only (purescm pstring) pstring<? pstring=?
                                     pstring-replace pstring-replace-all
                                     pstring-trim
                                     pstring-split

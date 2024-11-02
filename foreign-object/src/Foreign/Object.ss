@@ -17,9 +17,9 @@
           keys)
   (import (only (rnrs base) define lambda if let let* let-values begin)
           (prefix (chezscheme) scm:)
-          (prefix (purs runtime) rt:)
-          (prefix (purs runtime srfi :214) arrays:)
-          (only (purs runtime pstring) pstring->symbol symbol->pstring))
+          (prefix (purescm runtime) rt:)
+          (prefix (srfi :214) arrays:)
+          (only (purescm pstring) pstring->symbol symbol->pstring))
 
   (define _copyST
     (lambda (m)

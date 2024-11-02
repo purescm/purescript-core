@@ -3,8 +3,8 @@
           new foreach modifyImpl write)
 
   (import (except (chezscheme) read write)
-          (prefix (purs runtime srfi :214) srfi:214:)
-          (prefix (purs runtime) rt:))
+          (prefix (srfi :214) srfi:214:)
+          (prefix (purescm runtime) rt:))
 
   (define map_
     (lambda (f)

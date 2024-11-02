@@ -4,8 +4,8 @@
   (export unsafeIndex)
   (import (only (rnrs base) define lambda if)
           (prefix (chezscheme) scm:)
-          (prefix (purs runtime) rt:)
-          (only (purs runtime pstring) pstring->symbol))
+          (prefix (purescm runtime) rt:)
+          (only (purescm pstring) pstring->symbol))
 
   (define unsafeIndex
     (lambda (m)

@@ -1,7 +1,7 @@
 (library (Data.String.Unsafe foreign)
   (export charAt char)
   (import (only (chezscheme) define lambda let-values)
-          (only (purs runtime pstring) pstring-ref pstring-singleton pstring-uncons-char))
+          (only (purescm pstring) pstring-ref pstring-singleton pstring-uncons-char))
 
   (define charAt
     (lambda (n)

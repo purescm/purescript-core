@@ -7,8 +7,8 @@
           delete)
   (import (only (rnrs base) define lambda if let)
           (prefix (chezscheme) scm:)
-          (prefix (purs runtime) rt:)
-          (only (purs runtime pstring) pstring->symbol))
+          (prefix (purescm runtime) rt:)
+          (only (purescm pstring) pstring->symbol))
 
   (define remove-1st
     (lambda (x ls)

@@ -1,8 +1,8 @@
 (library (Record.Builder foreign)
   (export unsafeInsert unsafeModify unsafeDelete unsafeRename)
   (import (chezscheme)
-          (prefix (purs runtime) rt:)
-          (only (purs runtime pstring) pstring->symbol))
+          (prefix (purescm runtime) rt:)
+          (only (purescm pstring) pstring->symbol))
   
   (define unsafeInsert
     (lambda (l)

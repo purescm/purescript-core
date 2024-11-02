@@ -10,7 +10,7 @@
   (import (only (rnrs base) define lambda quote not)
           (only (rnrs arithmetic fixnums) fx+ fx>=?)
           (only (rnrs control) do)
-          (prefix (purs runtime srfi :214) srfi:214:))
+          (prefix (srfi :214) srfi:214:))
 
   (define pureE
     (lambda (a)

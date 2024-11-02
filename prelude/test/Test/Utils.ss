@@ -1,6 +1,6 @@
 (library (Test.Utils foreign)
   (export throwErr)
-  (import (chezscheme) (only (purs runtime pstring) pstring->string))
+  (import (chezscheme) (only (purescm pstring) pstring->string))
 
   (define throwErr
     (lambda (msg) 

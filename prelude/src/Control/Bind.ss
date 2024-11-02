@@ -3,8 +3,8 @@
 (library (Control.Bind foreign)
   (export arrayBind)
   (import (chezscheme)
-          (prefix (purs runtime) rt:)
-          (prefix (purs runtime srfi :214) srfi:214:))
+          (prefix (purescm runtime) rt:)
+          (prefix (srfi :214) srfi:214:))
 
   (define arrayBind
     (lambda (arr)

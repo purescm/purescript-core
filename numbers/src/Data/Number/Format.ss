@@ -7,7 +7,7 @@
           toString)
   (import (only (rnrs base) define lambda string-append number->string)
           (only (chezscheme) format)
-          (only (purs runtime pstring) string->pstring))
+          (only (purescm pstring) string->pstring))
 
   ;; TODO add a proper implementation
   (define toPrecisionNative
