@@ -7,7 +7,7 @@
           modifyImpl
           write)
   (import (prefix (chezscheme) scm:)
-          (prefix (purs runtime) rt:))
+          (prefix (purescm runtime) rt:))
 
   (scm:define _new
     (scm:lambda (v)

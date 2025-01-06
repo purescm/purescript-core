@@ -4,7 +4,7 @@
   (export foldrArray
           foldlArray)
   (import (only (rnrs base) define lambda)
-          (prefix (purs runtime srfi :214) srfi:214:))
+          (prefix (srfi :214) srfi:214:))
 
   (define foldrArray
     (lambda (f)

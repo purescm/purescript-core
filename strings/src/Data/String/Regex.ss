@@ -11,7 +11,7 @@
           test)
   (import
     (except (chezscheme) length)
-    (only (purs runtime pstring) pstring=?
+    (only (purescm pstring) pstring=?
                                  pstring-length
                                  pstring-make-regex
                                  pstring-ref
@@ -26,8 +26,8 @@
                                  regex-flags
                                  regex-source
                                  string->pstring)
-    (prefix (purs runtime srfi :214) srfi:214:)
-    (prefix (purs runtime) rt:))
+    (prefix (srfi :214) srfi:214:)
+    (prefix (purescm runtime) rt:))
 
   ;; NOTE: this doesn't include the flags as they are not part of the regex string
   (define showRegexImpl regex-source)

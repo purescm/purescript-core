@@ -3,8 +3,8 @@
 (library (Data.Show.Generic foreign)
   (export intercalate)
   (import (chezscheme)
-          (only (purs runtime pstring) pstring pstring-concat)
-          (prefix (purs runtime) rt:))
+          (only (purescm pstring) pstring pstring-concat)
+          (prefix (purescm runtime) rt:))
 
   (define intercalate
     (lambda (separator)

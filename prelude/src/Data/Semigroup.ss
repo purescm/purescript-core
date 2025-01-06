@@ -4,8 +4,8 @@
   (export concatString
           concatArray)
   (import (only (rnrs base) define lambda)
-          (only (purs runtime pstring) pstring-concat)
-          (prefix (purs runtime srfi :214) srfi:214:))
+          (only (purescm pstring) pstring-concat)
+          (prefix (srfi :214) srfi:214:))
 
   (define concatString
     (lambda (s1)

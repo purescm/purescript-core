@@ -16,7 +16,7 @@
             make-message-condition
             condition?
             message-condition?)
-          (only (purs runtime pstring) pstring->string string->pstring)
+          (only (purescm pstring) pstring->string string->pstring)
           (only (rnrs io ports) call-with-string-output-port)
           (only (rnrs exceptions) with-exception-handler raise-continuable)
           (only (chezscheme) format call/cc display-condition))

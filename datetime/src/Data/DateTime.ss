@@ -4,7 +4,7 @@
   (export calcDiff
           adjustImpl)
   (import (only (rnrs base) define lambda let let*)
-          (prefix (purs runtime) rt:)
+          (prefix (purescm runtime) rt:)
           (prefix (chezscheme) scm:))
 
   ;; Note: make-date in chez has a lower bound at 1901:

@@ -1,7 +1,7 @@
 (library (Test.Assert foreign)
   (export assertImpl checkThrows)
   (import (chezscheme)
-          (only (purs runtime pstring) pstring->string))
+          (only (purescm pstring) pstring->string))
 
   (define assertImpl
     (lambda (message)

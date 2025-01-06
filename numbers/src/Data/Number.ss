@@ -31,7 +31,7 @@
           (only (chezscheme) flabs flacos flasin flatan flceiling flcos flexp flpositive?
                              flfloor fllog flmax flmin flexpt flmod flround fl-
                              fl= fl< flsin flsqrt fltan fltruncate flonum? fixnum? fixnum->flonum)
-          (only (purs runtime pstring) pstring->number))
+          (only (purescm pstring) pstring->number))
 
   (define nan +nan.0)
 

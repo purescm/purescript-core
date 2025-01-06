@@ -19,7 +19,7 @@
     splitAt)
   (import
     (except (chezscheme) length)
-    (only (purs runtime pstring) pstring-empty?
+    (only (purescm pstring) pstring-empty?
                                     pstring-singleton
                                     pstring-slice
                                     pstring-length
@@ -32,7 +32,7 @@
                                     pstring-last-index-of
                                     char-flexvector->pstring
                                     pstring->char-flexvector)
-    (prefix (purs runtime) rt:))
+    (prefix (purescm runtime) rt:))
 
   (define fromCharArray char-flexvector->pstring)
 

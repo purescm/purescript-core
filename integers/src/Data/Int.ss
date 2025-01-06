@@ -12,7 +12,7 @@
           (only (rnrs arithmetic flonums) fixnum->flonum fltruncate fl=?)
           (only (chezscheme) format flonum->fixnum fixnum? fx=? fx/ fxremainder expt
                              with-exception-handler string-append number->string string->number)
-          (only (purs runtime pstring) pstring->string string->pstring))
+          (only (purescm pstring) pstring->string string->pstring))
 
   (define fromNumberImpl
     (lambda (just)

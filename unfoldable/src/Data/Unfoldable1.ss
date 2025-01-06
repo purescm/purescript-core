@@ -3,7 +3,7 @@
 (library (Data.Unfoldable1 foreign)
   (export unfoldr1ArrayImpl)
   (import (only (rnrs base) define if lambda let)
-          (prefix (purs runtime srfi :214) srfi:214:))
+          (prefix (srfi :214) srfi:214:))
 
   (define unfoldr1ArrayImpl
     (lambda (isNothing)

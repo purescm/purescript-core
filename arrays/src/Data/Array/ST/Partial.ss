@@ -1,8 +1,8 @@
 (library (Data.Array.ST.Partial foreign)
   (export peekImpl pokeImpl)
   (import (only (rnrs base) define lambda quote)
-          (prefix (purs runtime) rt:)
-          (prefix (purs runtime srfi :214) srfi:214:))
+          (prefix (purescm runtime) rt:)
+          (prefix (srfi :214) srfi:214:))
 
   (define peekImpl
     (lambda (i xs)

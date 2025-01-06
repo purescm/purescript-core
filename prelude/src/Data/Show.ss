@@ -7,8 +7,8 @@
           showStringImpl
           showArrayImpl)
   (import (chezscheme)
-          (prefix (purs runtime) rt:)
-          (only (purs runtime pstring) pstring
+          (prefix (purescm runtime) rt:)
+          (only (purescm pstring) pstring
                                           number->pstring
                                           string->pstring
                                           pstring-uncons-char
@@ -16,7 +16,7 @@
                                           pstring-concat
                                           pstring-make-regex
                                           pstring-regex-replace-by)
-          (prefix (purs runtime srfi :214) srfi:214:))
+          (prefix (srfi :214) srfi:214:))
 
   (define showIntImpl
     (lambda (n)

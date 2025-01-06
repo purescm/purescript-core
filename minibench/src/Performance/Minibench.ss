@@ -7,7 +7,7 @@
   )
 
   (import (chezscheme)
-          (only (purs runtime pstring) string->pstring)
+          (only (purescm pstring) string->pstring)
   )
 
   (define timeNs
