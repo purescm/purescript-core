@@ -202,15 +202,15 @@
   (define (read-escape cur)
     (let ([ch (pstring-cursor-read-char cur)])
       (cond
-        [(eqv? ch #\b) (pstring #\backspace)]
-        [(eqv? ch #\f) (pstring #\page)]
-        [(eqv? ch #\r) (pstring #\return)]
-        [(eqv? ch #\n) (pstring #\newline)]
-        [(eqv? ch #\t) (pstring #\tab)]
-        [(eqv? ch #\/) (pstring #\/)]
-        [(eqv? ch #\u) (code-points->pstring (read-unicode-code-point cur))]
         [(eqv? ch #\") (pstring #\")]
         [(eqv? ch #\\) (pstring #\\)]
+        [(eqv? ch #\/) (pstring #\/)]
+        [(eqv? ch #\b) (pstring #\backspace)]
+        [(eqv? ch #\f) (pstring #\page)]
+        [(eqv? ch #\n) (pstring #\newline)]
+        [(eqv? ch #\r) (pstring #\return)]
+        [(eqv? ch #\t) (pstring #\tab)]
+        [(eqv? ch #\u) (code-points->pstring (read-unicode-code-point cur))]
         [else (error #f (format "Invalid string escape ~a" ch))])))
 
   (define (control-char? ch)
