@@ -209,6 +209,8 @@
         [(eqv? ch #\t) (pstring #\tab)]
         [(eqv? ch #\/) (pstring #\/)]
         [(eqv? ch #\u) (code-points->pstring (read-unicode-code-point cur))]
+        [(eqv? ch #\") (pstring #\")]
+        [(eqv? ch #\\) (pstring #\\)]
         [else (error #f (format "Invalid string escape ~a" ch))])))
 
   (define (control-char? ch)
