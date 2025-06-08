@@ -4,6 +4,7 @@ import Prelude
 
 import Data.Maybe (Maybe(..))
 import Data.Tuple (Tuple(..))
+import Data.Either (isLeft)
 import Effect (Effect)
 import Effect.Console (log)
 import JSON as J
@@ -105,3 +106,4 @@ main = do
   assertTrue $ J.parse "[]" == pure (J.fromJArray (JA.fromArray []))
   let obj =J.fromJObject (JO.fromEntries [ Tuple "foo" (J.fromNumber 123.45), Tuple "bar" (J.fromString "Hello PS!"), Tuple "baz" J.null ])
   assertTrue $ J.parse "{ \"foo\": 123.45, \"bar\": \"Hello PS!\", \"baz\": null }" == pure obj
+  assertTrue $ isLeft (J.parse "{")
