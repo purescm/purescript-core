@@ -26,7 +26,7 @@
     (call/cc
       (lambda (k)
         (with-exception-handler
-          (lambda (e) (left (k (string->pstring (condition-message e)))))
+          (lambda (e) (k (left (string->pstring (condition-message e)))))
           (lambda () (right (json-parse s)))))))
 
   (define (_fromNumberWithDefault fallback n)
