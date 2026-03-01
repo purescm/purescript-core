@@ -26,6 +26,15 @@ testStringRegex = do
   assert $ "quxbarquxbaz" == replace (unsafeRegex "foo" (global <> ignoreCase)) "qux" "foobarFOObaz"
   assert $ "quxbarfoobaz" == replace (unsafeRegex ".foo" dotAll) "qux" "\nfoobarfoobaz"
 
+  log "dotAll"
+  -- Without dotAll: . should NOT match newline
+  assert $ not (test (unsafeRegex "foo.bar" noFlags) "foo\nbar")
+  -- With dotAll: . SHOULD match newline
+  assert $ test (unsafeRegex "foo.bar" dotAll) "foo\nbar"
+  -- dotAll with match
+  assert $ match (unsafeRegex "a.b" dotAll) "a\nb" == Just (nea [Just "a\nb"])
+  assert $ match (unsafeRegex "a.b" noFlags) "a\nb" == Nothing
+
   log "match"
   assert $ match (unsafeRegex "^abc$" noFlags) "abc" == Just (nea [Just "abc"])
   assert $ match (unsafeRegex "^abc$" noFlags) "xyz" == Nothing

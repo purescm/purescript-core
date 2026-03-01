@@ -23,7 +23,7 @@
                                  pstring-singleton
                                  pstring-slice
                                  pstring->string
-                                 regex-flags
+                                 regex-orig-flags
                                  regex-source
                                  string->pstring)
     (prefix (srfi :214) srfi:214:)
@@ -32,19 +32,39 @@
   ;; NOTE: this doesn't include the flags as they are not part of the regex string
   (define showRegexImpl regex-source)
 
+  ;; Parse a rendered flags string (e.g. "gims") into the alist format
+  ;; that pstring-make-regex expects: ((global . #t) (ignoreCase . #t) ...)
+  (define (parse-flags-string flags-pstring)
+    (let ([s (pstring->string flags-pstring)])
+      (list
+        (cons 'global (string-contains s "g"))
+        (cons 'ignoreCase (string-contains s "i"))
+        (cons 'multiline (string-contains s "m"))
+        (cons 'dotAll (string-contains s "s"))
+        (cons 'sticky (string-contains s "y"))
+        (cons 'unicode (string-contains s "u")))))
+
+  ;; Helper: check if a Scheme string contains a character substring
+  (define (string-contains s sub)
+    (let loop ([i 0])
+      (cond
+        [(> (+ i (string-length sub)) (string-length s)) #f]
+        [(string=? (substring s i (+ i (string-length sub))) sub) #t]
+        [else (loop (+ i 1))])))
+
   (define regexImpl
     (lambda (left)
       (lambda (right)
         (lambda (s)
-          (lambda (flags)
-            (let ([regex (pstring-make-regex s flags)])
+          (lambda (flags-str)
+            (let ([regex (pstring-make-regex s (parse-flags-string flags-str))])
               (if regex
                 (right regex)
                 (left (string->pstring "error compiling regex")))))))))
 
   (define source regex-source)
 
-  (define flagsImpl regex-flags)
+  (define flagsImpl regex-orig-flags)
 
   (define test
     (lambda (r)

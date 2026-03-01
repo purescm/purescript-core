@@ -3,4 +3,5 @@ package:
   dependencies: []
   test:
     main: Test.Partial.Main
-    dependencies: []
+    dependencies:
+      - prelude

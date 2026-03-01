@@ -10,4 +10,4 @@ package:
       - assert
       - console
       - effect
-    main: Test.Main
+    main: Test.Lazy.Main

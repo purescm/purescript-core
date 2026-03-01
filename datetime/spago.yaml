@@ -18,7 +18,7 @@ package:
     - prelude
     - tuples
   test:
-    main: Test.Main
+    main: Test.Data.Time.Main
     dependencies:
       - arrays
       - assert

@@ -1,5 +1,8 @@
 module Test.Partial.Main where
 
+import Prelude
+
+import Effect (Effect)
 import Partial (crashWith)
 import Partial.Unsafe (unsafePartial)
 
@@ -10,5 +13,5 @@ f _ = crashWith "f: partial function"
 safely :: Int
 safely = unsafePartial (f 0)
 
-main :: forall a. a -> {}
-main _ = {}
+main :: Effect Unit
+main = pure unit

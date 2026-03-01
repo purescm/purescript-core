@@ -28,6 +28,6 @@ package:
     - transformers
     - tuples
   test:
-    main: Test.Main
+    main: Test.QuickCheck.Main
     dependencies:
       - assert

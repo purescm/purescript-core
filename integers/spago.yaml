@@ -5,7 +5,7 @@ package:
     - numbers
     - prelude
   test:
-    main: Test.Main
+    main: Test.Int.Main
     dependencies:
       - assert
       - console

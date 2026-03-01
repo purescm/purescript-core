@@ -10,6 +10,7 @@
           pow)
   (import (only (rnrs base) define lambda if let cond else call-with-current-continuation)
           (only (rnrs arithmetic flonums) fixnum->flonum fltruncate fl=?)
+          (only (rnrs unicode) string-downcase)
           (only (chezscheme) format flonum->fixnum fixnum? fx=? fx/ fxremainder expt
                              with-exception-handler string-append number->string string->number)
           (only (purescm pstring) pstring->string string->pstring))
@@ -42,6 +43,8 @@
                 nothing)))))))
 
   ;; TODO we only support a fixed set of radices here
+  ;; Note: hex output uses string-downcase to match JS toString(16) which
+  ;; produces lowercase. Chez (format "~x" ...) produces uppercase.
   (define toStringAs
     (lambda (radix)
       (lambda (i)
@@ -50,7 +53,7 @@
             [(fx=? radix 2) (format "~b" i)]
             [(fx=? radix 8) (format "~o" i)]
             [(fx=? radix 10) (format "~d" i)]
-            [(fx=? radix 16) (format "~x" i)]
+            [(fx=? radix 16) (string-downcase (format "~x" i))]
             ;; Fall back to decimal
             [else (format "~d" i)])))))
 

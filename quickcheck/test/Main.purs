@@ -11,7 +11,7 @@ import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
 import Data.Tuple (fst)
 import Effect (Effect)
-import Effect.Console (log, logShow)
+import Effect.Console (log)
 import Effect.Exception (try)
 import Data.Number (isFinite)
 import Partial.Unsafe (unsafePartial)
@@ -55,22 +55,22 @@ main = do
   assert (testResize (resize))
 
   log "Try with some little Gens first"
-  logShow =<< go 10
-  logShow =<< go 100
-  logShow =<< go 1000
-  logShow =<< go 10000
+  log <<< ("[NDET] " <> _) <<< show =<< go 10
+  log <<< ("[NDET] " <> _) <<< show =<< go 100
+  log <<< ("[NDET] " <> _) <<< show =<< go 1000
+  log <<< ("[NDET] " <> _) <<< show =<< go 10000
 
   log "Testing stack safety of Gen"
-  logShow =<< go 20000
-  logShow =<< go 100000
+  log <<< ("[NDET] " <> _) <<< show =<< go 20000
+  log <<< ("[NDET] " <> _) <<< show =<< go 100000
 
   log "Generating via Generic"
-  logShow =<< randomSample' 10 (arbitrary :: Gen (Foo Int))
+  log <<< ("[NDET] " <> _) <<< show =<< randomSample' 10 (arbitrary :: Gen (Foo Int))
 
   log "Arbitrary instance for records"
   listOfRecords <- randomSample' 10 (arbitrary :: Gen { foo :: Int, nested :: { bar :: Boolean } })
   let toString rec = "{ foo: " <> show rec.foo <> "; nested.bar: " <> show rec.nested.bar <> " }"
-  logShow (toString <$> listOfRecords)
+  log $ "[NDET] " <> show (toString <$> listOfRecords)
 
   quickCheck \(x :: Int) -> x <? x + 1
   quickCheck \(x :: Int) -> x <=? x + 1

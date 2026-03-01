@@ -18,7 +18,6 @@ import Data.Traversable (sequence, traverse)
 import Data.TraversableWithIndex (traverseWithIndex)
 import Data.Tuple (Tuple(..), fst, snd, uncurry)
 import Effect (Effect)
-import Effect.Class.Console (logShow)
 import Effect.Console (log)
 import Effect.Unsafe (unsafePerformEffect)
 import Foreign.Object as O
@@ -73,7 +72,7 @@ objectTests = do
   log "Test inserting into empty tree"
   quickCheck $
     ( \k v -> unsafePerformEffect do
-        logShow k
+        log $ "[NDET] " <> show k
         pure $ O.lookup k (O.insert k v O.empty) == Just (number v)
           <?> ("k: " <> show k <> ", v: " <> show v)
     )

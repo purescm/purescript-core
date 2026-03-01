@@ -30,15 +30,14 @@ module Data.String.CodePoints
 
 import Prelude
 
-import Data.Enum (class BoundedEnum, class Enum, Cardinality(..), defaultPred, defaultSucc, fromEnum, toEnum, toEnumWithDefaults)
+import Data.Enum (class BoundedEnum, class Enum, Cardinality(..), defaultPred, defaultSucc, fromEnum, toEnum)
+
 import Data.Int (hexadecimal, toStringAs)
 import Data.Maybe (Maybe(..))
 import Data.String.CodeUnits (contains, stripPrefix, stripSuffix) as Exports
 import Data.String.CodeUnits as CU
 import Data.String.Common (toUpper)
 import Data.String.Pattern (Pattern)
-import Data.Tuple (Tuple(..))
-import Data.Unfoldable (unfoldr)
 
 -- | CodePoint is an `Int` bounded between `0` and `0x10FFFF`, corresponding to
 -- | Unicode code points.
@@ -147,6 +146,9 @@ foreign import _codePointAt
 -- | Nothing
 -- | ```
 -- |
+-- Note: this uses a foreign implementation to work correctly on backends where
+-- strings are not UTF-16 (e.g. Chez Scheme). The upstream version uses
+-- PureScript-level surrogate pair handling which relies on UTF-16 code units.
 uncons :: String -> Maybe { head :: CodePoint, tail :: String }
 uncons = _uncons Just Nothing
 
@@ -179,11 +181,6 @@ foreign import length :: String -> Int
 -- | ```
 -- |
 foreign import countPrefix :: (CodePoint -> Boolean) -> String -> Int
-
-countTail :: (CodePoint -> Boolean) -> String -> Int -> Int
-countTail p s accum = case uncons s of
-  Just { head, tail } -> if p head then countTail p tail (accum + 1) else accum
-  _ -> accum
 
 -- | Returns the number of code points preceding the first match of the given
 -- | pattern in the string. Returns `Nothing` when no matches are found.
@@ -268,10 +265,7 @@ lastIndexOf' p i s =
 -- | "b �"
 -- | ```
 -- |
-take :: Int -> String -> String
-take = _take
-
-foreign import _take :: Int -> String -> String
+foreign import take :: Int -> String -> String
 
 -- | Returns a string containing the leading sequence of code points which all
 -- | match the given predicate from the string. Operates in constant space and
@@ -338,9 +332,6 @@ splitAt i s =
   -- inline drop i s to reuse the result of take i s
   , after: CU.drop (CU.length before) s
   }
-
-fromCharCode :: Int -> String
-fromCharCode = CU.singleton <<< toEnumWithDefaults bottom top
 
 -- WARN: this function expects the String parameter to be non-empty
 foreign import unsafeCodePointAt0 :: String -> CodePoint

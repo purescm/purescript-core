@@ -1,0 +1,7 @@
+workspace:
+  backend:
+    cmd: purescm
+    args:
+      - build
+  packageSet:
+    registry: 62.2.6

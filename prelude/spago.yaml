@@ -2,5 +2,5 @@ package:
   name: prelude
   dependencies: []
   test:
-    main: Test.Main
+    main: Test.Prelude.Main
     dependencies: []

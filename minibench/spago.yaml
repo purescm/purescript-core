@@ -11,4 +11,4 @@ package:
     dependencies:
       - console
       - effect
-    main: Test.Main
+    main: Test.Minibench.Main

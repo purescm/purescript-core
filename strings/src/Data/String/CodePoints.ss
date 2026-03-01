@@ -1,13 +1,13 @@
 (library (Data.String.CodePoints foreign)
-  (export length
-          unsafeCodePointAt0
-          _codePointAt
-          countPrefix
+  (export singleton
           fromCodePointArray
           toCodePointArray
-          singleton
-          _take
-          _uncons)
+          _codePointAt
+          _uncons
+          length
+          countPrefix
+          take
+          unsafeCodePointAt0)
   (import
     (except (chezscheme) length)
     (prefix (purescm runtime) rt:)
@@ -23,12 +23,18 @@
                                  cursor->pstring)
     (only (chezscheme) fx1+ fx=?))
 
-  (define length pstring-length-code-points)
+  ;; singleton :: CodePoint -> String
+  (define singleton code-points->pstring)
 
-  (define unsafeCodePointAt0
-    (lambda (s)
-      (pstring-ref-code-point s 0)))
+  ;; fromCodePointArray :: Array CodePoint -> String
+  (define fromCodePointArray
+    (lambda (cps)
+      (apply code-points->pstring (srfi:214:flexvector->list cps))))
 
+  ;; toCodePointArray :: String -> Array CodePoint
+  (define toCodePointArray pstring->code-point-flexvector)
+
+  ;; _codePointAt :: (forall a. a -> Maybe a) -> (forall a. Maybe a) -> Int -> String -> Maybe CodePoint
   (define _codePointAt
     (lambda (Just)
       (lambda (Nothing)
@@ -41,28 +47,7 @@
                   [(fx=? i index) (Just cp)]
                   [else (loop (fx1+ i) (pstring-cursor-read-code-point cur))]))))))))
 
-  (define countPrefix
-    (lambda (pred)
-      (lambda (s)
-        (let ([cursor (pstring->cursor s)])
-          (let loop ([count 0])
-            (let ([cp (pstring-cursor-read-code-point cursor)])
-              (cond
-                [(eof-object? cp) count]
-                [(pred cp) (loop (fx1+ count))]
-                [else count])))))))
-
-  (define fromCodePointArray
-    (lambda (cps)
-      (apply code-points->pstring (srfi:214:flexvector->list cps))))
-
-  (define singleton code-points->pstring)
-
-  (define _take
-    (lambda (n)
-      (lambda (s)
-        (pstring-take-code-points s n))))
-
+  ;; _uncons :: (forall a. a -> Maybe a) -> (forall a. Maybe a) -> String -> Maybe { head :: CodePoint, tail :: String }
   (define _uncons
     (lambda (Just)
       (lambda (Nothing)
@@ -75,6 +60,30 @@
                     (cons 'head cp)
                     (cons 'tail (cursor->pstring cur))))))))))
 
-  (define toCodePointArray pstring->code-point-flexvector)
+  ;; length :: String -> Int
+  (define length pstring-length-code-points)
+
+  ;; countPrefix :: (CodePoint -> Boolean) -> String -> Int
+  (define countPrefix
+    (lambda (pred)
+      (lambda (s)
+        (let ([cursor (pstring->cursor s)])
+          (let loop ([count 0])
+            (let ([cp (pstring-cursor-read-code-point cursor)])
+              (cond
+                [(eof-object? cp) count]
+                [(pred cp) (loop (fx1+ count))]
+                [else count])))))))
+
+  ;; take :: Int -> String -> String
+  (define take
+    (lambda (n)
+      (lambda (s)
+        (pstring-take-code-points s n))))
+
+  ;; unsafeCodePointAt0 :: String -> CodePoint
+  (define unsafeCodePointAt0
+    (lambda (s)
+      (pstring-ref-code-point s 0)))
 
   )

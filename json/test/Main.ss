@@ -44,7 +44,7 @@
 
   (define testJsonParser
     (lambda ()
-      (display "  Strings\n")
+      ;; (display "  Strings\n")
       (assert-roundtrip "\"foo\"" "\"foo\"")
 
       (assert-roundtrip "\"\\n\"" "\"\\n\"")
@@ -52,13 +52,13 @@
       (assert-roundtrip "\"bar\\n\"" "\"bar\\n\"")
       (assert-roundtrip "\"\\nbar\"" "\"\\nbar\"")
 
-      (display "  Invalid strings with control chars\n")
+      ;; (display "  Invalid strings with control chars\n")
       (assert-fail "\"\n\"" "Invalid control character in string")
       (assert-fail "\"\r\"" "Invalid control character in string")
       (assert-fail "\"foo\n\"" "Invalid control character in string")
       (assert-fail "\"\\z\"" "Invalid string escape z")
 
-      (display "  Unicode escapes\n")
+      ;; (display "  Unicode escapes\n")
       (assert-fail "\"\\u03\"")
       (assert-roundtrip "\"\\u03BB\"" "\"λ\"")
       (assert-roundtrip "\"foo \\u03BB \\u03bc\"" "\"foo λ μ\"")
@@ -71,10 +71,10 @@
       (assert-fail "\"\\uDC37 \"" "Invalid unicode escape DC37")
       (assert-fail "\" \\uD801\\uD802 foo\"" "Invalid unicode surrogate pair D801 D802")
 
-      (display "  Leading whitespace\n")
+      ;; (display "  Leading whitespace\n")
       (assert-roundtrip "\n\r  \"\\nbar\"" "\"\\nbar\"")
 
-      (display "  Numbers\n")
+      ;; (display "  Numbers\n")
       (assert-roundtrip " 0 " "0")
       (assert-roundtrip "2" "2")
       (assert-roundtrip "-2" "-2")
@@ -103,7 +103,7 @@
       (assert-fail "1ee1" "Unexpected token 'e'")
       (assert-fail "1x1" "Unexpected token 'x'")
 
-      (display "  Booleans\n")
+      ;; (display "  Booleans\n")
       (assert-roundtrip "true" "true")
       (assert-roundtrip "false" "false")
       (assert-roundtrip " true " "true")
@@ -113,13 +113,13 @@
       (assert-fail " t")
       (assert-fail " tru")
 
-      (display "  null\n")
+      ;; (display "  null\n")
       (assert-roundtrip "null" "null")
       (assert-roundtrip " null " "null")
       (assert-fail " n")
       (assert-fail " nul")
 
-      (display "  Arrays\n")
+      ;; (display "  Arrays\n")
       (assert-roundtrip "[]" "[]")
       (assert-roundtrip "[  ]" "[]")
       (assert-roundtrip "[\"foo\"]" "[\"foo\"]")
@@ -132,7 +132,7 @@
       (assert-fail "[\"foo\",]" "Unexpected token ']'")
       (assert-fail "[ , \"foo\"]" "Unexpected token ','")
 
-      (display "  Objects\n")
+      ;; (display "  Objects\n")
       (assert-roundtrip "{}" "{}")
       (assert-roundtrip "{ }" "{}")
       (assert-roundtrip "{ \"key\":\"value\"}" "{\"key\":\"value\"}")
@@ -144,10 +144,10 @@
       (assert-fail "{, \"foo\"}" "Unexpected ',', was expecting '\"'")
       (assert-fail "{\"foo\" : }")
 
-      (display "  Nested\n")
+      ;; (display "  Nested\n")
       (assert-roundtrip "{ \"array\":[ null, true, false ], \"obj\": { \"key\" : \"value\" }}" "{\"array\":[null,true,false],\"obj\":{\"key\":\"value\"}}")
 
-      (display "  Trailing token\n")
+      ;; (display "  Trailing token\n")
       (assert-fail "0 0" "Unexpected token '0'")
       (assert-fail "{} 0" "Unexpected token '0'")
       (assert-fail "[] []" "Unexpected token '['")

@@ -101,39 +101,27 @@ numbersTestCode = do
 
   log "\tprecision"
   assertEqual
-    -- TODO fix toStringWith
-    -- { expected: "3.14"
-    { expected: "3.14159"
+    { expected: "3.14"
     , actual: toStringWith (precision 3) pi
     }
   assertEqual
-    -- TODO fix toStringWith
-    -- { expected: "3.1416"
-    { expected: "3.14159"
+    { expected: "3.1416"
     , actual: toStringWith (precision 5) pi
     }
   assertEqual
-    -- TODO fix toStringWith
-    -- { expected: "3"
-    { expected: "3.14159"
+    { expected: "3"
     , actual: toStringWith (precision 1) pi
     }
   assertEqual
-    -- TODO fix toStringWith
-    -- { expected: "3"
-    { expected: "3.14159"
+    { expected: "3"
     , actual: toStringWith (precision (-3)) pi
     }
   assertEqual
-    -- TODO fix toStringWith
-    -- { expected: "3.14"
-    { expected: "3.14159"
+    { expected: "3.14"
     , actual: toStringWith (precision 3) pi
     }
   assertEqual
-    -- TODO fix toStringWith
-    -- { expected: "1.2e+3"
-    { expected: "1234.5"
+    { expected: "1.2e+3"
     , actual: toStringWith (precision 2) 1234.5
     }
 
@@ -147,11 +135,11 @@ numbersTestCode = do
     , actual: toStringWith (fixed 4) pi
     }
   assertEqual
-    { expected: "3."
+    { expected: "3"
     , actual: toStringWith (fixed 0) pi
     }
   assertEqual
-    { expected: "3."
+    { expected: "3"
     , actual: toStringWith (fixed (-3)) pi
     }
   assertEqual
@@ -161,27 +149,19 @@ numbersTestCode = do
 
   log "\texponential"
   assertEqual
-    -- TODO fix toStringWith
-    -- { expected: "3e+0"
-    { expected: "3.14159"
+    { expected: "3e+0"
     , actual: toStringWith (exponential 0) pi
     }
   assertEqual
-    -- TODO fix toStringWith
-    -- { expected: "3.14e+0"
-    { expected: "3.14159"
+    { expected: "3.14e+0"
     , actual: toStringWith (exponential 2) pi
     }
   assertEqual
-    -- TODO fix toStringWith
-    -- { expected: "3.14e+2"
-    { expected: "314.159"
+    { expected: "3.14e+2"
     , actual: toStringWith (exponential 2) (100.0 * pi)
     }
   assertEqual
-    -- TODO fix toStringWith
-    -- { expected: "1.2e+3"
-    { expected: "1234.5"
+    { expected: "1.2e+3"
     , actual: toStringWith (exponential 1) 1234.5
     }
 
@@ -194,7 +174,7 @@ numbersTestCode = do
     }
 
   assertEqual
-    { expected: "10.0"
+    { expected: "10"
     , actual: toString 10.0
     }
 

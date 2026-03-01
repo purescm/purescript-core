@@ -28,6 +28,15 @@ export const _toChar = function (just) {
   };
 };
 
+export const _uncons = function (just) {
+  return function (nothing) {
+    return function (s) {
+      if (s.length === 0) return nothing;
+      return just({ head: s.charAt(0), tail: s.substring(1) });
+    };
+  };
+};
+
 export const length = function (s) {
   return s.length;
 };

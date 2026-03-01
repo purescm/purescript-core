@@ -4,6 +4,6 @@ package:
     - prelude
     - newtype
   test:
-    main: Test.Main
+    main: Test.Control.Main
     dependencies:
       - effect
